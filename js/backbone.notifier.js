@@ -78,8 +78,10 @@
 			    	if (settings.destroy instanceof this.NotificationView){
 						settings.destroy.destroy();
 			    	} else {
-			    		scope.destroy.apply(scope, _.isArray(settings.destroy) ? settings.destroy : [settings.destroy]);
+			    		scope.destroyAll.apply(scope, _.isArray(settings.destroy) ? settings.destroy : [settings.destroy]);
 			    	}
+		    	} else if (settings.destroy == true) {
+					scope.destroyAll();
 		    	}
 
 		    	var msgEl = $('<div class="notification ' + (settings['class'] || '') + '"></div>');
