@@ -12,17 +12,18 @@
 	var Notifier = Backbone.Notifier = Backbone.Model.extend({
 			defaults: {
 				'class': null, 		// notification style (null / 'error' / 'info' / 'ok')
-				ms: 10000,			// milliseconds before hiding
-				message: '',		// message content
-				hideOnClick: true,	// whether to hide the notifications on mouse click
-				loader: false,		// whether to display loader animation in notifactions
-				destroy: false,		// notification or selector of nofications to hide on show
-				modal: false,		// whether to dark and block the UI behind the nofication
-				opacity: 1,			// opacity of nofications
-				top: 0,				// distance between the notifications and the top edge
-				fadeInMs: 500,		// duration (milliseconds) of notification's fade-in effect
-				fadeOutMs: 500,		// duration (milliseconds) of notification's fade-out effect
+				'ms': 10000,			// milliseconds before hiding
+				'message': '',		// message content
+				'hideOnClick': true,	// whether to hide the notifications on mouse click
+				'loader': false,		// whether to display loader animation in notifactions
+				'destroy': false,		// notification or selector of nofications to hide on show
+				'modal': false,		// whether to dark and block the UI behind the nofication
+				'opacity': 1,			// opacity of nofications
+				'top': 0,				// distance between the notifications and the top edge
+				'fadeInMs': 500,		// duration (milliseconds) of notification's fade-in effect
+				'fadeOutMs': 500		// duration (milliseconds) of notification's fade-out effect
 			},
+		    current: {},
 			initialize: function(options){
 				var el = options && options.el ? options.el : 'body',
 					$el = this.$el = _.isObject(el) ? el : $(el);
@@ -40,9 +41,7 @@
 		    			return Backbone.View.prototype.on.call(this, eventName, fn);
 		    		}
 				});
-
 			},
-		    current: {},
 		    destroyAll: function(keyFilter, valueFilter){
 		    	var i=0;
 				if (_.isFunction(keyFilter)) {
@@ -86,11 +85,11 @@
 
 		    	var msgEl = $('<div class="notification ' + (settings['class'] || '') + '"></div>');
 	    		var msgInner = $('<div>' + settings.message + '</div>').appendTo(msgEl);
-	    			msgEl.css({top: settings.top - 40, opacity: 0}).prependTo(this.$el);
-			    	var msgView = new this.NotificationView({  
-			    		el: msgEl
-			    	});
-			    	msgView.settings = settings;
+    			msgEl.css({top: settings.top - 40, opacity: 0}).prependTo(this.$el);
+		    	var msgView = new this.NotificationView({  
+		    		el: msgEl
+		    	});
+		    	msgView.settings = settings;
 
 				var innerPh;
 		    	if (settings.loader) {
@@ -113,7 +112,10 @@
 				}
 
 		    	var removeFn = msgView.destroy = function(e){
-	    			_.isObject(e) && e.preventDefault && (e.preventDefault(), e.stopPropagation());
+	    			if (_.isObject(e) && e.preventDefault) {
+	    				e.preventDefault();
+	    				e.stopPropagation();
+	    			} 
 	    			msgView.trigger('beforeHide', msgView, msgEl);
 	    			settings.modal && scope.screenEl.fadeOut(300, function(){
 	    				msgView.trigger('screenHidden', msgView, msgEl);
@@ -129,6 +131,7 @@
 					delete msgView.timeoutId;
 					delete scope.current[msgView.cid];
 		    	};
+
 		    	var preventDefaultFn = function(e){
 	    			e && (e.preventDefault(), e.stopPropagation());
 		    	};

@@ -296,6 +296,8 @@
 
 <script type="text/javascript">
  
+
+ $(function(){
  	var notifier = new Backbone.Notifier({
  		ms: 5000
 		// el: '#main',
@@ -303,16 +305,16 @@
  	});
 
 
-	$(function(){
-		$('.code-wrapper button.run').click(function(){
-			var js = $(this).closest('.code-wrapper').children('pre').html()
-				.replace(/&lt;/ig,'<')
-				.replace(/&gt;/ig,'>')
-				.replace(/<strong>/ig,'')
-				.replace(/<\/strong>/ig,'');
-			eval(js);
-		});
+	$('.code-wrapper button.run').click(function(){
+		var js = $(this).closest('.code-wrapper').children('pre').html()
+			.replace(/&lt;/ig,'<')
+			.replace(/&gt;/ig,'>')
+			.replace(/<strong>/ig,'')
+			.replace(/<\/strong>/ig,'');
+		eval(js);
 	});
+ });
+	
 
 </script>
 
