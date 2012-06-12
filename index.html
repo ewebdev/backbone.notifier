@@ -55,11 +55,11 @@
 		<h1>2. Installation<small></small></h1>
 		</div>
 		<div class="row">
-		    <div class="span10">
-		    	<strong>Include notifier's resources:</strong>
+		    <div class="span12">
+		    	<strong>Notifier's resources:</strong>
 		    	<ul>
-		    		<li><div class="file">css\notifier.css</div> <span>Feel free to edit it</span></li>
-		    		<li><div class="file">js\backbone.notifier.js</div> <span>Place this script tag <strong>after</strong> <em>backbone.js</em></span></li>
+		    		<li><div class="file">&lt;link rel="stylesheet" type="text/css" href="<strong>css/notifier.css</strong>"&gt;</div> <span>Add this to the head section. Feel free to modify.</span></li>
+		    		<li><div class="file">&lt;script type="text/javascript" src="<strong>js/backbone.notifier.js</strong>"&gt;&lt;/script&gt;</div> <span>Place this tag <strong>after</strong> <em>backbone.js</em></span></li>
 		    		<li><div class="file">imgs\loader.gif</div> <span>You can use your own loader image (referenced in css file)</span></li>
 		    	</ul>
 			</div>
@@ -85,7 +85,7 @@
 		ms: 5000,		<small>// milliseconds before hiding (default: 10000)</small>
 		hideOnClick: true,	<small>// whether to hide the notifications on mouse click (default: true)</small>
 		loader: false,		<small>// whether to display loader animation in notifactions (default: false)</small>
-		destroy: false,	<small>// notification or selector of nofications to hide on show (default: false)</small>
+		destroy: false,	<small>	// notification or selector of nofications to hide on show (default: false)</small>
 		modal: false,		<small>// whether to dark and block the UI behind the nofication (default: false)</small>
 		opacity: 1,		<small>// opacity of nofications (default: 1)</small>
 		top: -500,		<small>// distance between the notifications and the top edge (default: 0)</small>

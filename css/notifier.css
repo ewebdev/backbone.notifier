@@ -1,12 +1,12 @@
 
 .notification-screen {
 	background-color: #000;
-	z-index: 22;
+	z-index: 90000022;
 }
 
 .notification {
-	z-index: 25;
-	position: absolute;
+	z-index: 90000025;
+	position: fixed;
 	top: -32px;
 	left: 0;
 	right: 0;

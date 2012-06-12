@@ -11,17 +11,17 @@
 
 	var Notifier = Backbone.Notifier = Backbone.Model.extend({
 			defaults: {
-				class: null, // null / 'error' / 'info' / 'ok'
-				ms: 10000,
-				message: '',
-				hideOnClick: true,
-				loader: false,
-				destroy: false,
-				modal: false,
-				opacity: 1,
-				top: 0,
-				fadeInMs: 500,
-				fadeOutMs: 500,
+				'class': null, 		// notification style (null / 'error' / 'info' / 'ok')
+				ms: 10000,			// milliseconds before hiding
+				message: '',		// message content
+				hideOnClick: true,	// whether to hide the notifications on mouse click
+				loader: false,		// whether to display loader animation in notifactions
+				destroy: false,		// notification or selector of nofications to hide on show
+				modal: false,		// whether to dark and block the UI behind the nofication
+				opacity: 1,			// opacity of nofications
+				top: 0,				// distance between the notifications and the top edge
+				fadeInMs: 500,		// duration (milliseconds) of notification's fade-in effect
+				fadeOutMs: 500,		// duration (milliseconds) of notification's fade-out effect
 			},
 			initialize: function(options){
 				var el = options && options.el ? options.el : 'body',
@@ -67,7 +67,7 @@
 				}
 				return i;
 		    },
-		    notify: function(options){// class = null / 'error' / 'info' / 'ok'
+		    notify: function(options){
 		    	var settings = $.extend({}, this.attributes, options),
 		    		scope = this;
 	    		if (settings.modal && (options || {}).hideOnClick === undefined) {
