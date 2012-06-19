@@ -1,3 +1,8 @@
+.social-btns {
+    margin-top: 10px;
+}
+
+
 .instructions li {
 	/*line-height: 30px;*/
 	margin: 10px 0 0 20px;
@@ -36,6 +41,12 @@
 .code-wrapper > .title > button {
 	float: right;
 	width: 10%;
+}
+
+.btn.run {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAALCAYAAABCm8wlAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAKZJREFUeNpiZmBgkALif0D8mwEb+PTp0/6DBw+mAZniQMz2//9/BmTM8O/fvx9Axr83b95smjlzphtQkSAQM8MV/Pnz5+1/KPj79++HO3fudKamphoAFfEAMSOKAhj4+fPn/WPHjmVramrKY1UAA1+/fj3GxIAHcHFxKeBSAHQdQw8Qm2OzYg0QW8N9AXT5Z6jEJSBOxAgHIHERiHuAmAtdEoQBAgwAXIHJm1bei18AAAAASUVORK5CYII=);
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 .code-wrapper pre {
