@@ -2,6 +2,9 @@
     margin-top: 10px;
 }
 
+#main {
+    margin-bottom: 80px;
+}
 
 .instructions li {
 	/*line-height: 30px;*/
@@ -19,9 +22,13 @@
 
 .code-wrapper {
 	margin: 10px 20px 20px 40px;
-
 }
 
+.code {
+    background-color: whiteSmoke;
+    border: 1px solid #CCC;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
 .code-wrapper > .title {
 	height: 31px;
 	font-size: 20px;
@@ -41,15 +48,16 @@
 .code-wrapper > .title > button {
 	float: right;
 	width: 10%;
+    height: 27px;
 }
 
-.btn.run {
+.btn.run, .btn.runnable {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAALCAYAAABCm8wlAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAKZJREFUeNpiZmBgkALif0D8mwEb+PTp0/6DBw+mAZniQMz2//9/BmTM8O/fvx9Axr83b95smjlzphtQkSAQM8MV/Pnz5+1/KPj79++HO3fudKamphoAFfEAMSOKAhj4+fPn/WPHjmVramrKY1UAA1+/fj3GxIAHcHFxKeBSAHQdQw8Qm2OzYg0QW8N9AXT5Z6jEJSBOxAgHIHERiHuAmAtdEoQBAgwAXIHJm1bei18AAAAASUVORK5CYII=);
     background-position: center center;
     background-repeat: no-repeat;
 }
 
-.code-wrapper pre {
+.code-wrapper .code {
 	clear: both;
 	float: none;
 	color: #888;
@@ -74,4 +82,67 @@
 }
 #installation .file > strong { 
 	color: #000;
+}
+
+#logoBar {
+    width: 150px;
+}
+
+.btns-wrapper {
+    margin: 0 20px 20px;
+}
+
+.btns-block {
+    margin: 20px 0 20px 60px;
+}
+.btns-block > button {
+    margin: 0 10px;
+}
+.btns-block .lbl {
+    font-size: 13px;
+    display: block;
+    float: left;
+    margin: 10px 9px 0;
+    color: #919191;
+    text-shadow: 0 1px 0 #EEE;
+    border-right: solid 1px #ACACAC;
+    padding-right: 9px;
+    -webkit-box-shadow: 1px 0 0 #EEE;
+    -moz-shadow: 1px 0 0 #EEE;
+    box-shadow: 1px 0 0 #EEE;
+}
+.btn.runnable {
+    background-position: 11px center;
+    padding-left: 26px;
+}
+
+.wrapper-960, #topBar .wrapper-960 {
+    width: 960px;
+    margin: 0 auto;
+}
+.float-navbar {
+    background: lightGrey;
+    box-shadow: inset 0 1px 0 #EBEBEB, 0 -7px 32px white, 0 -34px 50px white;
+    bottom: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    padding-top: 2px;
+}
+
+#intro {
+    margin: 40px 0;
+}
+#intro h1 {
+    font-size: 38px;
+    color: #ccc;
+    display: inline-block;
+    height: 40px;
+    float: left;
+}
+#demoBtn {
+    margin: 0 0 0 30px;
+    width: 120px;
+    display: inline-block;
+    float: left;
 }

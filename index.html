@@ -1,22 +1,22 @@
 
-<!DOCTYPE html> 
-<html> 
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
 <head> 
 <meta charset=utf-8 /> 
 <title>Backbone.js Notifier</title> 
 <meta http-equiv="X-UA-Compatible" content="chrome=1"> 
 
-<link rel="stylesheet" type="text/css" href="example-css/bootstrap.css"> 
+<link rel="stylesheet" type="text/css" href="example-css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="example-css/example.css"> 
 
 <link rel="stylesheet" type="text/css" href="css/notifier.css"> 
  
 </head> 
-<body> 
+<body>
 
- <div class="navbar">
+ <div class="navbar" id="topBar">
       <div class="navbar-inner">
-        <div class="container">
+        <div class="container wrapper-960">
           <button type="button"class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -35,9 +35,26 @@
 
 		</div>
       </div>
-    </div>
+</div>
+
+ <div class="navbar float-navbar">
+	 <div class="btns-block wrapper-960">
+		 <span class="lbl">Basic Examples</span>
+		 <button class="btn btn-inverse runnable">notifier.notify("Hi!");</button>
+		 <button class="btn btn-info runnable">notifier.info("Hi!");</button>
+		 <button class="btn btn-warning runnable">notifier.warning("Hi!");</button>
+		 <button class="btn btn-danger runnable">notifier.error("Hi!");</button>
+		 <button class="btn btn-success runnable">notifier.success("Hi!");</button>
+	 </div>
+ </div>
 
     <div class="container" id="main">
+
+<section id="intro">
+	<h1>Backbone.Notifier</h1>
+	<!--<button id="demoBtn" class="btn btn-large btn-primary">Demo</button>-->
+	<div class="clearfix"></div>
+</section>
 
 <div class="instructions">
 
@@ -62,8 +79,14 @@
 		<h1>2. Installation<small></small></h1>
 		</div>
 		<div class="row">
-		    <div class="span12">
-		    	<strong>Notifier's resources:</strong>
+		    <div class="span12 btns-wrapper">
+				<a class="btn btn-primary btn-large" href="https://github.com/ewebdev/backbone.notifier/zipball/master">Download</a>
+				<a class="btn btn-large" href="https://github.com/ewebdev/backbone.notifier/">project on github</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span12">
+				<strong>Notifier's resources:</strong>
 		    	<ul>
 		    		<li><div class="file">&lt;link rel="stylesheet" type="text/css" href="<strong>css/notifier.css</strong>"&gt;</div> <span>Add this to the head section. Feel free to modify.</span></li>
 		    		<li><div class="file">&lt;script type="text/javascript" src="<strong>js/backbone.notifier.js</strong>"&gt;&lt;/script&gt;</div> <span>Place this tag <strong>after</strong> <em>backbone.js</em></span></li>
@@ -86,9 +109,7 @@
 					<div class="title">
 						<h3>1. Create notifier with default config <small>The config is optional</small></h3>
 					</div>
-					<pre class="prettyprint">
-
-
+					<div class="code"><pre class="prettyprint">
 	<strong>var notifier = new Backbone.Notifier(</strong>{
 		el: '#main', 		<small>// container for notification (default: 'body')</small>
 		types: ['warning', 'error', 'info', 'success'], <small>// available notification styles</small>
@@ -103,7 +124,7 @@
 		fadeInMs: 500,		<small>// duration (milliseconds) of notification's fade-in effect (default: 500)</small>
 		fadeOutMs: 500		<small>// duration (milliseconds) of notification's fade-out effect (default: 500)</small>
 		zIndex: 10000		<small>// minimal z-index for notifications</small>
-	}<strong>);</strong></pre>
+	}<strong>);</strong></pre></div>
 				</div>
 
 			</div>
@@ -121,13 +142,77 @@
 <div class="row">
     <div class="span12">
 
+		<h2>Basic Examples</h2>
+
+		<!--<div class="row">-->
+			<!--<div class="span12 btns-block">-->
+				<!--<button class="btn btn-inverse runnable">notifier.notify("Hi!");</button>-->
+				<!--<button class="btn btn-info runnable">notifier.info("Hi!");</button>-->
+				<!--<button class="btn btn-warning runnable">notifier.warning("Hi!");</button>-->
+				<!--<button class="btn btn-danger runnable">notifier.error("Hi!");</button>-->
+				<!--<button class="btn btn-success runnable">notifier.success("Hi!");</button>-->
+			<!--</div>-->
+		<!--</div>-->
+
+		<div class="row">
+			<div class="span12">
+				<div class="code-wrapper">
+					<div class="title">
+						<h3>Default notification</h3>
+						<button class="run btn btn-primary"></button>
+					</div>
+					<div class="code">
+	<div class="row">
+	<div class="span5">
+			<pre class="runnable"><strong>notifier.notify("Hello World!");</strong></pre>
+	</div>
+	<div class="span5">
+	<pre class="side">	// Is equivalent to:
+	//  notifier.notify({
+	//    message: "Hello World!"
+	//  });</pre>
+	</div>
+	</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- row -->
+
+		<div class="row">
+			<div class="span12">
+				<div class="code-wrapper">
+					<div class="title">
+						<h3>Warning notification</h3>
+						<button class="run btn btn-primary"></button>
+					</div>
+					<div class="code">
+						<div class="row">
+							<div class="span5">
+								<pre class="runnable"><strong>notifier.warning("Hello World!");</strong></pre>
+							</div>
+							<div class="span5">
+	<pre class="side">	// Is equivalent to:
+	//  notifier.notify({
+	//    message: "Hello World!"
+	//    'class': 'warning'
+	//  });</pre>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- row -->
+
+
+
+		<h2>Advanced Examples</h2>
 
 		<div class="code-wrapper">
 			<div class="title">
 				<h3>"Warning" Modal + Buttons + Events</h3>
 				<button class="run btn btn-primary"></button>
 			</div>
-			<pre>
+			<div class="code"><pre class="runnable">
 	<strong>var confirmMsg = notifier.notify({ 
 		message: "Unsaved changes will be lost. Continue anyway?",
 		'class': "warning",
@@ -146,7 +231,7 @@
 			'class': 'success'
 		});
 	})
-	.on('click:cancel', 'destroy');</strong></pre>
+	.on('click:cancel', 'destroy');</strong></pre></div>
 		</div>
 
 	</div>
@@ -160,7 +245,7 @@
 				<h3>"Info" Modal + Buttons + Events <small>Alternative Implementation</small></h3>
 				<button class="run btn btn-primary"></button>
 			</div>
-			<pre>
+			<div class="code"><pre class="runnable">
 	<strong>var confirmMsg = notifier.notify({ 
 		message: "Unsaved changes will be lost. Continue anyway?&lt;div&gt;&lt;button class='ok'&gt;Continue&lt;/button&gt; &lt;button class='cancel default'&gt;Cancel&lt;/button&gt;&lt;/div&gt;",
 		'class': "info",
@@ -177,7 +262,7 @@
 			});
 		  }).end()
 		.find('.cancel').click(confirmMsg.destroy);</strong></pre>
-		</div>
+		</div></div>
 
 	</div>
 </div><!-- row -->
@@ -190,13 +275,13 @@
 				<h3>"Info" + (3 sec.) Loader</h3>
 				<button class="run btn btn-primary"></button>
 			</div>
-			<pre>
+			<div class="code"><pre class="runnable">
 	<strong>notifier.notify({ 
 		message: "Loading...",
 		'class': "info",
 		ms: 3000,
 		loader: true
-	});</strong></pre>
+	});</strong></pre></div>
 		</div>
 	</div>
 </div><!-- row -->
@@ -210,17 +295,16 @@
 				<h3>Modal + (3 sec.) Loader</h3>
 				<button class="run btn btn-primary"></button>
 			</div>
-			<pre>
+			<div class="code"><pre class="runnable">
 	<strong>notifier.notify({ 
 		message: "Loading...",
 		ms: 3000,
 		modal: true,
 		loader: true
-	});</strong></pre>
+	});</strong></pre></div>
 		</div>
 	</div>
 </div><!-- row -->
-
 
 
 <div class="row">
@@ -230,40 +314,17 @@
 				<h3>Error + Slow Fading + Stays Until Click</h3>
 				<button class="run btn btn-primary"></button>
 			</div>
-			<pre>
-	<strong>notifier.notify({ 
-		message: "Error: An error has occurred",
-		ms: false,
-		fadeInMs: 2500,
-		fadeOutMs: 2500,
-		'class': 'error'
-	});</strong></pre>
-		</div>
-	</div>
-</div><!-- row -->
-
-
-
-<div class="row">
-    <div class="span12">
-		<div class="code-wrapper">
-			<div class="title">
-				<h3>Error + Slow Fading + Stays Until Click</h3>
-				<button class="run btn btn-primary"></button>
-			</div>
-			<pre>
+			<div class="code"><pre class="runnable">
 	<strong>notifier.notify({ 
 		message: "&lt;em&gt;Error&lt;/em&gt;: An error has occurred",
 		ms: false,
 		fadeInMs: 2500,
 		fadeOutMs: 2500,
 		'class': 'error'
-	});</strong></pre>
+	});</strong></pre></div>
 		</div>
 	</div>
 </div><!-- row -->
-
-
 
 
 <div class="row">
@@ -273,7 +334,7 @@
 				<h3>Success + Modal + Long Text</h3>
 				<button class="run btn btn-primary"></button>
 			</div>
-			<pre>
+			<div class="code"><pre class="runnable">
 	<strong>notifier.notify({ 
 		'class': 'success',
 		fadeInMs: 1000,
@@ -281,17 +342,12 @@
 		modal: true,
 		hideOnClick: true,
 		message: "&lt;p&gt;Lorem Ipsum is simply dummy text of the printing and typesetting industry.&lt;/p&gt;&lt;p&gt;Lorem Ipsum is simply dummy text of the printing and typesetting industry.&lt;/p&gt;&lt;p&gt;Lorem Ipsum is simply dummy text of the printing and typesetting industry.&lt;/p&gt;&lt;p&gt;Lorem Ipsum is simply dummy text of the printing and typesetting industry.&lt;/p&gt;&lt;p&gt;Lorem Ipsum is simply dummy text of the printing and typesetting industry.&lt;/p&gt;&lt;p&gt;Lorem Ipsum is simply dummy text of the printing and typesetting industry.&lt;/p&gt;&lt;p&gt;Lorem Ipsum is simply dummy text of the printing and typesetting industry.&lt;/p&gt;"
-	});</strong></pre>
+	});</strong></pre></div>
 		</div>
 	</div>
 </div><!-- row -->
 
-
-
-
 </section>
-
-
 
 
 
@@ -312,13 +368,14 @@
  $(function(){
  	var notifier = window.notifier = new Backbone.Notifier({
  		ms: 5000
-		// el: '#main',
-		// top: -50
  	});
 
+	 $('.btns-block').on('click', '.runnable', function(){
+		 eval($(this).text());
+	 });
 
 	$('.code-wrapper button.run').click(function(){
-		var js = $(this).closest('.code-wrapper').children('pre').html()
+		var js = $(this).closest('.code-wrapper').find('pre.runnable').html()
 			.replace(/&lt;/ig,'<')
 			.replace(/&gt;/ig,'>')
 			.replace(/<strong>/ig,'')

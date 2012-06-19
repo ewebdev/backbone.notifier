@@ -696,9 +696,6 @@ pre {
   word-wrap: break-word;
   white-space: pre;
   white-space: pre-wrap;
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 pre.prettyprint {
@@ -716,6 +713,8 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
+
+
 
 form {
   margin: 0 0 18px;
@@ -3196,7 +3195,6 @@ input[type="submit"].btn.btn-mini {
 }
 
 .nav {
-  margin-bottom: 18px;
   margin-left: 0;
   list-style: none;
 }
@@ -3566,7 +3564,6 @@ input[type="submit"].btn.btn-mini {
 .navbar {
   *position: relative;
   *z-index: 2;
-  margin-bottom: 18px;
   overflow: visible;
 }
 
@@ -3605,14 +3602,14 @@ input[type="submit"].btn.btn-mini {
 }
 
 .navbar .brand {
-  display: block;
-  float: left;
-  padding: 8px 20px 12px;
-  margin-left: -20px;
-  font-size: 20px;
-  font-weight: 200;
-  line-height: 1;
-  color: #999999;
+    display: block;
+    float: left;
+    padding: 12px 20px 8px;
+    margin-left: -20px;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 1;
+    color: #999;
 }
 
 .navbar .navbar-text {
