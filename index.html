@@ -80,8 +80,12 @@
 						<h3>1. Create notifier with default config <small>The config is optional</small></h3>
 					</div>
 					<pre class="prettyprint">
+
+
 	<strong>var notifier = new Backbone.Notifier(</strong>{
 		el: '#main', 		<small>// container for notification (default: 'body')</small>
+		types: ['warning', 'error', 'info', 'success'], <small>// available notification styles</small>
+		'class': null, 		<small>// default notification style (null / 'warning' / 'error' / 'info' / 'success')</small>
 		ms: 5000,		<small>// milliseconds before hiding (default: 10000)</small>
 		hideOnClick: true,	<small>// whether to hide the notifications on mouse click (default: true)</small>
 		loader: false,		<small>// whether to display loader animation in notifactions (default: false)</small>
@@ -91,6 +95,7 @@
 		top: -500,		<small>// distance between the notifications and the top edge (default: 0)</small>
 		fadeInMs: 500,		<small>// duration (milliseconds) of notification's fade-in effect (default: 500)</small>
 		fadeOutMs: 500		<small>// duration (milliseconds) of notification's fade-out effect (default: 500)</small>
+		zIndex: 10000		<small>// minimal z-index for notifications</small>
 	}<strong>);</strong></pre>
 				</div>
 
@@ -175,14 +180,14 @@
     <div class="span12">
 		<div class="code-wrapper">
 			<div class="title">
-				<h3>"Info" + (5 sec.) Loader</h3>
+				<h3>"Info" + (3 sec.) Loader</h3>
 				<button class="run btn btn-primary">run</button>
 			</div>
 			<pre>
 	<strong>notifier.notify({ 
 		message: "Loading...",
 		'class': "info",
-		ms: 5000,
+		ms: 3000,
 		loader: true
 	});</strong></pre>
 		</div>
@@ -195,13 +200,13 @@
     <div class="span12">
 		<div class="code-wrapper">
 			<div class="title">
-				<h3>Modal + (5 sec.) Loader</h3>
+				<h3>Modal + (3 sec.) Loader</h3>
 				<button class="run btn btn-primary">run</button>
 			</div>
 			<pre>
 	<strong>notifier.notify({ 
 		message: "Loading...",
-		ms: 5000,
+		ms: 3000,
 		modal: true,
 		loader: true
 	});</strong></pre>
@@ -298,7 +303,7 @@
  
 
  $(function(){
- 	var notifier = new Backbone.Notifier({
+ 	var notifier = window.notifier = new Backbone.Notifier({
  		ms: 5000
 		// el: '#main',
 		// top: -50

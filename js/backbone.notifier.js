@@ -3,15 +3,12 @@
  * Copyright 2012, Eyal Weiss
  * backbone.notifier.js may be freely distributed under the MIT license.
  */
-(function(window) {
-
-	var Backbone = window.Backbone,
-		_ = window._,
-		$ = window.$;
+(function($, Backbone, _) {
 
 	var Notifier = Backbone.Notifier = Backbone.Model.extend({
 			defaults: {
-				'class': null, 		// notification style (null / 'error' / 'info' / 'ok')
+				types: ['warning', 'error', 'info', 'success'], // available notification styles
+				'class': null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
 				'ms': 10000,			// milliseconds before hiding
 				'message': '',		// message content
 				'hideOnClick': true,	// whether to hide the notifications on mouse click
@@ -21,13 +18,16 @@
 				'opacity': 1,			// opacity of nofications
 				'top': 0,				// distance between the notifications and the top edge
 				'fadeInMs': 500,		// duration (milliseconds) of notification's fade-in effect
-				'fadeOutMs': 500		// duration (milliseconds) of notification's fade-out effect
+				'fadeOutMs': 500,		// duration (milliseconds) of notification's fade-out effect
+				'zIndex': 10000		// minimal z-index for notifications
 			},
 		    current: {},
 			initialize: function(options){
-				var el = options && options.el ? options.el : 'body',
+				var scope = this,
+					el = options && options.el ? options.el : 'body',
 					$el = this.$el = _.isObject(el) ? el : $(el);
-					$el.css('position', 'relative');
+
+				$el.css('position', 'relative');
 
 				this.NotificationView = Backbone.View.extend({
 					defaults: this.attributes,
@@ -41,25 +41,51 @@
 		    			return Backbone.View.prototype.on.call(this, eventName, fn);
 		    		}
 				});
+
+				var notifyFn = function(type, opts){
+					if (_.isString(opts)){
+						opts = {message: opts};
+					}
+					var o = _.extend({}, {class: ''}, opts);
+					o.class += ' ' + type;
+					return scope.notify(o);
+				};
+
+				var createNotifyFn = function(type){
+					scope[type] = function(opts){
+						notifyFn(type, opts);
+					}
+				};
+
+				_.each(options.types, function(type){
+					createNotifyFn(type);
+				});
+			},
+			calcZIndex: function(){
+				var z = this.attributes.zIndex;
+				_.each(this.current, function(view) {
+					z = view.zIndex > z ? view.zIndex : z;
+				});
+				return ++z;
 			},
 		    destroyAll: function(keyFilter, valueFilter){
 		    	var i=0;
 				if (_.isFunction(keyFilter)) {
-					_.each(this.current, function(view, k) {
+					_.each(this.current, function(view) {
 						if (keyFilter(view)) {
 							view.destroy.call(view);
 							i++;
 						}
 					});
 				} else if (keyFilter !== undefined) {
-					_.each(this.current, function(view, k) {
+					_.each(this.current, function(view) {
 						if (view.settings[keyFilter]===valueFilter) {
 							view.destroy.call(view);
 							i++;
 						}
 					});
 				} else {
-					_.each(this.current, function(view, k) {
+					_.each(this.current, function(view) {
 						view.destroy.call(view);
 						i++;
 					});
@@ -67,6 +93,9 @@
 				return i;
 		    },
 		    notify: function(options){
+				if (_.isString(options)){
+					options = {message: options};
+				}
 		    	var settings = $.extend({}, this.attributes, options),
 		    		scope = this;
 	    		if (settings.modal && (options || {}).hideOnClick === undefined) {
@@ -82,11 +111,11 @@
 		    	} else if (settings.destroy == true) {
 					scope.destroyAll();
 		    	}
-
+				var zIndex = scope.calcZIndex.call(scope);
 		    	var msgEl = $('<div class="notification ' + (settings['class'] || '') + '"></div>');
 	    		var msgInner = $('<div>' + settings.message + '</div>').appendTo(msgEl);
-    			msgEl.css({top: settings.top - 40, opacity: 0}).prependTo(this.$el);
-		    	var msgView = new this.NotificationView({  
+    			msgEl.css({top: settings.top - 40, opacity: 0, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(this.$el);
+				var msgView = new this.NotificationView({
 		    		el: msgEl
 		    	});
 		    	msgView.settings = settings;
@@ -117,8 +146,9 @@
 	    				e.stopPropagation();
 	    			} 
 	    			msgView.trigger('beforeHide', msgView, msgEl);
-	    			settings.modal && scope.screenEl.fadeOut(300, function(){
-	    				msgView.trigger('screenHidden', msgView, msgEl);
+	    			settings.modal && msgView.screenEl.fadeOut(300, function(){
+						msgView.trigger('screenHidden', msgView, msgEl);
+						msgView.screenEl.remove();
 	    			});
 		    		msgEl.animate({top: -msgInner.height(), opacity: 0}, settings.fadeOutMs, function(){
 						msgView.remove();
@@ -137,25 +167,24 @@
 		    	};
 
 		    	if (settings.modal) {
-		    		if (!scope.screenEl || !scope.screenEl.parent().length){
-		    			scope.screenEl = $('<div/>',{'class': 'notification-screen', css: {position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', opacity: 0 }}).prependTo($('body'));
-		    			scope.screenEl.click(function(e){
+		    			var screenEl = msgView.screenEl =  $('<div/>',{'class': 'notification-screen', css: {position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, zIndex: zIndex-1  }}).prependTo($('body'));
+						screenEl.click(function(e){
 							e.preventDefault();
 							e.stopPropagation();
 							return false;
 		    			});
-		    		}
-		    		scope.screenEl.fadeTo(300, .7);
-		    	}		 
-		    	if (settings.ms > 0  || settings.ms === 0){
-		    		msgView.timeoutId = setTimeout(removeFn, settings.ms);
+		    		screenEl.fadeTo(300, .7);
 		    	}
+				if (settings.ms > 0  || settings.ms === 0){
+					msgView.timeoutId = setTimeout(removeFn, settings.ms);
+				}
 	    		msgInner.click(settings.hideOnClick ? removeFn : preventDefaultFn);
 		    	msgEl.animate({top: settings.top, opacity: settings.opacity}, settings.fadeInMs);
 		    	settings.css && msgInner.css(settings.css);
 				scope.current[msgView.cid] = msgView;
+				msgView.zIndex = zIndex;
 		    	return msgView;
 		    }
 	});
 
-})(this);
+})(jQuery, Backbone, _);
