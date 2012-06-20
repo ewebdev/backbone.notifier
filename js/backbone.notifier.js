@@ -4,8 +4,8 @@
  * backbone.notifier.js may be freely distributed under the MIT license.
  */
 (function($, Backbone, _) {
-
-	var Notifier = Backbone.Notifier = Backbone.Model.extend({
+	var emptyFn = function(){},
+		Notifier = Backbone.Notifier = Backbone.Model.extend({
 			defaults: {
 				types: ['warning', 'error', 'info', 'success'], // available notification styles
 				'class': null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
@@ -19,7 +19,26 @@
 				'top': 0,				// distance between the notifications and the top edge
 				'fadeInMs': 500,		// duration (milliseconds) of notification's fade-in effect
 				'fadeOutMs': 500,		// duration (milliseconds) of notification's fade-out effect
+				'position': 'top',		// default notifications position ('top' / 'center')
 				'zIndex': 10000		// minimal z-index for notifications
+			},
+			transitions: {
+				top: {
+					in: function(el, inner, options, duration){
+						el.animate({top: options.top, opacity: options.opacity}, duration);
+					},
+					out: function(el, inner, options, duration, callback){
+						el.animate({top: -inner.height(), opacity: 0}, duration, callback || emptyFn);
+					}
+				},
+				center: {
+					in: function(el, inner, options, duration){
+						el.animate({top: ($(window).height()-inner.height())/2, opacity: options.opacity}, duration);
+					},
+					out: function(el, inner, options, duration, callback){
+						el.animate({top: -inner.height(), opacity: 0}, duration, callback || emptyFn);
+					}
+				}
 			},
 		    current: {},
 			initialize: function(options){
@@ -112,8 +131,9 @@
 					scope.destroyAll();
 		    	}
 				var zIndex = scope.calcZIndex.call(scope);
-		    	var msgEl = $('<div class="notification ' + (settings['class'] || '') + '"></div>');
-	    		var msgInner = $('<div>' + settings.message + '</div>').appendTo(msgEl);
+				var cls = ['notification', (settings['class'] || ''), 'pos-' + settings.position, settings.loader ? 'with-loader' : '' ].join(' ');
+		    	var msgEl = $('<div class="' + cls + '"></div>');
+	    		var msgInner = $('<div class="notification-inner"><div class="message">' + settings.message + '</div></div>').appendTo(msgEl);
     			msgEl.css({top: settings.top - 40, opacity: 0, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(this.$el);
 				var msgView = new this.NotificationView({
 		    		el: msgEl
@@ -127,7 +147,7 @@
 		    	}
 
 				if (settings.buttons) {
-					var btnsPh = $('<div class="btns" />').appendTo((innerPh = innerPh || msgEl.find('>div')));
+					var btnsPh = $('<div class="btns"></div>').appendTo((innerPh = innerPh || msgEl.find('>div')));
 					_.each(settings.buttons, function(btn, i){
 						btnsPh.append($('<button/>', btn));
 					});
@@ -150,11 +170,13 @@
 						msgView.trigger('screenHidden', msgView, msgEl);
 						msgView.screenEl.remove();
 	    			});
-		    		msgEl.animate({top: -msgInner.height(), opacity: 0}, settings.fadeOutMs, function(){
+
+					var outAnimFn = scope.transitions[settings.position].out;
+					outAnimFn.call(scope, msgEl, msgInner, settings, options.fadeOutMs, function(){
 						msgView.remove();
 						msgView.trigger('destroyed', msgView, msgEl);
 						_.isFunction(e) && e.call(msgView, msgView, msgEl);
-		    		});
+					});
 					if (msgView.timeoutId) {
 						clearTimeout(msgView.timeoutId);
 					}
@@ -176,13 +198,18 @@
 		    		screenEl.fadeTo(300, .7);
 		    	}
 				if (settings.ms > 0  || settings.ms === 0){
-					msgView.timeoutId = setTimeout(removeFn, settings.ms);
+					msgView.timeoutId = setTimeout(function(){
+						msgView.trigger('timeout', msgView, msgEl);
+						removeFn();
+					}, settings.ms);
 				}
 	    		msgInner.click(settings.hideOnClick ? removeFn : preventDefaultFn);
-		    	msgEl.animate({top: settings.top, opacity: settings.opacity}, settings.fadeInMs);
-		    	settings.css && msgInner.css(settings.css);
+
+				var animateFn = this.transitions[settings.position].in;
 				scope.current[msgView.cid] = msgView;
 				msgView.zIndex = zIndex;
+				animateFn.call(this, msgEl, msgInner, settings, settings.fadeInMs);
+				settings.css && msgInner.css(settings.css);
 		    	return msgView;
 		    }
 	});

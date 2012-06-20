@@ -16,13 +16,12 @@
 
  <div class="navbar" id="topBar">
       <div class="navbar-inner">
-        <div class="container wrapper-960">
+        <div class="container wrapper-940">
           <button type="button"class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="./index.html">Backbone.Notifier</a>
 
 		<div class="social-btns">
 		<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=ewebdev&repo=backbone.notifier&type=watch&count=true"
@@ -37,24 +36,14 @@
       </div>
 </div>
 
- <div class="navbar float-navbar">
-	 <div class="btns-block wrapper-960">
-		 <span class="lbl">Basic Examples</span>
-		 <button class="btn btn-inverse runnable">notifier.notify("Hi!");</button>
-		 <button class="btn btn-info runnable">notifier.info("Hi!");</button>
-		 <button class="btn btn-warning runnable">notifier.warning("Hi!");</button>
-		 <button class="btn btn-danger runnable">notifier.error("Hi!");</button>
-		 <button class="btn btn-success runnable">notifier.success("Hi!");</button>
+ <section id="intro">
+	 <div class="intro-ph">
+		 <h1>Backbone.Notifier</h1>
+		 <button id="btnTour" class="btn-primary btn btn-large">Quick Tour</button>
 	 </div>
- </div>
+ </section>
 
-    <div class="container" id="main">
-
-<section id="intro">
-	<h1>Backbone.Notifier</h1>
-	<!--<button id="demoBtn" class="btn btn-large btn-primary">Demo</button>-->
-	<div class="clearfix"></div>
-</section>
+<div class="container" id="main">
 
 <div class="instructions">
 
@@ -109,22 +98,23 @@
 					<div class="title">
 						<h3>1. Create notifier with default config <small>The config is optional</small></h3>
 					</div>
-					<div class="code"><pre class="prettyprint">
-	<strong>var notifier = new Backbone.Notifier(</strong>{
-		el: '#main', 		<small>// container for notification (default: 'body')</small>
-		types: ['warning', 'error', 'info', 'success'], <small>// available notification styles</small>
-		'class': null, 		<small>// default notification style (null / 'warning' / 'error' / 'info' / 'success')</small>
-		ms: 5000,		<small>// milliseconds before hiding (default: 10000)</small>
-		hideOnClick: true,	<small>// whether to hide the notifications on mouse click (default: true)</small>
-		loader: false,		<small>// whether to display loader animation in notifactions (default: false)</small>
-		destroy: false,	<small>	// notification or selector of nofications to hide on show (default: false)</small>
-		modal: false,		<small>// whether to dark and block the UI behind the nofication (default: false)</small>
-		opacity: 1,		<small>// opacity of nofications (default: 1)</small>
-		top: -500,		<small>// distance between the notifications and the top edge (default: 0)</small>
-		fadeInMs: 500,		<small>// duration (milliseconds) of notification's fade-in effect (default: 500)</small>
-		fadeOutMs: 500		<small>// duration (milliseconds) of notification's fade-out effect (default: 500)</small>
-		zIndex: 10000		<small>// minimal z-index for notifications</small>
-	}<strong>);</strong></pre></div>
+				<div class="code"><pre class="prettyprint">
+<strong>var notifier = new Backbone.Notifier(</strong>{
+	el: '#main', 		<small>// container for notification (default: 'body')</small>
+	types: ['warning', 'error', 'info', 'success'], <small>// available notification styles</small>
+	'class': null, 		<small>// default notification style (null / 'warning' / 'error' / 'info' / 'success')</small>
+	ms: 5000,		<small>// milliseconds before hiding (default: 10000)</small>
+	hideOnClick: true,	<small>// whether to hide the notifications on mouse click (default: true)</small>
+	loader: false,		<small>// whether to display loader animation in notifactions (default: false)</small>
+	destroy: false,	<small>	// notification or selector of nofications to hide on show (default: false)</small>
+	modal: false,		<small>// whether to dark and block the UI behind the nofication (default: false)</small>
+	opacity: 1,		<small>// opacity of nofications (default: 1)</small>
+	top: -500,		<small>// distance between the notifications and the top edge (default: 0)</small>
+	fadeInMs: 500,		<small>// duration (milliseconds) of notification's fade-in effect (default: 500)</small>
+	fadeOutMs: 500,		<small>// duration (milliseconds) of notification's fade-out effect (default: 500)</small>
+	'position': 'top',	<small>// default notifications position ('top' / 'center')</small>
+	zIndex: 10000		<small>// minimal z-index for notifications</small>
+}<strong>);</strong></pre></div>
 				</div>
 
 			</div>
@@ -134,7 +124,7 @@
 
 </div>
 
-<section id="usage">
+<section id="examples">
 	<div class="page-header">
 	<h1>Usage - Examples<small></small></h1>
 	</div>
@@ -143,7 +133,21 @@
     <div class="span12">
 
 		<h2>Basic Examples</h2>
-
+		<div class="bar-spacer">
+			<div class="ex-bar-ph" id="floatBarPh">
+				<div class="navbar float-navbar" id="floatBar">
+					<div class="btns-block wrapper-940">
+						<span class="lbl">Examples</span>
+						<button class="btn btn-inverse runnable">notifier.notify("Hi!");</button>
+						<button class="btn btn-info runnable">notifier.info("Hi!");</button>
+						<button class="btn btn-warning runnable">notifier.warning("Hi!");</button>
+						<button class="btn btn-danger runnable">notifier.error("Hi!");</button>
+						<button class="btn btn-success runnable">notifier.success("Hi!");</button>
+						<a href="#examples" class="more">more »</a>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!--<div class="row">-->
 			<!--<div class="span12 btns-block">-->
 				<!--<button class="btn btn-inverse runnable">notifier.notify("Hi!");</button>-->
@@ -207,6 +211,8 @@
 
 		<h2>Advanced Examples</h2>
 
+<div class="row">
+	<div class="span12">
 		<div class="code-wrapper">
 			<div class="title">
 				<h3>"Warning" Modal + Buttons + Events</h3>
@@ -237,36 +243,40 @@
 	</div>
 </div><!-- row -->
 
-<div class="row">
-	<div class="span12">
 
-		<div class="code-wrapper">
-			<div class="title">
-				<h3>"Info" Modal + Buttons + Events <small>Alternative Implementation</small></h3>
-				<button class="run btn btn-primary"></button>
-			</div>
-			<div class="code"><pre class="runnable">
-	<strong>var confirmMsg = notifier.notify({ 
-		message: "Unsaved changes will be lost. Continue anyway?&lt;div&gt;&lt;button class='ok'&gt;Continue&lt;/button&gt; &lt;button class='cancel default'&gt;Cancel&lt;/button&gt;&lt;/div&gt;",
-		'class': "info",
-		modal: true,
-		ms: null,
-		destroy: false
+
+	<div class="row">
+		<div class="span12">
+			<div class="code-wrapper">
+				<div class="title">
+					<h3>"Info" Centered Modal + Buttons + Events</h3>
+					<button class="run btn btn-primary"></button>
+				</div>
+				<div class="code"><pre class="runnable">
+<strong>var confirmMsg = notifier.notify({
+	message: "Unsaved changes will be lost. Continue anyway?",
+	'class': "info",
+	buttons: [
+	{'data-role': 'ok', text: 'Continue'},
+	{'data-role': 'cancel', text: 'Cancel', 'class': 'default'}
+	],
+	modal: true,
+	position: 'center',
+	ms: null,
+	destroy: false
+	})
+	.on('click:ok', function(){
+	this.destroy();
+	notifier.notify({
+	message: 'You have clicked "Continue".',
+	'class': 'success'
 	});
-	confirmMsg.$el
-		.find('.ok').click(function(){
-			confirmMsg.destroy();
-			notifier.notify({ 
-				message: 'You have clicked "Continue".',
-				'class': 'success'
-			});
-		  }).end()
-		.find('.cancel').click(confirmMsg.destroy);</strong></pre>
-		</div></div>
+	})
+	.on('click:cancel', 'destroy');</strong></pre></div>
+			</div>
 
-	</div>
-</div><!-- row -->
-
+		</div>
+	</div><!-- row -->
 
 <div class="row">
     <div class="span12">
@@ -382,8 +392,131 @@
 			.replace(/<\/strong>/ig,'');
 		eval(js);
 	});
+
+
+
+	 var floatBarPh = $('#floatBarPh'),
+		 floatBar = floatBarPh.children('div'),
+		 barH =  floatBar.height(),
+		 curPos = 'fixed',
+		 pageH,
+		 fTop;
+	 var updatePos = function(){
+		 pageH = $(window).height();
+		 fTop = floatBarPh.position().top;
+	 };
+	 $(window).resize(updatePos);
+	 updatePos();
+
+	 $(window).scroll(function(){
+		 var cvPos = $(window).scrollTop();
+		 if (cvPos > fTop - pageH + barH) {
+			 if (curPos !== 'absolute') {
+				 curPos = 'absolute';
+				 floatBar.css({position: curPos}).addClass('in-place');
+			 }
+		 } else {
+			 if (curPos !== 'fixed') {
+				 curPos = 'fixed';
+				 floatBar.css({position: curPos}).removeClass('in-place');
+			 }
+		 }
+	 });
+
+	 $('.more').on('click', function(event){
+		 event.preventDefault();
+		 var t =$($(this).attr('href'));
+		 t.length && $('html,body').animate({scrollTop:t.offset().top-20}, 1000);
+	 });
+
+
+	 var onTourEnd = function(){
+		$('#btnTour').fadeIn(2000);
+	 };
+
+	var tour = function(){
+
+
+		 notifier.notify({
+			 message: "Hi, would you like really a quick tour?",
+			 'class': "info",
+			 buttons: [
+				 {'data-role': 'ok', text: 'Yes!', 'class': 'default'},
+				 {'data-role': 'cancel', text: 'Not now'}
+			 ],
+			 hideOnClick: false,
+			 modal: false,
+			 ms: 10000
+		 })
+		 .on('click:ok', function(){
+			 this.destroy();
+
+			 notifier.notify({
+				 message: "You can set different styles and positions. Wanna see more?",
+				 'class': 'warning',
+				 position: 'center',
+				 modal: true,
+				 buttons: [
+					 {'data-role': 'ok', text: 'Sure!', 'class': 'default'},
+					 {'data-role': 'cancel', text: 'No, I think I\'ve got it'}
+				 ]
+			 })
+			 .on('click:ok', function(){
+				 this.destroy();
+
+				 notifier.notify({
+					 message: 'It is very flexible and customizable.',
+					 loader: true,
+					 modal: true,
+					 hideOnClick: true,
+					 ms: 3500
+				 }).on('destroyed', function(){
+
+					 notifier.notify({
+						 message: 'Supports multiple notifications and much more...<br /> <strong>Thanks for taking the tour!</strong>',
+						 buttons: [
+							 {'data-role': 'dismiss', text: 'Dismiss', 'class': 'default'}
+						 ],
+						 'class': 'success',
+						 modal: true,
+						 hideOnClick: false,
+						 ms: false
+					 })
+					 .on('click:dismiss', 'destroy')
+					 .on('destroyed', onTourEnd);
+
+					setTimeout(function(){
+						notifier.notify({
+							modal: true,
+							message: 'Includes useful event mechanism with great API.',
+							'class': 'error',
+							hideOnClick: true,
+							ms: 3500
+						});
+					}, 300);
+
+
+
+				 });
+			 })
+			 .on('click:cancel', function(){
+				 this.destroy();
+				 onTourEnd();
+			 });
+
+		 })
+		 .on('click:cancel timeout', function(){
+			 this.destroy();
+			 onTourEnd();
+		 });
+
+	};
+
+	tour();
+	$('#btnTour').click(tour);
+
+
  });
-	
 
 </script>
 
