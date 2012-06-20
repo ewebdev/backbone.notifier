@@ -102,9 +102,9 @@
     font-size: 13px;
     display: block;
     float: left;
-    margin: 10px 9px 0;
     color: #919191;
     text-shadow: 0 1px 0 #EEE;
+    margin: 10px 9px 0;
 
     -moz-transition: all 400ms ease-in-out;
     -webkit-transition: all 400ms ease-in-out;
@@ -113,6 +113,7 @@
 }
 .btns-block .more {
     color: #5A5A5A;
+    margin: 10px 0 0 4px;
 }
 .btns-block .more:hover {
     color: #1B1B1B;
@@ -127,8 +128,8 @@
 .btn.runnable {
     background-position: 8px center;
     padding-left: 26px;
-    padding: 4px 7px 4px 23px;
-    margin: 5px 7px 6px;
+    padding: 4px 6px 4px 23px;
+    margin: 5px 8px 6px;
     float: left;
 }
 

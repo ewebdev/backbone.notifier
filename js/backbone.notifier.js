@@ -24,18 +24,18 @@
 			},
 			transitions: {
 				top: {
-					in: function(el, inner, options, duration){
+					'in': function(el, inner, options, duration){
 						el.animate({top: options.top, opacity: options.opacity}, duration);
 					},
-					out: function(el, inner, options, duration, callback){
+					'out': function(el, inner, options, duration, callback){
 						el.animate({top: -inner.height(), opacity: 0}, duration, callback || emptyFn);
 					}
 				},
 				center: {
-					in: function(el, inner, options, duration){
+					'in': function(el, inner, options, duration){
 						el.animate({top: ($(window).height()-inner.height())/2, opacity: options.opacity}, duration);
 					},
-					out: function(el, inner, options, duration, callback){
+					'out': function(el, inner, options, duration, callback){
 						el.animate({top: -inner.height(), opacity: 0}, duration, callback || emptyFn);
 					}
 				}
@@ -65,8 +65,8 @@
 					if (_.isString(opts)){
 						opts = {message: opts};
 					}
-					var o = _.extend({}, {class: ''}, opts);
-					o.class += ' ' + type;
+					var o = _.extend({}, {'class': ''}, opts);
+					o['class'] += ' ' + type;
 					return scope.notify(o);
 				};
 
@@ -205,7 +205,7 @@
 				}
 	    		msgInner.click(settings.hideOnClick ? removeFn : preventDefaultFn);
 
-				var animateFn = this.transitions[settings.position].in;
+				var animateFn = this.transitions[settings.position]['in'];
 				scope.current[msgView.cid] = msgView;
 				msgView.zIndex = zIndex;
 				animateFn.call(this, msgEl, msgInner, settings, settings.fadeInMs);
