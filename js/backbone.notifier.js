@@ -7,8 +7,9 @@
 	var emptyFn = function(){},
 		Notifier = Backbone.Notifier = Backbone.Model.extend({
 			defaults: {
+				'baseCls': 'notifier',
 				types: ['warning', 'error', 'info', 'success'], // available notification styles
-				'class': null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
+				'cls': null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
 				'ms': 10000,			// milliseconds before hiding
 				'message': '',		// message content
 				'hideOnClick': true,	// whether to hide the notifications on mouse click
@@ -20,7 +21,24 @@
 				'fadeInMs': 500,		// duration (milliseconds) of notification's fade-in effect
 				'fadeOutMs': 500,		// duration (milliseconds) of notification's fade-out effect
 				'position': 'top',		// default notifications position ('top' / 'center')
-				'zIndex': 10000		// minimal z-index for notifications
+				'zIndex': 10000,		// minimal z-index for notifications
+				'template': function(settings){     		//function(sessings){ ... return html; }
+					var strBuilder =  [
+						'<div class="' + settings.wrapperCls + '">',
+						'<div class="' +  settings.innerCls + '">',
+						'<div class="' + settings.baseCls + '-message">' + settings.message + '</div>',
+						(settings.loader ? '<div class="' + settings.baseCls + '-loader"></div>' : '')
+					];
+					if (settings.buttons) {
+						var btnPh = $('<div />');
+						_.each(settings.buttons, function(btn){
+							btnPh.append($('<button/>', btn));
+						});
+						strBuilder.push('<div class="' + settings.baseCls + '-btns">' + btnPh.html() + '</div>');
+					}
+					strBuilder.push('</div></div>');
+					return strBuilder.join('');
+				}
 			},
 			transitions: {
 				top: {
@@ -33,7 +51,7 @@
 				},
 				center: {
 					'in': function(el, inner, options, duration){
-						el.animate({top: ($(window).height()-inner.height())/2, opacity: options.opacity}, duration);
+						el.animate({ top: '50%', marginTop: -inner.height()/2, opacity: options.opacity}, duration);
 					},
 					'out': function(el, inner, options, duration, callback){
 						el.animate({top: -inner.height(), opacity: 0}, duration, callback || emptyFn);
@@ -65,18 +83,18 @@
 					if (_.isString(opts)){
 						opts = {message: opts};
 					}
-					var o = _.extend({}, {'class': ''}, opts);
-					o['class'] += ' ' + type;
+					var o = _.extend({}, {'cls': ''}, opts);
+					o['cls'] = o['cls'] ? type + ' ' + o['cls'] : type;
 					return scope.notify(o);
 				};
 
 				var createNotifyFn = function(type){
-					scope[type] = function(opts){
+					scope[type] = scope[type] || function(opts){
 						notifyFn(type, opts);
 					}
 				};
 
-				_.each(options.types, function(type){
+				_.each(this.attributes.types, function(type){
 					createNotifyFn(type);
 				});
 			},
@@ -131,30 +149,27 @@
 					scope.destroyAll();
 		    	}
 				var zIndex = scope.calcZIndex.call(scope);
-				var cls = ['notification', (settings['class'] || ''), 'pos-' + settings.position, settings.loader ? 'with-loader' : '' ].join(' ');
-		    	var msgEl = $('<div class="' + cls + '"></div>');
-	    		var msgInner = $('<div class="notification-inner"><div class="message">' + settings.message + '</div></div>').appendTo(msgEl);
-    			msgEl.css({top: settings.top - 40, opacity: 0, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(this.$el);
+
+				settings.wrapperCls = [settings.baseCls,
+							settings.cls ? settings.baseCls + '-' + settings.cls : '',
+							settings.baseCls + '-pos-' + settings.position,
+							settings.buttons ? settings.baseCls + '-block' : '',
+							settings.loader ? settings.baseCls + '-with-loader' : ''
+						].join(' ');
+
+				settings.innerCls = settings.baseCls + '-inner';
+
+				var msgEl = $(settings.template(settings)),
+					msgInner = msgEl.find('.' + settings.innerCls);
+
+				msgEl.css({top: settings.top - 40, opacity: 0, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(this.$el);
 				var msgView = new this.NotificationView({
 		    		el: msgEl
 		    	});
 		    	msgView.settings = settings;
 
-				var innerPh;
-		    	if (settings.loader) {
-		    		(innerPh = innerPh || msgEl.find('>div'))
-		    			.append('<div class="loader"></div>');
-		    	}
-
-				if (settings.buttons) {
-					var btnsPh = $('<div class="btns"></div>').appendTo((innerPh = innerPh || msgEl.find('>div')));
-					_.each(settings.buttons, function(btn, i){
-						btnsPh.append($('<button/>', btn));
-					});
-				}
-
 				if (settings.buttons || msgInner.find('button').length) {
-					msgEl.addClass('block');
+//					msgEl.addClass(settings.baseCls + '-block');
 					msgInner.on('button click', function(e){
 						msgView.trigger('click:' + $(e.target).data('role'));
 					});
@@ -189,14 +204,16 @@
 		    	};
 
 		    	if (settings.modal) {
-		    			var screenEl = msgView.screenEl =  $('<div/>',{'class': 'notification-screen', css: {position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, zIndex: zIndex-1  }}).prependTo($('body'));
+		    			var screenEl = msgView.screenEl =  $('<div/>',{'class': settings.baseCls + '-screen', css: {position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, zIndex: zIndex-1  }}).prependTo($('body'));
 						screenEl.click(function(e){
 							e.preventDefault();
 							e.stopPropagation();
 							return false;
 		    			});
 		    		screenEl.fadeTo(300, .7);
+
 		    	}
+
 				if (settings.ms > 0  || settings.ms === 0){
 					msgView.timeoutId = setTimeout(function(){
 						msgView.trigger('timeout', msgView, msgEl);
