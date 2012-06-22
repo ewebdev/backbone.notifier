@@ -54,7 +54,7 @@
 						el.animate({ top: '50%', marginTop: -inner.height()/2, opacity: options.opacity}, duration);
 					},
 					'out': function(el, inner, options, duration, callback){
-						el.animate({top: -inner.height(), opacity: 0}, duration, callback || emptyFn);
+						el.animate({top: '0%', marginTop: -inner.height(), opacity: 0}, duration, callback || emptyFn);
 					}
 				}
 			},
