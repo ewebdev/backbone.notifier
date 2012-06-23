@@ -1,17 +1,20 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head> 
 <meta charset=utf-8 /> 
-<title>Backbone.js Notifier</title> 
-<meta http-equiv="X-UA-Compatible" content="chrome=1"> 
+<title>Backbone.js Notifier</title>
 
+<!-- Used by example page -->
 <link rel="stylesheet" type="text/css" href="example-css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="example-css/example.css"> 
+<link rel="stylesheet" type="text/css" href="example-css/example.css">
+<link rel="stylesheet" type="text/css" href="example-css/prettify.css">
+<!-- Used /by example page -->
 
-<link rel="stylesheet" type="text/css" href="css/notifier.css"> 
- 
-</head> 
+<!-- Backbone.Notidier CSS  -->
+<link rel="stylesheet" type="text/css" href="css/notifier.css">
+<!-- /Backbone.Notidier CSS  -->
+
+</head>
 <body>
 
  <div class="navbar" id="topBar">
@@ -54,9 +57,9 @@
 		<div class="row">
 		    <div class="span12">
 		    	<ol>
-		    		<li><em>jQuery</em></li>
-		    		<li><em>underscore.js</em></li>
-		    		<li><em>backbone.js</em></li>
+		    		<li><code><a href="http://jquery.com" rel="nofollow">jQuery</a></code></li>
+		    		<li><code><a href="http://underscorejs.org/" rel="nofollow">underscore.js</a></code></li>
+		    		<li><code><a href="http://backbonejs.org" rel="nofollow">backbone.js</a></code></li>
 		    	</ol>
 		    </div>
 		</div>
@@ -77,9 +80,9 @@
 			<div class="span12">
 				<strong>Notifier's resources:</strong>
 		    	<ul>
-		    		<li><div class="file">&lt;link rel="stylesheet" type="text/css" href="<strong>css/notifier.css</strong>"&gt;</div> <span>Add this to the head section. Feel free to modify.</span></li>
-		    		<li><div class="file">&lt;script type="text/javascript" src="<strong>js/Backbone.Notifier.js</strong>"&gt;&lt;/script&gt;</div> <span>Place this tag <strong>after</strong> <em>backbone.js</em></span></li>
-		    		<li><div class="file">imgs\loader.gif</div> <span>You can use your own loader image (referenced in css file)</span></li>
+		    		<li><code class="file">&lt;link rel="stylesheet" type="text/css" href="<strong>css/notifier.css</strong>"&gt;</code> <span>Add this to the head section. Feel free to modify.</span></li>
+		    		<li><code class="file">&lt;script type="text/javascript" src="<strong>js/Backbone.Notifier.js</strong>"&gt;&lt;/script&gt;</code> <span>Place this tag <strong>after</strong> <em>backbone.js</em></span></li>
+		    		<li><code class="file"><strong>imgs/loader.gif</strong></code> <span>You can use your own loader image (referenced in css file)</span></li>
 		    	</ul>
 			</div>
 		</div>
@@ -99,24 +102,24 @@
 						<h3>1. Create notifier with default config <small>The config is <strong>optional</strong>!</small></h3>
 					</div>
 				<div class="code"><pre class="prettyprint">
-<strong>var notifier = new Backbone.Notifier(</strong>{		<small>// defaults</small>
-	el: 'body', 		<small>// container for notification (default: 'body')</small>
-	baseCls: 'notifier',	<small>// css classes prefix, should match css file and can be changed to avoid conflicts.</small>
-	types: ['warning', 'error', 'info', 'success'], <small>// available notification styles</small>
-	cls: null, 		<small>// default notification style (null / 'warning' / 'error' / 'info' / 'success')</small>
-	ms: 5000,		<small>// milliseconds before hiding (default: 10000)</small>
-	hideOnClick: true,	<small>// whether to hide the notifications on mouse click (default: true)</small>
-	loader: false,		<small>// whether to display loader animation in notifactions (default: false)</small>
-	destroy: false,	<small>	// notification or selector of nofications to hide on show (default: false)</small>
-	modal: false,		<small>// whether to dark and block the UI behind the nofication (default: false)</small>
-	opacity: 1,		<small>// opacity of nofications (default: 1)</small>
-	top: -500,		<small>// distance between the notifications and the top edge (default: 0)</small>
-	fadeInMs: 500,		<small>// duration (milliseconds) of notification's fade-in effect (default: 500)</small>
-	fadeOutMs: 500,		<small>// duration (milliseconds) of notification's fade-out effect (default: 500)</small>
-	position: 'top',	<small>// default notifications position ('top' / 'center')</small>
-	zIndex: 10000,		<small>// minimal z-index for notifications</small>
-	template: function(settings){ var html = ...; return html; }	<small>// custom html structure</small>
-}<strong>);</strong></pre></div>
+	var notifier = new Backbone.Notifier({		// defaults
+		el: 'body', 		// container for notification (default: 'body')
+		baseCls: 'notifier',	// css classes prefix, should match css file and can be changed to avoid conflicts.
+		types: ['warning', 'error', 'info', 'success'], // available notification styles
+		cls: null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
+		ms: 5000,		// milliseconds before hiding (default: 10000)
+		hideOnClick: true,	// whether to hide the notifications on mouse click (default: true)
+		loader: false,		// whether to display loader animation in notifactions (default: false)
+		destroy: false,		// notification or selector of nofications to hide on show (default: false)
+		modal: false,		// whether to dark and block the UI behind the nofication (default: false)
+		opacity: 1,		// opacity of nofications (default: 1)
+		top: -500,		// distance between the notifications and the top edge (default: 0)
+		fadeInMs: 500,		// duration (milliseconds) of notification's fade-in effect (default: 500)
+		fadeOutMs: 500,		// duration (milliseconds) of notification's fade-out effect (default: 500)
+		position: 'top',	// default notifications position ('top' / 'center')
+		zIndex: 10000,		// minimal z-index for notifications
+		template: function(settings){ var html = ...; return html; }	// custom html structure
+	});</pre></div>
 				</div>
 
 			</div>
@@ -150,15 +153,6 @@
 				</div>
 			</div>
 		</div>
-		<!--<div class="row">-->
-			<!--<div class="span12 btns-block">-->
-				<!--<button class="btn btn-inverse runnable">notifier.notify("Hi!");</button>-->
-				<!--<button class="btn btn-info runnable">notifier.info("Hi!");</button>-->
-				<!--<button class="btn btn-warning runnable">notifier.warning("Hi!");</button>-->
-				<!--<button class="btn btn-danger runnable">notifier.error("Hi!");</button>-->
-				<!--<button class="btn btn-success runnable">notifier.success("Hi!");</button>-->
-			<!--</div>-->
-		<!--</div>-->
 
 		<div class="row">
 			<div class="span12">
@@ -170,7 +164,7 @@
 					<div class="code">
 	<div class="row">
 	<div class="span5">
-			<pre class="runnable"><strong>notifier.notify("Hello World!");</strong></pre>
+			<pre class="runnable">	notifier.notify("Hello World!");</pre>
 	</div>
 	<div class="span5">
 	<pre class="side">	// Is equivalent to:
@@ -194,7 +188,7 @@
 					<div class="code">
 						<div class="row">
 							<div class="span5">
-								<pre class="runnable"><strong>notifier.warning("Hello World!");</strong></pre>
+								<pre class="runnable">	notifier.warning("Hello World!");</pre>
 							</div>
 							<div class="span5">
 	<pre class="side">	// Is equivalent to:
@@ -211,7 +205,7 @@
 
 
 
-		<h2>Advanced Examples</h2>
+<h2>Advanced Examples</h2>
 
 <div class="row">
 	<div class="span12">
@@ -220,8 +214,8 @@
 				<h3>"Warning" Modal + Buttons + Events</h3>
 				<button class="run btn btn-primary"></button>
 			</div>
-			<div class="code"><pre class="runnable">
-	<strong>var confirmMsg = notifier.notify({ 
+			<div class="code">
+<pre class="runnable"><strong>	var confirmMsg = notifier.notify({
 		message: "Unsaved changes will be lost. Continue anyway?",
 		cls: "warning",
 		buttons: [
@@ -234,7 +228,7 @@
 	})
 	.on('click:ok', function(){
 		this.destroy();
-		notifier.notify({ 
+		notifier.notify({
 			message: 'You have clicked "Continue".',
 			cls: 'success'
 		});
@@ -255,7 +249,7 @@
 					<button class="run btn btn-primary"></button>
 				</div>
 				<div class="code"><pre class="runnable">
-<strong>var confirmMsg = notifier.notify({
+<strong>	var confirmMsg = notifier.notify({
 		message: "Unsaved changes will be lost. Continue anyway?",
 		cls: "info",
 		buttons: [
@@ -360,6 +354,157 @@
 </div>
 
 
+
+
+
+	<h2>Ultimate Destruction</h2>
+
+
+
+
+		<div class="row">
+			<div class="span12">
+				<div class="code-wrapper">
+					<div class="title">
+						<h3>Destruction by Reference</h3>
+						<button class="run btn btn-primary"></button>
+					</div>
+					<div class="code"><pre class="runnable">
+<strong>	var loader = notifier.notify({
+		cls: 'info',
+		modal: true,
+		loader: true,
+		myAttr: 'ajaxLoader',
+		ms: false,
+		position: 'center',
+		message: "Loading..."
+	});
+
+	notifier.notify({
+		cls: 'warning',
+		ms: false,
+		message: "This is another message, unrelated to the ajax request."
+	});
+
+	$.ajax({
+		url: 'http://www.google.com/dummy-url/?callback=?',
+		timeout: 2000,
+		dataType: 'jsonp',
+		complete: function(){
+		loader.destroy();	// reference
+	}
+	});</strong></pre></div>
+				</div>
+
+			</div>
+		</div><!-- row -->
+
+
+
+	<div class="row">
+		<div class="span12">
+			<div class="code-wrapper">
+				<div class="title">
+					<h3>Notifier.destroyAll()</h3>
+					<button class="run btn btn-primary"></button>
+				</div>
+				<div class="code"><pre class="runnable">
+<strong>	notifier.notify({
+		cls: 'info',
+		modal: true,
+		loader: true,
+		message: "Loading..."
+	});
+
+	$.ajax({
+		url: 'http://www.google.com/dummy-url/?callback=?',
+		timeout: 2000,
+		dataType: 'jsonp',
+		complete: function(){
+			notifier.destroyAll();	// hide all instances
+		}
+	});</strong></pre></div>
+			</div>
+
+		</div>
+	</div><!-- row -->
+
+
+
+		<div class="row">
+			<div class="span12">
+				<div class="code-wrapper">
+					<div class="title">
+						<h3>Notifier.destroyAll(attributeSelectorKey, attributeSelectorValue)</h3>
+						<button class="run btn btn-primary"></button>
+					</div>
+					<div class="code"><pre class="runnable">
+<strong>	notifier.notify({
+		cls: 'info',
+		modal: true,
+		loader: true,
+		myAttr: 'ajaxLoader',
+		ms: false,
+		position: 'center',
+		message: "Loading..."
+	});
+
+	notifier.notify({
+		cls: 'warning',
+		ms: 8000,
+		message: "This is another message, unrelated to the ajax request."
+	});
+
+	$.ajax({
+		url: 'http://www.google.com/dummy-url/?callback=?',
+		timeout: 2000,
+		dataType: 'jsonp',
+		complete: function(){
+			notifier.destroyAll('myAttr', 'ajaxLoader');	// attribute selector or no arguments to hide all instances
+		}
+	});</strong></pre></div>
+				</div>
+
+			</div>
+		</div><!-- row -->
+
+
+
+		<div class="row">
+			<div class="span12">
+				<div class="code-wrapper">
+					<div class="title">
+						<h3>Destroy Previous Notifications</h3>
+						<button class="run btn btn-primary"></button>
+					</div>
+					<div class="code"><pre class="runnable">
+<strong>	notifier.notify({
+		cls: 'info',
+		modal: true,
+		loader: true,
+		message: "Loading..."
+	});
+
+	$.ajax({
+		url: 'http://www.google.com/dummy-url/?callback=?',
+		timeout: 2000,
+		dataType: 'jsonp',
+		complete: function(){
+			notifier.notify({
+				cls: 'success',
+				ms: 10000,
+				destroy: true,   // destroy any existing notifications.
+						 // can also pass attribute selector (e.g. ['loader', true] )
+				message: "Request completed.&lt;br /&gt; &lt;strong&gt;Notice how this notification caused " +
+					 "previous notifications to disappear.&lt;/strong&gt;"
+			});
+		}
+	});</strong></pre></div>
+				</div>
+
+			</div>
+		</div><!-- row -->
+
 	</div>
 </div><!-- row -->
 
@@ -369,37 +514,166 @@
 
 
 
+
+
+
+
+<section id="modules">
+	<div class="page-header">
+		<h1>Modules</h1>
+	</div>
+
+	<div class="row">
+		<div class="span12">
+			<h4>Backbone.Notifier also features light and simple extendability abilities using unique modules architecture.</h4>
+			<p><strong>Load a module</strong>: add a script tag with 'src' to its path, <strong>after</strong> <code>&lt;script type="text/javascript" src="<strong>js/Backbone.Notifier.js</strong>"&gt;&lt;/script&gt;</code>.
+				<br>The module should call <code>Notifier.regModule()</code> (as described below).
+			</p>
+
+			<p><strong>Enable a module</strong> (after it has been loaded): call <code>Backbone.Notifier.enableModule(<em>moduleName</em>)</code>.</p>
+			<p><strong>Disable a module</strong> (after it has been loaded): call <code>Backbone.Notifier.disableModule(<em>moduleName</em>)</code>.</p>
+			<p class="alert alert-warning">Please note, modules are shared by all instances of Backbone.Notifier!</p>
+
+			<div id="moduleToggleBlock" class="well">
+				<p><strong>Demo: <a href="js/modules/3d.js">3D module</a></strong> (requires modern browser)</p>
+				<div id="notSupported3d" class="alert alert-error" style="display: none;">Your browser doesn't support this feature (CSS3 required)</div>
+				<button id="btn3d" class="btn btn-primary" data-alt-text="Disable" data-active-text="Disable">Enable</button>
+				<label id="lbl3dStatus">Current state: <span data-alt-text="Enabled">Disabled</span></label>
+				<div class="clearfix"></div>
+			</div>
+
+			<div id="moduleDesign" class="well well-block">
+				<h4>Module Design</h4>
+				<pre class="prettyprint lang-js">(function(Notifier, $){
+
+	Notifier.regModule({
+		name: 'myModule',	//<strong>required</strong>
+		enabled: true,		//whether you like the module to be auto-enabled upon registration
+		extend: {		//attributes to add to Backbone.Notifier.prototype
+			// defaults: {
+			//	'myAttrName': 'defaultValue'
+			// }
+			// ...
+		},
+		events: {
+			'beforeAppendMsgEl': function(notifier, settings, msgEl, msgInner){
+				//some code
+			},
+			'beforeAnimateInMsgEl': function(notifier, settings, msgEl, msgInner, msgView){
+				//some code
+			},
+			'afterAnimateInMsgEl': function(notifier, settings, msgEl, msgInner, msgView){
+				//some code
+			},
+			'beforeHideMsgEl': function(notifier, settings, msgEl, msgInner, msgView){
+				//some code
+			},
+			'afterDestroyMsgEl': function(notifier, settings, msgEl, msgInner, msgView){
+				//some code
+			}
+		},
+		register: function(){
+			console.log('registered module ' + this.name);
+		},
+		enable: function(){
+			console.log('enabled module ' + this.name);
+		},
+		disable: function(){
+			console.log('disabled module ' + this.name);
+		}
+	});
+
+})(Backbone.Notifier, jQuery);</pre>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<div id="footer"></div>
+
+
 </div>
+
+
+
+
+
+ <!-- Dependencies -->
 <script type="text/javascript" src="dependencies/jquery-1.7.2.min.js"></script> 
 <script type="text/javascript" src="dependencies/underscore-1.3.3.min.js"></script> 
 <script type="text/javascript" src="dependencies/backbone-0.9.2.js"></script>
+ <!-- /Dependencies -->
 
+ <!-- Backbone.Notifier -->
+<script type="text/javascript" src="js/Backbone.Notifier.js?_1"></script>
+<script type="text/javascript" src="js/modules/3d.js?_!"></script><!-- Optional (3d module) -->
+ <!-- /Backbone.Notifier -->
 
-<script type="text/javascript" src="js/Backbone.Notifier.js?_0"></script>
+ <!-- Used by example page -->
+ <script type="text/javascript" src="example-js/prettify.js"></script>
+ <!-- /Used by example page -->
 
 
 <script type="text/javascript">
- 
 
  $(function(){
- 	var notifier = window.notifier = new Backbone.Notifier({
- 		ms: 5000
- 	});
+
+	 var notifier = window.notifier = new Backbone.Notifier({
+		 ms: 5000
+	 });
+
+	 var moduleToggleBlock = $('#moduleToggleBlock');
+
+	 if ($.browser.msie && $.browser.version < 9) {
+		 $('#notSupported3d').show();
+	 }
+
+	 moduleToggleBlock.find('button').click(function(){
+
+		 var $btn = $(this),
+		 	active = $btn.data('alt-text') === $(this).data('active-text');
+
+		 moduleToggleBlock.find('[data-alt-text]').each(function(){
+			var $el = $(this),
+				curText = $el.text();
+			$el.text($el.data('alt-text'));
+			$el.data('alt-text', curText);
+		});
+
+		 Backbone.Notifier[active ? 'enableModule' : 'disableModule' ]('3d');
+		 notifier[active ? 'success' : 'error']({
+			 message: "3D module is now " + (active ? 'enabled' : 'disabled'),
+			 position: 'center',
+			 modal: true,
+			 ms: -1,
+			 hideOnClick: true,
+			 destroy: true,
+			 buttons: [
+				 {'data-role': 'ok', text: 'Dismiss'}
+			 ]
+		 });
+	 });
+
 
 	 $('.btns-block').on('click', '.runnable', function(){
 		 eval($(this).text());
 	 });
 
+	 $('pre.runnable').each(function(){
+		$(this).data('code',
+				$(this).text()
+				.replace(/<strong>/ig,'')
+				.replace(/<\/strong>/ig,'')
+				.replace(/&lt;/ig,'<')
+				.replace(/&gt;/ig,'>')
+		).addClass('prettyprint lang-js');
+	 });
+
 	$('.code-wrapper button.run').click(function(){
-		var js = $(this).closest('.code-wrapper').find('pre.runnable').html()
-			.replace(/&lt;/ig,'<')
-			.replace(/&gt;/ig,'>')
-			.replace(/<strong>/ig,'')
-			.replace(/<\/strong>/ig,'');
+		var js = $(this).closest('.code-wrapper').find('pre.runnable').data('code');
 		eval(js);
 	});
-
-
 
 	 var floatBarPh = $('#floatBarPh'),
 		 floatBar = floatBarPh.children('div'),
@@ -521,7 +795,7 @@
 
 	tour();
 	$('#btnTour').click(tour);
-
+	 window.prettyPrint();
 
  });
 

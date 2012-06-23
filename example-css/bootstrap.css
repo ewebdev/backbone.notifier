@@ -699,7 +699,8 @@ pre {
 }
 
 pre.prettyprint {
-  margin-bottom: 18px;
+  margin-bottom: 0;
+    border: 0 none;
 }
 
 pre code {

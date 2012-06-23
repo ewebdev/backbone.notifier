@@ -7,12 +7,11 @@
 }
 
 .instructions li {
-	/*line-height: 30px;*/
 	margin: 10px 0 0 20px;
 }
 
 .instructions li .file {
-	width: 450px;
+    margin-right: 10px;
 	display: inline-block;
 	display: -moz-inline-stack;
     zoom: 1;
@@ -20,6 +19,19 @@
     font-style: italic;
 }
 
+#dependencies code {
+    color: #000;
+    font-weight: bold;
+    font-style: italic;
+}
+
+#dependencies a {
+    color: #000;
+}
+
+#dependencies a:hover {
+    color: #05C;
+}
 .code-wrapper {
 	margin: 10px 20px 20px 40px;
 }
@@ -43,6 +55,11 @@
 	float: left;
 	width: 80%;
 	text-shadow: 0 1px 0 #F1F1F1;
+}
+
+.code-wrapper > .title  small {
+    color: #686D79;
+    margin-left: 4px;
 }
 
 .code-wrapper > .title > button {
@@ -218,6 +235,48 @@
     display: none;
 }
 
+#lbl3dStatus, #btn3d {
+    float: left;
+}
+
+#lbl3dStatus {
+    padding-top: 5px;
+    margin-left: 10px;
+}
+
+#lbl3dStatus > span{
+    font-weight: bold;
+}
+
+.module-toggle-block {
+}
+
+
+#modules h4 {
+    margin: 0 0 20px;
+}
+
+#modules code strong {
+    color: #4e0024;
+    font-weight: normal;
+}
+
+#modules code em {
+    color: #C29696;
+    font-weight: normal;
+}
+
+.well-block h4 {
+    border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 0 white;
+    padding: 0 21px 10px 21px;
+    margin: -5px -19px 20px!important;
+}
+
+#footer {
+    border-bottom: solid 1px #eee;
+    margin: 20px 0 20px;
+}
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     #intro h1 {
