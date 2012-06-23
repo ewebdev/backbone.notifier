@@ -1,3 +1,8 @@
+/*!
+ * Backbone.Notifier 3D Module v0.0.1
+ * Copyright 2012, Eyal Weiss
+ * Backbone.Notifier 3D Module be freely distributed under the MIT license.
+ */
 (function(Notifier, $){
 
 	Notifier.regModule({

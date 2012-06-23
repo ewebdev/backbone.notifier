@@ -28,6 +28,8 @@
 	background: #191919;
 	color: white;
 	display: inline-block;
+    zoom: 1;
+    *display: inline;
 	box-shadow: 0 0px 8px rgba(255,255,255,0.1), 0 0px 1px rgba(255,255,255,0.3), inset 0 0px 2px #000;
 	-webkit-box-shadow: 0 0px 8px rgba(255,255,255,0.1), 0 0px 1px rgba(255,255,255,0.3), inset 0 0px 2px #000;
 	-moz-box-shadow: 0 0px 8px rgba(255,255,255,0.1), 0 0px 1px rgba(255,255,255,0.3), inset 0 0px 2px #000;
@@ -199,6 +201,8 @@
 }*/
 .notifier-loader {
 	display: inline-block;
+    zoom: 1;
+    *display: inline;
 	width: 16px;
 	height: 16px;
 	margin-left: 10px;
