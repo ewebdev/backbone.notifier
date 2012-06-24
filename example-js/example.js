@@ -4,11 +4,8 @@ $(function(){
 		ms: 5000
 	});
 
-
-	if ($.browser.msie && $.browser.version < 9) {
-		$('#notSupported3d').show();
-	}
-
+	var supports3d = !($.browser.msie && $.browser.version < 9);
+	supports3d && $('#notSupported3d').show();
 
 	var updateUIState = function(moduleBlock, enabled){
 		var moduleName = moduleBlock.data('module');
@@ -26,7 +23,8 @@ $(function(){
 
 		Backbone.Notifier[active ? 'enableModule' : 'disableModule' ](moduleName);
 		notifier[active ? 'success' : 'error']({
-			message: moduleName + " module is now " +
+			title: moduleName + ' module',
+			message: moduleName + ' module is now ' +
 				(active ?
 					('<strong>enabled</strong>.' + (moduleBlock.data('msg-enable') || ''))
 					: '<strong>disabled</strong>.'),
@@ -115,12 +113,16 @@ $(function(){
 		$('#btnTour').fadeIn(2000);
 	};
 
-	var tour = function(){
+	var quitTour = function(){
+		this.destroy();
+		onTourEnd();
+	};
 
+	var tour = function(){
 
 		notifier.notify({
 			message: "Hi, would you like really a quick tour?",
-			cls: "info",
+			type: "info",
 			buttons: [
 				{'data-role': 'ok', text: 'Yes!', 'class': 'default'},
 				{'data-role': 'cancel', text: 'Not now'}
@@ -133,8 +135,8 @@ $(function(){
 				this.destroy();
 
 				notifier.notify({
-					message: "You can set different styles and positions. Wanna see more?",
-					cls: 'warning',
+					message: "Backbone.Notifier support different styles and positions,<br />which are fully customizable. <strong>Wanna see more?</strong>",
+					type: 'warning',
 					position: 'center',
 					modal: true,
 					ms: false,
@@ -146,51 +148,84 @@ $(function(){
 					.on('click:ok', function(){
 						this.destroy();
 
-						notifier.notify({
-							message: 'It is very flexible and customizable.',
-							loader: true,
-							modal: true,
-							hideOnClick: true,
-							ms: 3500
-						}).on('destroyed', function(){
+						      notifier.notify({
+								  type: 'info',
+								  title: "Information",
+								  message: "This is a 'dialog' <em>info</em> notification. Dialog-styled notifications are also available in the same all types, and creating new types doens't require extra css for dialogs.",
+								  buttons: [
+									  {'data-role': 'ok', text: 'Continue the tour', 'class': 'default'},
+									  {'data-role': 'cancel', text: 'Let me go'}
+								  ],
+								  modal: true,
+								  ms: null
+							  })
+							  .on('click:ok', function(){
 
-								notifier.notify({
-									message: 'Supports multiple notifications and much more...<br /> <strong>Thanks for taking the tour!</strong>',
-									buttons: [
-										{'data-role': 'dismiss', text: 'Dismiss', 'class': 'default'}
-									],
-									cls: 'success',
-									modal: true,
-									hideOnClick: false,
-									ms: false
-								})
-									.on('click:dismiss', 'destroy')
-									.on('destroyed', onTourEnd);
+									  notifier.notify({
+										  message: 'We got loaders...',
+										  loader: true,
+										  modal: true,
+										  hideOnClick: true,
+										  ms: 3500
+									  }).on('destroy', function(){
+											  var msg3d = supports3d ? '<strong>You can now see our <em>3D module</em> in action.</strong>' : '';
+											  Backbone.Notifier.enableModule('3d');
+											  notifier.notify({
+												  title: 'Almost Done...',
+												  destroy: true,
+												  '3d': true,
+												  message: 'Backbone.Notifier can be can be easily extended thanks to smart modules architecture.<br />' + msg3d,
+												  buttons: [
+													  {text: 'Dismiss', 'class': 'default'}
+												  ],
+												  type: 'success',
+												  position: 'center',
+												  modal: true,
+												  hideOnClick: true,
+												  ms: false
+											  })
+												  .on('destroy', function(){
+													  Backbone.Notifier.disableModule('3d');
 
-								setTimeout(function(){
-									notifier.notify({
-										modal: true,
-										message: 'Includes useful event mechanism with great API.',
-										cls: 'error',
-										hideOnClick: true,
-										ms: 3500
-									});
-								}, 300);
+														  notifier.notify({
+															  message: "And there's so much more... <strong>Thanks for taking the tour.</strong><br /><em>Don't forget to tweet if you appreciate the work...!</em>",
+															  buttons: [
+																  {'data-role': 'dismiss', text: 'Dismiss', 'class': 'default'}
+															  ],
+															  type: 'success',
+															  destroy: true,
+															  modal: true,
+															  hideOnClick: false,
+															  ms: 15000
+														  })
+														  .on('click:dismiss', 'destroy')
+														  .on('destroy', onTourEnd);
+
+														  setTimeout(function(){
+															  notifier.notify({
+																  modal: true,
+																  screenOpacity:.7,
+																  message: 'Features useful event mechanism with great API',
+																  type: 'error',
+																  hideOnClick: true,
+																  position: 'center',
+																  ms: 3500
+															  });
+														  }, 300);
+
+												  });
 
 
+										  });
 
-							});
+							  })
+							  .on('click:cancel', quitTour);
+
 					})
-					.on('click:cancel', function(){
-						this.destroy();
-						onTourEnd();
-					});
+					.on('click:cancel', quitTour);
 
 			})
-			.on('click:cancel timeout', function(){
-				this.destroy();
-				onTourEnd();
-			});
+			.on('click:cancel timeout', quitTour);
 
 	};
 

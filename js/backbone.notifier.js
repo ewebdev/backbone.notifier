@@ -8,11 +8,14 @@
 		Notifier = Backbone.Notifier = Backbone.Model.extend({
 			defaults: {
 				'baseCls': 'notifier',
-				types: ['warning', 'error', 'info', 'success'], // available notification styles
-				'cls': null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
-				'ms': 10000,			// milliseconds before hiding
+				'types': ['warning', 'error', 'info', 'success'], // available notification styles
+				'dialog': false,		// whether display the notification with a title bar and a dialog style (sets 'hideOnClick' to false, unless defined)
 				'message': '',		// message content
+				'title': undefined,		// notification title, if defined causes the notification to be 'dialog' (unless dialog is 'false')
 				'hideOnClick': true,	// whether to hide the notifications on mouse click
+				'type': null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
+				'class': null, 		// additional css class
+				'ms': 10000,			// milliseconds before hiding
 				'loader': false,		// whether to display loader animation in notifactions
 				'destroy': false,		// notification or selector of nofications to hide on show
 				'modal': false,		// whether to dark and block the UI behind the nofication
@@ -21,14 +24,27 @@
 				'fadeInMs': 500,		// duration (milliseconds) of notification's fade-in effect
 				'fadeOutMs': 500,		// duration (milliseconds) of notification's fade-out effect
 				'position': 'top',		// default notifications position ('top' / 'center')
+				'screenOpacity': 0.5,	// opacity of dark screen background that goes behind for modals (between 0 to 1)
 				'zIndex': 10000,		// minimal z-index for notifications
+				'width': undefined,		// notification's width
 				'template': function(settings){     		//function(sessings){ ... return html; }
 					var strBuilder =  [
 						'<div class="' + settings.wrapperCls + '">',
 						'<div class="' +  settings.innerCls + '">',
-						'<div class="' + settings.baseCls + '-message">' + settings.message + '</div>',
-						(settings.loader ? '<div class="' + settings.baseCls + '-loader"></div>' : '')
+						(settings.title ? '<div class="' + settings.baseCls + '-title">' + settings.title + '</div>' : '')
 					];
+					if (settings.dialog) {
+						strBuilder.push(
+							'<div class="' + settings.baseCls + '-message">' + settings.message +
+								(settings.loader ? '<div class="' + settings.baseCls + '-loader"></div>' : '') +
+							'</div>'
+						);
+					} else {
+						strBuilder.push(
+							'<div class="' + settings.baseCls + '-message">' + settings.message + '</div>',
+							(settings.loader ? '<div class="' + settings.baseCls + '-loader"></div>' : '')
+						);
+					}
 					if (settings.buttons) {
 						var btnPh = $('<div />');
 						_.each(settings.buttons, function(btn){
@@ -84,8 +100,8 @@
 					if (_.isString(opts)){
 						opts = {message: opts};
 					}
-					var o = _.extend({}, {'cls': ''}, opts);
-					o['cls'] = o['cls'] ? type + ' ' + o['cls'] : type;
+					var o = _.extend({}, {'type': ''}, opts);
+					o['type'] = o['type'] ? type + ' ' + o['type'] : type;
 					return scope.notify(o);
 				};
 
@@ -133,24 +149,40 @@
 				return i;
 		    },
 			getWrapperCls: function(settings){
-		   		return [settings.baseCls,
-					   settings.cls ? settings.baseCls + '-' + settings.cls : '',
-					   settings.baseCls + '-pos-' + settings.position,
-					   settings.buttons ? settings.baseCls + '-block' : '',
-					   settings.loader ? settings.baseCls + '-with-loader' : ''
-				   ].join(' ');
+				var c = (settings.baseCls + ' ') +
+					   (settings.type ? settings.type + ' ' : '') +
+					   (settings.dialog ? 'dialog ' : '') +
+					   ('pos-' + settings.position + ' ') +
+					   (settings.buttons ? 'block ' : '') +
+					   (settings.loader ? 'with-loader ' : '');
+				return $.trim(c).split(' ').join(' ' + settings.baseCls + '-') + ' ' + (settings['class'] || '');
 			},
-		    notify: function(options){
-				if (_.isString(options)){
+			getSettings: function(options){
+				if (!options) {
+					options = {};
+				} else if (_.isString(options)){
 					options = {message: options};
 				}
-		    	var settings = $.extend({}, this.attributes, options),
-		    		scope = this;
-	    		if (settings.modal && (options || {}).hideOnClick === undefined) {
-	    			settings.hideOnClick = false;
-	    		}
+				var settings = $.extend({}, this.attributes, options);
+				if (settings.title && options.dialog === undefined) {
+					settings.dialog = true;
+				}
+				if ((settings.modal || settings.dialog) && options.hideOnClick === undefined) {
+					settings.hideOnClick = false;
+				}
+				if (settings.dialog && options.ms === undefined) {
+					settings.ms = null;
+				}
+				if (settings.dialog && options.position === undefined) {
+					settings.position = 'center';
+				}
+				return settings;
+			},
+		    notify: function(options){
+				var scope = this,
+					settings = this.getSettings(options);
 
-		    	if (_.isObject(settings.destroy)){
+				if (_.isObject(settings.destroy)){
 			    	if (settings.destroy instanceof scope.NotificationView){
 						settings.destroy.destroy();
 			    	} else {
@@ -162,11 +194,11 @@
 				var zIndex = scope.calcZIndex.call(scope);
 
 				settings.wrapperCls = scope.getWrapperCls(settings);
-
 				settings.innerCls = settings.baseCls + '-inner';
 
 				var msgEl = $(settings.template(settings)),
 					msgInner = msgEl.find('.' + settings.innerCls);
+					settings.width && msgInner.css({width: settings.width});
 
 				Notifier._modulesBinder.trigger('beforeAppendMsgEl', scope, settings, msgEl, msgInner);
 				msgEl.css({top: settings.top - 40, opacity: 0, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(scope.$el);
@@ -176,6 +208,11 @@
 		    	msgView.settings = settings;
 
 				if (settings.buttons || msgInner.find('button').length) {
+					msgInner.on('click', 'button[data-handler]', function(){
+						var handler = $(this).data('handler'),
+							fn = _.isFunction(handler) ? handler : msgView[handler];
+						fn.apply(msgView, arguments);
+					});
 					msgInner.on('button click', function(e){
 						msgView.trigger('click:' + $(e.target).data('role'));
 					});
@@ -188,15 +225,15 @@
 	    			} 
 	    			msgView.trigger('beforeHide', msgView, msgEl);
 					settings.modal && msgView.screenEl.fadeOut(300, function(){
-						msgView.trigger('screenHidden', msgView, msgEl);
+						msgView.trigger('screenHide', msgView, msgEl);
 						msgView.screenEl.remove();
 	    			});
 
 					Notifier._modulesBinder.trigger('beforeHideMsgEl', scope, settings, msgEl, msgInner, msgView);
 					var outAnimFn = scope.transitions[settings.position].out;
-					outAnimFn.call(scope, msgEl, msgInner, settings, options.fadeOutMs, function(){
+					outAnimFn.call(scope, msgEl, msgInner, settings, settings.fadeOutMs, function(){
 						msgView.remove();
-						msgView.trigger('destroyed', msgView, msgEl);
+						msgView.trigger('destroy', msgView, msgEl);
 						Notifier._modulesBinder.trigger('afterDestroyMsgEl', scope, settings, msgEl, msgInner, msgView);
 						_.isFunction(e) && e.call(msgView, msgView, msgEl);
 					});
@@ -218,7 +255,7 @@
 							e.stopPropagation();
 							return false;
 		    			});
-		    		screenEl.fadeTo(300, .7);
+		    		screenEl.fadeTo(300, settings.screenOpacity);
 
 		    	}
 
@@ -228,6 +265,7 @@
 						removeFn();
 					}, settings.ms);
 				}
+
 	    		msgInner.click(settings.hideOnClick ? removeFn : preventDefaultFn);
 
 				var animateFn = scope.transitions[settings.position]['in'];

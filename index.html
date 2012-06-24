@@ -113,18 +113,28 @@
 		el: 'body', 		// container for notification (default: 'body')
 		baseCls: 'notifier',	// css classes prefix, should match css file and can be changed to avoid conflicts.
 		types: ['warning', 'error', 'info', 'success'], // available notification styles
-		cls: null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
-		ms: 5000,		// milliseconds before hiding (default: 10000)
+		type: null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
+		dialog: false,		// whether display the notification with a title bar and a dialog style.
+						// - sets 'hideOnClick' to false, unless defined otherwise
+						// - sets 'position' to 'center', unless defined otherwise
+						// - sets 'ms' to null, unless defined otherwise
+		modal: false,		// whether to dark and block the UI behind the nofication (default: false)
+		message: '',		// default message content
+		title: undefined,	// default notification title, if defined, causes the notification
+						// to be 'dialog' (unless dialog is 'false')
+		ms: 5000,		// milliseconds before hiding, (null || false => no timeout) (default: 10000)
+		'class': null, 		// additional css class
 		hideOnClick: true,	// whether to hide the notifications on mouse click (default: true)
 		loader: false,		// whether to display loader animation in notifactions (default: false)
 		destroy: false,		// notification or selector of nofications to hide on show (default: false)
-		modal: false,		// whether to dark and block the UI behind the nofication (default: false)
 		opacity: 1,		// opacity of nofications (default: 1)
 		top: -500,		// distance between the notifications and the top edge (default: 0)
 		fadeInMs: 500,		// duration (milliseconds) of notification's fade-in effect (default: 500)
 		fadeOutMs: 500,		// duration (milliseconds) of notification's fade-out effect (default: 500)
 		position: 'top',	// default notifications position ('top' / 'center')
 		zIndex: 10000,		// minimal z-index for notifications
+		screenOpacity: 0.5,	// opacity of dark screen background that goes behind for modals (between 0 to 1)
+		width: undefined,	// notification's width ('auto' if not set)
 		template: function(settings){ var html = ...; return html; }	// custom html structure
 	});</pre></div>
 				</div>
@@ -185,6 +195,8 @@
 			</div>
 		</div><!-- row -->
 
+
+
 		<div class="row">
 			<div class="span12">
 				<div class="code-wrapper">
@@ -201,7 +213,7 @@
 	<pre class="side prettyprint lang-js">	// Is equivalent to:
 	//  notifier.notify({
 	//    message: "Hello World!"
-	//    cls: 'warning'
+	//    type: 'warning'
 	//  });</pre>
 							</div>
 						</div>
@@ -214,6 +226,63 @@
 
 <h2>Advanced Examples</h2>
 
+
+		<div class="row">
+			<div class="span12">
+				<div class="code-wrapper">
+					<div class="title">
+						<h3>Dialogs</h3>
+						<button class="run btn btn-primary"></button>
+					</div>
+					<div class="code">
+<pre class="runnable"><strong>	notifier.notify({
+		type: 'info',
+		title: "Information",
+		message: "This is a 'dialog' notification. Do you want to see another one?",
+		buttons: [
+			{'data-role': 'myOk', text: 'Yes', 'class': 'default'},	// 'data-role' - an identifier for binding
+							// event using notification.on('click:myOk', function(){...});
+			{'data-handler': 'destroy', text: 'No'} // 'data-handler' - calls a function of notification object,
+			// i.g.: 'data-handler': 'destroy' => calls notification.destroy() upon clicking the button
+		],
+		modal: true,
+		ms: null,
+		destroy: false
+	})
+	.on('click:myOk', function(){
+		notifier.notify({
+			destroy: true,	// will hide all existing notification
+			type: 'warning',
+			title: "Warning!",
+			message: "Lets say you've been warned!",
+			buttons: [{'data-handler': 'destroy', text: 'Errrr'}]
+		}).on('destroy', function(){
+			notifier.notify({
+				type: 'error',
+				title: "Error Dialog",
+				message: "That's our error dialog notification",
+				buttons: [{'data-handler': 'destroy', text: 'Ok'}]
+			}).on('destroy', function(){
+				notifier.notify({
+					type: 'success',
+					title: "Success!",
+					message: "bla bla bla bla bla bla bla bla...",
+					buttons: [{'data-handler': 'destroy', text: 'Cool'}]
+				});
+			});
+		});
+	});</strong></pre></div>
+				</div>
+
+			</div>
+		</div><!-- row -->
+
+
+
+
+
+
+
 <div class="row">
 	<div class="span12">
 		<div class="code-wrapper">
@@ -224,7 +293,7 @@
 			<div class="code">
 <pre class="runnable"><strong>	var confirmMsg = notifier.notify({
 		message: "Unsaved changes will be lost. Continue anyway?",
-		cls: "warning",
+		type: "warning",
 		buttons: [
 			{'data-role': 'ok', text: 'Continue'},
 			{'data-role': 'cancel', text: 'Cancel', 'class': 'default'}
@@ -237,7 +306,7 @@
 		this.destroy();
 		notifier.notify({
 			message: 'You have clicked "Continue".',
-			cls: 'success'
+			type: 'success'
 		});
 	})
 	.on('click:cancel', 'destroy');</strong></pre></div>
@@ -258,7 +327,7 @@
 				<div class="code"><pre class="runnable">
 <strong>	var confirmMsg = notifier.notify({
 		message: "Unsaved changes will be lost. Continue anyway?",
-		cls: "info",
+		type: "info",
 		buttons: [
 			{'data-role': 'ok', text: 'Continue'},
 			{'data-role': 'cancel', text: 'Cancel', 'class': 'default'}
@@ -272,7 +341,7 @@
 		this.destroy();
 		notifier.notify({
 			message: 'You have clicked "Continue".',
-			cls: 'success'
+			type: 'success'
 		});
 	})
 	.on('click:cancel', 'destroy');</strong></pre></div>
@@ -285,13 +354,15 @@
     <div class="span12">
 		<div class="code-wrapper">
 			<div class="title">
-				<h3>"Info" + (3 sec.) Loader</h3>
+				<h3>Transparent "Info" + (3 sec.) Loader</h3>
 				<button class="run btn btn-primary"></button>
 			</div>
 			<div class="code"><pre class="runnable">
 	<strong>notifier.notify({ 
 		message: "Loading...",
-		cls: "info",
+		destroy: true,	// hides all existing notification
+		type: "info",
+		opacity: .5,
 		ms: 3000,
 		loader: true
 	});</strong></pre></div>
@@ -305,12 +376,15 @@
     <div class="span12">
 		<div class="code-wrapper">
 			<div class="title">
-				<h3>Modal + (3 sec.) Loader</h3>
+				<h3>No Animation Centered Modal + (3 sec.) Loader</h3>
 				<button class="run btn btn-primary"></button>
 			</div>
 			<div class="code"><pre class="runnable">
 	<strong>notifier.notify({ 
 		message: "Loading...",
+		position: 'center',
+		fadeInMs: 0,
+		fadeOutMs: 0,
 		ms: 3000,
 		modal: true,
 		loader: true
@@ -333,7 +407,7 @@
 		ms: false,
 		fadeInMs: 2500,
 		fadeOutMs: 2500,
-		cls: 'error'
+		type: 'error'
 	});</strong></pre></div>
 		</div>
 	</div>
@@ -349,7 +423,7 @@
 			</div>
 			<div class="code"><pre class="runnable">
 	<strong>notifier.notify({ 
-		cls: 'success',
+		type: 'success',
 		fadeInMs: 1000,
 		fadeOutMs: 1000,
 		modal: true,
@@ -378,7 +452,7 @@
 					</div>
 					<div class="code"><pre class="runnable">
 <strong>	var loader = notifier.notify({
-		cls: 'info',
+		type: 'info',
 		modal: true,
 		loader: true,
 		myAttr: 'ajaxLoader',
@@ -388,7 +462,7 @@
 	});
 
 	notifier.notify({
-		cls: 'warning',
+		type: 'warning',
 		ms: false,
 		message: "This is another message, unrelated to the ajax request."
 	});
@@ -417,7 +491,7 @@
 				</div>
 				<div class="code"><pre class="runnable">
 <strong>	notifier.notify({
-		cls: 'info',
+		type: 'info',
 		modal: true,
 		loader: true,
 		message: "Loading..."
@@ -447,7 +521,7 @@
 					</div>
 					<div class="code"><pre class="runnable">
 <strong>	notifier.notify({
-		cls: 'info',
+		type: 'info',
 		modal: true,
 		loader: true,
 		myAttr: 'ajaxLoader',
@@ -457,7 +531,7 @@
 	});
 
 	notifier.notify({
-		cls: 'warning',
+		type: 'warning',
 		ms: 8000,
 		message: "This is another message, unrelated to the ajax request."
 	});
@@ -486,7 +560,7 @@
 					</div>
 					<div class="code"><pre class="runnable">
 <strong>	notifier.notify({
-		cls: 'info',
+		type: 'info',
 		modal: true,
 		loader: true,
 		message: "Loading..."
@@ -498,7 +572,7 @@
 		dataType: 'jsonp',
 		complete: function(){
 			notifier.notify({
-				cls: 'success',
+				type: 'success',
 				ms: 10000,
 				destroy: true,   // destroy any existing notifications.
 						 // can also pass attribute selector (e.g. ['loader', true] )
@@ -612,7 +686,7 @@
 	// Helper function defined for this module.
 	_log: function(a, b){
 		a = 'logger: ' + a;
-		arguments.length === 2 ? console.log(a, b) : console.log(a);
+		arguments.length >= 2 ? console.log(a, b) : console.log(a);
 	},
 	// Optional. Triggers immediately when Backbone.Notifier finishes the 'regModule' action
 	register: function(){
