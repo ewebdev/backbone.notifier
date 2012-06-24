@@ -69,10 +69,11 @@
 				scope.NotificationView = Backbone.View.extend({
 					defaults: scope.attributes,
 				    on: function(eventName, handler){
-		    			var fn = handler;
+		    			var fn = handler,
+							view = this;
 		    			if (_.isString(handler)) {
-		    				fn = function(){
-								scope[handler].apply(this, arguments);
+							fn = function(){
+								view[handler].apply(view, arguments);
 		    				};
 		    			}
 		    			return Backbone.View.prototype.on.call(this, eventName, fn);
