@@ -1,5 +1,5 @@
 /*!
- * Backbone.Notifier.js v0.0.3
+ * Backbone.Notifier.js v0.0.4
  * Copyright 2012, Eyal Weiss
  * backbone.notifier.js may be freely distributed under the MIT license.
  */
