@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head> 
 <meta charset=utf-8 /> 
-<title>Backbone.js Notifier</title>
+<title>Backbone.Notifier | Powerful UI Notifications Framework</title>
 
 <!-- Used by example page -->
 <link rel="stylesheet" type="text/css" href="example-css/bootstrap.css">
@@ -10,9 +10,9 @@
 <link rel="stylesheet" type="text/css" href="example-css/prettify.css">
 <!-- Used /by example page -->
 
-<!-- Backbone.Notidier CSS  -->
+<!-- Backbone.Notifier CSS  -->
 <link rel="stylesheet" type="text/css" href="css/notifier.css">
-<!-- /Backbone.Notidier CSS  -->
+<!-- /Backbone.Notifier CSS  -->
 
 </head>
 <body>
@@ -30,14 +30,21 @@
 		<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=ewebdev&repo=backbone.notifier&type=watch&count=true"
 				allowtransparency="true" frameborder="0" scrolling="0" width="90px" height="20px"></iframe>
 		<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=ewebdev&repo=backbone.notifier&type=fork&count=true"
-				allowtransparency="true" frameborder="0" scrolling="0" width="82px" height="20px"></iframe>
+				allowtransparency="true" frameborder="0" scrolling="0" width="84px" height="20px"></iframe>
 		<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=ewebdev&repo=backbone.notifier&type=follow"
-				allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="20px"></iframe>
+				allowtransparency="true" frameborder="0" scrolling="0" width="140px" height="20px"></iframe>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="Eyal_Weiss">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+			<a href="https://twitter.com/Eyal_Weiss" class="twitter-follow-button" data-show-count="false">Follow @Eyal_Weiss</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 		</div>
 
 		</div>
       </div>
 </div>
+
+ <div id="githubBadge"><a href="https://github.com/ewebdev/backbone.notifier/"></a></div>
 
  <section id="intro">
 	 <div class="intro-ph">
@@ -80,9 +87,9 @@
 			<div class="span12">
 				<strong>Notifier's resources:</strong>
 		    	<ul>
-		    		<li><code class="file">&lt;link rel="stylesheet" type="text/css" href="<strong>css/notifier.css</strong>"&gt;</code> <span>Add this to the head section. Feel free to modify.</span></li>
-		    		<li><code class="file">&lt;script type="text/javascript" src="<strong>js/Backbone.Notifier.js</strong>"&gt;&lt;/script&gt;</code> <span>Place this tag <strong>after</strong> <em>backbone.js</em></span></li>
-		    		<li><code class="file"><strong>imgs/loader.gif</strong></code> <span>You can use your own loader image (referenced in css file)</span></li>
+		    		<li><code class="file">&lt;link rel="stylesheet" type="text/css" href="<strong><a href="css/notifier.css">css/notifier.css</a></strong>"&gt;</code> <span>Add this to the head section. Feel free to modify.</span></li>
+		    		<li><code class="file">&lt;script type="text/javascript" src="<strong><a href="js/Backbone.Notifier.js">js/Backbone.Notifier.js</a></strong>"&gt;&lt;/script&gt;</code> <span>Place this tag <strong>after</strong> <em>backbone.js</em></span></li>
+		    		<li><code class="file"><strong><a href="imgs/notifier-loader.gif">imgs/notifier-loader.gif</a></strong></code> <span>You can use your own loader animation (referenced in css file)</span></li>
 		    	</ul>
 			</div>
 		</div>
@@ -526,7 +533,7 @@
 	<div class="row">
 		<div class="span12">
 			<h4>Backbone.Notifier also features light and simple extendability abilities using unique modules architecture.</h4>
-			<p><strong>Load a module</strong>: add a script tag with 'src' to its path, <strong>after</strong> <code>&lt;script type="text/javascript" src="<strong>js/Backbone.Notifier.js</strong>"&gt;&lt;/script&gt;</code>.
+			<p><strong>Load a module</strong>: add a script tag with 'src' to its path, <strong>after</strong> <code>&lt;script type="text/javascript" src="<strong><a href="js/Backbone.Notifier.js">js/Backbone.Notifier.js</a></strong>"&gt;&lt;/script&gt;</code>.
 				<br>The module should call <code>Notifier.regModule()</code> (as described below).
 			</p>
 
@@ -534,54 +541,96 @@
 			<p><strong>Disable a module</strong> (after it has been loaded): call <code>Backbone.Notifier.disableModule(<em>moduleName</em>)</code>.</p>
 			<p class="alert alert-warning">Please note, modules are shared by all instances of Backbone.Notifier!</p>
 
-			<div id="moduleToggleBlock" class="well">
+			<div class="module-toggle-block well" data-module="logger" data-msg-enable="&lt;br /&gt;See log in developer console (F12).">
+				<p><strong>Demo: <a href="js/modules/logger.js">Logger module</a></strong> - logs notification info using console.log (hit <code>F12</code> to check it out)</p>
+				<div class="module-state-controls">
+					<button class="btn-module btn btn-primary" data-text-0="Enable" data-text-1="Disable"></button>
+					<label class="lbl-module-state">Current state: <span data-text-0="Disabled" data-text-1="Enabled"></span></label>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+
+			<div class="module-toggle-block well" data-module="3d">
 				<p><strong>Demo: <a href="js/modules/3d.js">3D module</a></strong> (requires modern browser)</p>
 				<div id="notSupported3d" class="alert alert-error" style="display: none;">Your browser doesn't support this feature (CSS3 required)</div>
-				<button id="btn3d" class="btn btn-primary" data-alt-text="Disable" data-active-text="Disable">Enable</button>
-				<label id="lbl3dStatus">Current state: <span data-alt-text="Enabled">Disabled</span></label>
-				<div class="clearfix"></div>
+				<div class="module-state-controls">
+					<button id="btn3d" class="btn-module btn btn-primary" data-text-0="Enable" data-text-1="Disable"></button>
+					<label class="lbl-module-state">Current state: <span data-text-0="Disabled" data-text-1="Enabled"></span></label>
+					<div class="clearfix"></div>
+				</div>
 			</div>
 
 			<div id="moduleDesign" class="well well-block">
-				<h4>Module Design</h4>
+				<h4>Module Design - Logger Module (Example)</h4>
 				<pre class="prettyprint lang-js">(function(Notifier, $){
 
-	Notifier.regModule({
-		name: 'myModule',	//<strong>required</strong>
-		enabled: true,		//whether you like the module to be auto-enabled upon registration
-		extend: {		//attributes to add to Backbone.Notifier.prototype
-			// defaults: {
-			//	'myAttrName': 'defaultValue'
-			// }
-			// ...
+  Notifier.regModule({
+	name: 'logger',	// Required.
+	enabled: true,  // Optional. Whether you like the module to be auto-enabled upon registration (default: false).
+	extend: { 	// Optional. Data/functions to extend Backbone.Notifier.prototype
+		defaults: {
+			'showInLog': true
 		},
-		events: {
-			'beforeAppendMsgEl': function(notifier, settings, msgEl, msgInner){
-				//some code
-			},
-			'beforeAnimateInMsgEl': function(notifier, settings, msgEl, msgInner, msgView){
-				//some code
-			},
-			'afterAnimateInMsgEl': function(notifier, settings, msgEl, msgInner, msgView){
-				//some code
-			},
-			'beforeHideMsgEl': function(notifier, settings, msgEl, msgInner, msgView){
-				//some code
-			},
-			'afterDestroyMsgEl': function(notifier, settings, msgEl, msgInner, msgView){
-				//some code
-			}
-		},
-		register: function(){
-			console.log('registered module ' + this.name);
-		},
-		enable: function(){
-			console.log('enabled module ' + this.name);
-		},
-		disable: function(){
-			console.log('disabled module ' + this.name);
+		// Overriding existing function of Backbone.Notifier.prototype
+		// "this" refers to:
+		// {
+		//   super: function(){/* the function we override */},
+		// 	 module: {/* this module */}},
+		// 	 scope: {/* this context of the function we override (an *instance* of Backbone.Notifier) */}}
+		// }
+		// 'initialize' is called when instantiating a new Backbone.Notifier
+		initialize: function(){
+			this.super.apply(this.scope, arguments);
+			this.scope._loggerNotifierId = ++this.module._notifiers;
+			this.module._log('initialized notifier #' + this.scope._loggerNotifierId);
 		}
-	});
+	},
+	// Optional. Unique events accessible for modules, dynamic binding/unbinding is not supported (at the moment).
+	// In all event handlers, "this" refers to:
+	// {
+	//   super: function(){/* the function we override */},
+	// 	 module: {/* this module */}},
+	// 	 scope: {/* this context of the function we override (an *instance* of Backbone.Notifier) */}}
+	// }
+	events: {
+		'beforeAppendMsgEl': function(settings, msgEl, msgInner, msgView){
+		  settings._loggerNotificationId = ++this.module._notifications;
+		  settings.showInLog && this.module._log('beforeAppendMsgEl #' + settings._loggerNotificationId, settings);
+		},
+		'beforeAnimateInMsgEl': function(settings, msgEl, msgInner, msgView){
+		  settings.showInLog && this.module._log('beforeAnimateInMsgEl #' + settings._loggerNotificationId, msgView);
+		},
+		'afterAnimateInMsgEl': function(settings, msgEl, msgInner, msgView){
+		  settings.showInLog && this.module._log('afterAnimateInMsgEl #' + settings._loggerNotificationId, msgView);
+		},
+		'beforeHideMsgEl': function(settings, msgEl, msgInner, msgView){
+		  settings.showInLog && this.module._log('beforeHideMsgEl #' + settings._loggerNotificationId, msgView);
+		},
+		'afterDestroyMsgEl': function(settings, msgEl, msgInner, msgView){
+		  settings.showInLog && this.module._log('afterDestroyMsgEl #' + settings._loggerNotificationId, msgView);
+		}
+	},
+	// Helper function defined for this module.
+	_log: function(a, b){
+		a = 'logger: ' + a;
+		arguments.length === 2 ? console.log(a, b) : console.log(a);
+	},
+	// Optional. Triggers immediately when Backbone.Notifier finishes the 'regModule' action
+	register: function(){
+		this._notifications = 0;
+		this._notifiers = 0;
+		this._log(this.name + ' module was registered');
+	},
+	// Optional. Called after module is enabled by Backbone.Notifier.enableModule(moduleName)
+	// or after registration when 'enabled' property is set to true.
+	enable: function(){
+		this._log(this.name + ' module was enabled');
+	},
+	// Optional. Called after module is disabled by Backbone.Notifier.disableModule(moduleName)
+	disable: function(){
+		this._log(this.name + ' module was disabled');
+	}
+  });
 
 })(Backbone.Notifier, jQuery);</pre>
 			</div>
@@ -606,202 +655,15 @@
  <!-- /Dependencies -->
 
  <!-- Backbone.Notifier -->
-<script type="text/javascript" src="js/Backbone.Notifier.js?_2"></script>
+<script type="text/javascript" src="js/Backbone.Notifier.js?_3"></script>
 <script type="text/javascript" src="js/modules/3d.js?_2"></script><!-- Optional (3d module) -->
+<script type="text/javascript" src="js/modules/logger.js?_1"></script><!-- Optional (3d module) -->
  <!-- /Backbone.Notifier -->
 
  <!-- Used by example page -->
  <script type="text/javascript" src="example-js/prettify.js"></script>
+ <script type="text/javascript" src="example-js/example.js"></script>
  <!-- /Used by example page -->
-
-
-<script type="text/javascript">
-
- $(function(){
-
-	 var notifier = window.notifier = new Backbone.Notifier({
-		 ms: 5000
-	 });
-
-	 var moduleToggleBlock = $('#moduleToggleBlock');
-
-	 if ($.browser.msie && $.browser.version < 9) {
-		 $('#notSupported3d').show();
-	 }
-
-	 moduleToggleBlock.find('button').click(function(){
-
-		 var $btn = $(this),
-		 	active = $btn.data('alt-text') === $(this).data('active-text');
-
-		 moduleToggleBlock.find('[data-alt-text]').each(function(){
-			var $el = $(this),
-				curText = $el.text();
-			$el.text($el.data('alt-text'));
-			$el.data('alt-text', curText);
-		});
-
-		 Backbone.Notifier[active ? 'enableModule' : 'disableModule' ]('3d');
-		 notifier[active ? 'success' : 'error']({
-			 message: "3D module is now " + (active ? 'enabled' : 'disabled'),
-			 position: 'center',
-			 modal: true,
-			 ms: -1,
-			 hideOnClick: true,
-			 destroy: true,
-			 buttons: [
-				 {'data-role': 'ok', text: 'Dismiss'}
-			 ]
-		 });
-	 });
-
-
-	 $('.btns-block').on('click', '.runnable', function(){
-		 eval($(this).text());
-	 });
-
-	 $('pre.runnable').each(function(){
-		$(this).data('code',
-				$(this).text()
-				.replace(/<strong>/ig,'')
-				.replace(/<\/strong>/ig,'')
-				.replace(/&lt;/ig,'<')
-				.replace(/&gt;/ig,'>')
-		).addClass('prettyprint lang-js');
-	 });
-
-	$('.code-wrapper button.run').click(function(){
-		var js = $(this).closest('.code-wrapper').find('pre.runnable').data('code');
-		eval(js);
-	});
-
-	 var floatBarPh = $('#floatBarPh'),
-		 floatBar = floatBarPh.children('div'),
-		 barH =  floatBar.height(),
-		 curPos = 'fixed',
-		 pageH,
-		 fTop;
-	 var updatePos = function(){
-		 pageH = $(window).height();
-		 fTop = floatBarPh.position().top;
-	 };
-	 $(window).resize(updatePos);
-	 updatePos();
-
-	 $(window).scroll(function(){
-		 var cvPos = $(window).scrollTop();
-		 if (cvPos > fTop - pageH + barH) {
-			 if (curPos !== 'absolute') {
-				 curPos = 'absolute';
-				 floatBar.css({position: curPos}).addClass('in-place');
-			 }
-		 } else {
-			 if (curPos !== 'fixed') {
-				 curPos = 'fixed';
-				 floatBar.css({position: curPos}).removeClass('in-place');
-			 }
-		 }
-	 });
-
-	 $('.more').on('click', function(event){
-		 event.preventDefault();
-		 var t =$($(this).attr('href'));
-		 t.length && $('html,body').animate({scrollTop:t.offset().top-20}, 1000);
-	 });
-
-
-	 var onTourEnd = function(){
-		$('#btnTour').fadeIn(2000);
-	 };
-
-	var tour = function(){
-
-
-		 notifier.notify({
-			 message: "Hi, would you like really a quick tour?",
-			 cls: "info",
-			 buttons: [
-				 {'data-role': 'ok', text: 'Yes!', 'class': 'default'},
-				 {'data-role': 'cancel', text: 'Not now'}
-			 ],
-			 hideOnClick: false,
-			 modal: false,
-			 ms: 10000
-		 })
-		 .on('click:ok', function(){
-			 this.destroy();
-
-			 notifier.notify({
-				 message: "You can set different styles and positions. Wanna see more?",
-				 cls: 'warning',
-				 position: 'center',
-				 modal: true,
-				 ms: false,
-				 buttons: [
-					 {'data-role': 'ok', text: 'Sure!', 'class': 'default'},
-					 {'data-role': 'cancel', text: 'No, I think I\'ve got it'}
-				 ]
-			 })
-			 .on('click:ok', function(){
-				 this.destroy();
-
-				 notifier.notify({
-					 message: 'It is very flexible and customizable.',
-					 loader: true,
-					 modal: true,
-					 hideOnClick: true,
-					 ms: 3500
-				 }).on('destroyed', function(){
-
-					 notifier.notify({
-						 message: 'Supports multiple notifications and much more...<br /> <strong>Thanks for taking the tour!</strong>',
-						 buttons: [
-							 {'data-role': 'dismiss', text: 'Dismiss', 'class': 'default'}
-						 ],
-						 cls: 'success',
-						 modal: true,
-						 hideOnClick: false,
-						 ms: false
-					 })
-					 .on('click:dismiss', 'destroy')
-					 .on('destroyed', onTourEnd);
-
-					setTimeout(function(){
-						notifier.notify({
-							modal: true,
-							message: 'Includes useful event mechanism with great API.',
-							cls: 'error',
-							hideOnClick: true,
-							ms: 3500
-						});
-					}, 300);
-
-
-
-				 });
-			 })
-			 .on('click:cancel', function(){
-				 this.destroy();
-				 onTourEnd();
-			 });
-
-		 })
-		 .on('click:cancel timeout', function(){
-			 this.destroy();
-			 onTourEnd();
-		 });
-
-	};
-
-	tour();
-	$('#btnTour').click(tour);
-	 window.prettyPrint();
-
- });
-
-</script>
-
-
 
 <!--Google Analytics-->
  <script type="text/javascript">

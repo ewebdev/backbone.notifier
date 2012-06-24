@@ -1,5 +1,5 @@
 /*!
- * backbone.notifier.js v0.0.1
+ * Backbone.Notifier.js v0.0.3
  * Copyright 2012, Eyal Weiss
  * backbone.notifier.js may be freely distributed under the MIT license.
  */
@@ -66,13 +66,13 @@
 
 				$el.css('position', 'relative');
 
-				this.NotificationView = Backbone.View.extend({
-					defaults: this.attributes,
+				scope.NotificationView = Backbone.View.extend({
+					defaults: scope.attributes,
 				    on: function(eventName, handler){
 		    			var fn = handler;
 		    			if (_.isString(handler)) {
-		    				fn = function(){ 
-		    					this[handler].apply(this, arguments);
+		    				fn = function(){
+								scope[handler].apply(this, arguments);
 		    				};
 		    			}
 		    			return Backbone.View.prototype.on.call(this, eventName, fn);
@@ -94,35 +94,37 @@
 					}
 				};
 
-				_.each(this.attributes.types, function(type){
+				_.each(scope.attributes.types, function(type){
 					createNotifyFn(type);
 				});
 			},
 			calcZIndex: function(){
-				var z = this.attributes.zIndex;
-				_.each(this.current, function(view) {
+				var z = this.attributes.zIndex,
+					scope = this;
+				_.each(scope.current, function(view) {
 					z = view.zIndex > z ? view.zIndex : z;
 				});
 				return ++z;
 			},
 		    destroyAll: function(keyFilter, valueFilter){
-		    	var i=0;
+		    	var i= 0,
+					scope = this;
 				if (_.isFunction(keyFilter)) {
-					_.each(this.current, function(view) {
+					_.each(scope.current, function(view) {
 						if (keyFilter(view)) {
 							view.destroy.call(view);
 							i++;
 						}
 					});
 				} else if (keyFilter !== undefined) {
-					_.each(this.current, function(view) {
+					_.each(scope.current, function(view) {
 						if (view.settings[keyFilter]===valueFilter) {
 							view.destroy.call(view);
 							i++;
 						}
 					});
 				} else {
-					_.each(this.current, function(view) {
+					_.each(scope.current, function(view) {
 						view.destroy.call(view);
 						i++;
 					});
@@ -148,7 +150,7 @@
 	    		}
 
 		    	if (_.isObject(settings.destroy)){
-			    	if (settings.destroy instanceof this.NotificationView){
+			    	if (settings.destroy instanceof scope.NotificationView){
 						settings.destroy.destroy();
 			    	} else {
 			    		scope.destroyAll.apply(scope, _.isArray(settings.destroy) ? settings.destroy : [settings.destroy]);
@@ -158,16 +160,16 @@
 		    	}
 				var zIndex = scope.calcZIndex.call(scope);
 
-				settings.wrapperCls = this.getWrapperCls(settings);
+				settings.wrapperCls = scope.getWrapperCls(settings);
 
 				settings.innerCls = settings.baseCls + '-inner';
 
 				var msgEl = $(settings.template(settings)),
 					msgInner = msgEl.find('.' + settings.innerCls);
 
-				this.eat('beforeAppendMsgEl', settings, msgEl, msgInner);
-				msgEl.css({top: settings.top - 40, opacity: 0, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(this.$el);
-				var msgView = new this.NotificationView({
+				scope.eat('beforeAppendMsgEl', settings, msgEl, msgInner);
+				msgEl.css({top: settings.top - 40, opacity: 0, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(scope.$el);
+				var msgView = new scope.NotificationView({
 		    		el: msgEl
 		    	});
 		    	msgView.settings = settings;
@@ -227,13 +229,13 @@
 				}
 	    		msgInner.click(settings.hideOnClick ? removeFn : preventDefaultFn);
 
-				var animateFn = this.transitions[settings.position]['in'];
+				var animateFn = scope.transitions[settings.position]['in'];
 				scope.current[msgView.cid] = msgView;
 				msgView.zIndex = zIndex;
 				settings.css && msgInner.css(settings.css);
 
-				this.eat.call(this, 'beforeAnimateInMsgEl', settings, msgEl, msgInner, msgView);
-				animateFn.call(this, msgEl, msgInner, settings, settings.fadeInMs, function(){
+				scope.eat.call(scope, 'beforeAnimateInMsgEl', settings, msgEl, msgInner, msgView);
+				animateFn.call(scope, msgEl, msgInner, settings, settings.fadeInMs, function(){
 					scope.eat.call(scope, 'afterAnimateInMsgEl', settings, msgEl, msgInner, msgView);
 				});
 		    	return msgView;
@@ -242,7 +244,7 @@
 			eat: function(event, settings, msgEl, msgInner, msgView){ // Triggers registered modules' events
 				var obj = Notifier.prototype['@' + event];
 				obj && _.each(obj, function(e, moduleName){
-					e.fn.call(e.caller, this, settings, msgEl, msgInner, msgView);
+					e.fn.call({scope: this, module: e.caller}, settings, msgEl, msgInner, msgView);
 				}, this);
 			}
 //			,
@@ -267,12 +269,25 @@
 			m = $.isFunction(m) ? m() : m;
 			m.name = moduleName;
 		}
+		if (!moduleName) {
+			throw('module name is not defined.');
+		}
 		if (m.extend) {
-			Notifier.prototype = $.extend(true, {}, Notifier.prototype, m.extend );
+			$.each(m.extend, function(k, v){
+				var orig = Notifier.prototype[k];
+				if (_.isFunction(orig)) {
+					Notifier.prototype[k] = function(){
+						v.apply({scope: this, super: orig, module: m}, arguments);
+					};
+				} else {
+					Notifier.prototype[k] = $.extend(true, {}, orig, v );
+				}
+			});
 		}
 		(Notifier.modules = Notifier.modules || {})[moduleName] = m;
 		$.isFunction(m.register) && m.register.call(m, Notifier);
 		m.enabled && Notifier.enableModule(m);
+		return m;
 	};
 
 	Notifier.enableModule = function(moduleName){
@@ -286,21 +301,21 @@
 			$.isFunction(m.enable) && m.enable.call(m, Notifier);
 			return m;
 		}
-		console.warn('module "'  + moduleName + '" is not registered.');
+		console.log('module "'  + moduleName + '" is not registered.');
 		return false;
 	};
 
 	Notifier.disableModule = function(moduleName){
 		var m = Notifier.getModule(moduleName);
 		if (m) {
-			$.each(Notifier.modules[m.name].events, function(k, fn){
+			$.each(Notifier.modules[m.name].events, function(k){
 				delete Notifier.prototype['@' + k];
 			});
 			m.enabled = false;
 			$.isFunction(m.disable) && m.disable.call(m, Notifier);
 			return m;
 		}
-		console.warn('module "'  + moduleName + '" is not registered.');
+		console.log('module "'  + moduleName + '" is not registered.');
 		return false;
 	};
 
