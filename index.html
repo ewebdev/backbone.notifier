@@ -588,12 +588,11 @@
 	// Optional. Unique events accessible for modules, dynamic binding/unbinding is not supported (at the moment).
 	// In all event handlers, "this" refers to:
 	// {
-	//   super: function(){/* the function we override */},
 	// 	 module: {/* this module */}},
 	// 	 scope: {/* this context of the function we override (an *instance* of Backbone.Notifier) */}}
 	// }
 	events: {
-		'beforeAppendMsgEl': function(settings, msgEl, msgInner, msgView){
+		'beforeAppendMsgEl': function(settings, msgEl, msgInner){
 		  settings._loggerNotificationId = ++this.module._notifications;
 		  settings.showInLog && this.module._log('beforeAppendMsgEl #' + settings._loggerNotificationId, settings);
 		},

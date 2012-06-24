@@ -167,7 +167,7 @@
 				var msgEl = $(settings.template(settings)),
 					msgInner = msgEl.find('.' + settings.innerCls);
 
-				scope.eat('beforeAppendMsgEl', settings, msgEl, msgInner);
+				Notifier._modulesBinder.trigger('beforeAppendMsgEl', scope, settings, msgEl, msgInner);
 				msgEl.css({top: settings.top - 40, opacity: 0, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(scope.$el);
 				var msgView = new scope.NotificationView({
 		    		el: msgEl
@@ -191,12 +191,12 @@
 						msgView.screenEl.remove();
 	    			});
 
-					scope.eat.call(scope, 'beforeHideMsgEl', settings, msgEl, msgInner, msgView);
+					Notifier._modulesBinder.trigger('beforeHideMsgEl', scope, settings, msgEl, msgInner, msgView);
 					var outAnimFn = scope.transitions[settings.position].out;
 					outAnimFn.call(scope, msgEl, msgInner, settings, options.fadeOutMs, function(){
 						msgView.remove();
 						msgView.trigger('destroyed', msgView, msgEl);
-						scope.eat.call(scope, 'afterDestroyMsgEl', settings, msgEl, msgInner, msgView);
+						Notifier._modulesBinder.trigger('afterDestroyMsgEl', scope, settings, msgEl, msgInner, msgView);
 						_.isFunction(e) && e.call(msgView, msgView, msgEl);
 					});
 					if (msgView.timeoutId) {
@@ -234,25 +234,12 @@
 				msgView.zIndex = zIndex;
 				settings.css && msgInner.css(settings.css);
 
-				scope.eat.call(scope, 'beforeAnimateInMsgEl', settings, msgEl, msgInner, msgView);
+				Notifier._modulesBinder.trigger('beforeAnimateInMsgEl', scope, settings, msgEl, msgInner, msgView);
 				animateFn.call(scope, msgEl, msgInner, settings, settings.fadeInMs, function(){
-					scope.eat.call(scope, 'afterAnimateInMsgEl', settings, msgEl, msgInner, msgView);
+					Notifier._modulesBinder.trigger('afterAnimateInMsgEl', scope, settings, msgEl, msgInner, msgView);
 				});
 		    	return msgView;
-		    },
-
-			eat: function(event, settings, msgEl, msgInner, msgView){ // Triggers registered modules' events
-				var obj = Notifier.prototype['@' + event];
-				obj && _.each(obj, function(e, moduleName){
-					e.fn.call({scope: this, module: e.caller}, settings, msgEl, msgInner, msgView);
-				}, this);
-			}
-//			,
-//			'@beforeAppendMsgEl': {},
-//			'@beforeAnimateInMsgEl': {},
-//			'@afterAnimateInMsgEl': {},
-//			'@beforeHideMsgEl': {},
-//			'@afterDestroyMsgEl': {}
+		    }
 	});
 
 
@@ -260,6 +247,11 @@
 	Notifier.getModule = function(moduleName){
 		return (_.isObject(moduleName)) ? moduleName : Notifier.modules[moduleName];
 	};
+
+	var modulesBinder = {},
+		shift = Array.prototype.shift;
+	_.extend(modulesBinder, Backbone.Events);
+	Notifier._modulesBinder = modulesBinder;
 
 	Notifier.regModule = function(moduleName, m){
 		if (arguments.length === 1) {
@@ -293,14 +285,19 @@
 	Notifier.enableModule = function(moduleName){
 		var m = Notifier.getModule(moduleName);
 		if (m) {
+			m._handlers = m._handlers || {};
 			$.each(m.events, function(k, fn){
-				var arr = Notifier.prototype['@' + k] = Notifier.prototype['@' + k] || {};
-				arr[m.name] = {caller: m, fn: fn};
+				var handler = m._handlers[k] = function(){
+					var notifier = shift.call(arguments);
+					fn.apply({module: m, scope: notifier}, arguments);
+				};
+				Notifier._modulesBinder.on(k, handler);
 			});
 			m.enabled = true;
 			$.isFunction(m.enable) && m.enable.call(m, Notifier);
 			return m;
 		}
+
 		console.log('module "'  + moduleName + '" is not registered.');
 		return false;
 	};
@@ -308,8 +305,8 @@
 	Notifier.disableModule = function(moduleName){
 		var m = Notifier.getModule(moduleName);
 		if (m) {
-			$.each(Notifier.modules[m.name].events, function(k){
-				delete Notifier.prototype['@' + k];
+			$.each(m._handlers, function(k, fn){
+				Notifier._modulesBinder.off(k, fn);
 			});
 			m.enabled = false;
 			$.isFunction(m.disable) && m.disable.call(m, Notifier);
