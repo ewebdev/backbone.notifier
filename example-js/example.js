@@ -5,7 +5,7 @@ $(function(){
 	});
 
 	var supports3d = !($.browser.msie && $.browser.version < 9);
-	supports3d && $('#notSupported3d').show();
+	!supports3d && $('#notSupported3d').show();
 
 	var updateUIState = function(moduleBlock, enabled){
 		var moduleName = moduleBlock.data('module');
