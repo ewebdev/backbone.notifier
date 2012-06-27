@@ -38,23 +38,28 @@
 				settings.showInLog && this.module._log('beforeAppendMsgEl #' + settings._loggerNotificationId, settings);
 			},
 			'beforeAnimateInMsgEl': function(settings, msgEl, msgInner, msgView){
-				settings.showInLog && this.module._log('beforeAnimateInMsgEl #' + settings._loggerNotificationId, msgView);
+				settings.showInLog && this.module._log('beforeAnimateInMsgEl #' + settings._loggerNotificationId);
 			},
 			'afterAnimateInMsgEl': function(settings, msgEl, msgInner, msgView){
-				settings.showInLog && this.module._log('afterAnimateInMsgEl #' + settings._loggerNotificationId, msgView);
+				settings.showInLog && this.module._log('afterAnimateInMsgEl #' + settings._loggerNotificationId);
 			},
 			'beforeHideMsgEl': function(settings, msgEl, msgInner, msgView){
-				settings.showInLog && this.module._log('beforeHideMsgEl #' + settings._loggerNotificationId, msgView);
+				settings.showInLog && this.module._log('beforeHideMsgEl #' + settings._loggerNotificationId);
 			},
 			'afterDestroyMsgEl': function(settings, msgEl, msgInner, msgView){
-				settings.showInLog && this.module._log('afterDestroyMsgEl #' + settings._loggerNotificationId, msgView);
+				settings.showInLog && this.module._log('afterDestroyMsgEl #' + settings._loggerNotificationId);
 			}
 		},
 		// Helper function defined for this module.
 		_log: function(a, b){
-			if (console && console.log){
+			if (window.console && window.console.log){
 				a = 'logger: ' + a;
-				arguments.length >= 2 ? console.log(a, b) : console.log(a);
+				if (arguments.length >= 2) {
+					b = _.isString(b) ? b : ($.browser.msie ? ' ' + JSON.stringify(b) : b);
+					console.log(a, b);
+				} else {
+					console.log(a);
+				}
 			}
 		},
 		// Optional. Triggers immediately when Backbone.Notifier finishes the 'regModule' action
