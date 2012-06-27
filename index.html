@@ -6,12 +6,12 @@
 
 <!-- Used by example page -->
 <link rel="stylesheet" type="text/css" href="example-css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="example-css/example.css?_11">
-<link rel="stylesheet" type="text/css" href="example-css/prettify.css?_11">
+<link rel="stylesheet" type="text/css" href="example-css/example.css?_12">
+<link rel="stylesheet" type="text/css" href="example-css/prettify.css?_12">
 <!-- Used /by example page -->
 
 <!-- Backbone.Notifier CSS  -->
-<link rel="stylesheet" type="text/css" href="css/notifier.css?_11">
+<link rel="stylesheet" type="text/css" href="css/notifier.css?_12">
 <!-- /Backbone.Notifier CSS  -->
 
 </head>
@@ -648,13 +648,13 @@
 		// Overriding existing function of Backbone.Notifier.prototype
 		// "this" refers to:
 		// {
-		//   super: function(){/* the function we override */},
+		//   supr: function(){/* the function we override */},
 		// 	 module: {/* this module */}},
 		// 	 scope: {/* this context of the function we override (an *instance* of Backbone.Notifier) */}}
 		// }
 		// 'initialize' is called when instantiating a new Backbone.Notifier
 		initialize: function(){
-			this.super.apply(this.scope, arguments);
+			this.supr.apply(this.scope, arguments);
 			this.scope._loggerNotifierId = ++this.module._notifiers;
 			this.module._log('initialized notifier #' + this.scope._loggerNotifierId);
 		}
@@ -728,14 +728,14 @@
  <!-- /Dependencies -->
 
  <!-- Backbone.Notifier -->
-<script type="text/javascript" src="js/Backbone.Notifier.js?_11"></script>
-<script type="text/javascript" src="js/modules/3d.js?_11"></script><!-- Optional (3d module) -->
-<script type="text/javascript" src="js/modules/logger.js?_11"></script><!-- Optional (3d module) -->
+<script type="text/javascript" src="js/Backbone.Notifier.js?_12"></script>
+<script type="text/javascript" src="js/modules/3d.js?_12"></script><!-- Optional (3d module) -->
+<script type="text/javascript" src="js/modules/logger.js?_12"></script><!-- Optional (3d module) -->
  <!-- /Backbone.Notifier -->
 
  <!-- Used by example page -->
  <script type="text/javascript" src="example-js/prettify.js"></script>
- <script type="text/javascript" src="example-js/example.js?_11"></script>
+ <script type="text/javascript" src="example-js/example.js?_12"></script>
  <!-- /Used by example page -->
 
 <!--Google Analytics-->

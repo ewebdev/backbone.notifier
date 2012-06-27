@@ -15,13 +15,13 @@
 			// Overriding existing function of Backbone.Notifier.prototype
 			// "this" refers to:
 			// {
-			//   super: function(){/* the function we override */},
+			//   supr: function(){/* the function we override */},
 			// 	 module: {/* this module */}},
 			// 	 scope: {/* this context of the function we override (an *instance* of Backbone.Notifier) */}}
 			// }
 			// 'initialize' is called when instantiating a new Backbone.Notifier
 			initialize: function(){
-				this.super.apply(this.scope, arguments);
+				this.supr.apply(this.scope, arguments);
 				this.scope._loggerNotifierId = ++this.module._notifiers;
 				this.module._log('initialized notifier #' + this.scope._loggerNotifierId);
 			}
