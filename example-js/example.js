@@ -51,7 +51,7 @@ $(function(){
 		} else {
 			moduleBlock.find('.module-state-controls').hide();
 			moduleBlock.append('<div class="alert alert-error">Module "' + moduleName + '" was not loaded!</div>');
-			console.log('module ' + moduleName + ' was not loaded!');
+//			console.log('module ' + moduleName + ' was not loaded!');
 		}
 	});
 

@@ -52,8 +52,10 @@
 		},
 		// Helper function defined for this module.
 		_log: function(a, b){
-			a = 'logger: ' + a;
-			arguments.length >= 2 ? console.log(a, b) : console.log(a);
+			if (console && console.log){
+				a = 'logger: ' + a;
+				arguments.length >= 2 ? console.log(a, b) : console.log(a);
+			}
 		},
 		// Optional. Triggers immediately when Backbone.Notifier finishes the 'regModule' action
 		register: function(){

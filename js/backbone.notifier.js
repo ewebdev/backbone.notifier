@@ -337,7 +337,7 @@
 			return m;
 		}
 
-		console.log('module "'  + moduleName + '" is not registered.');
+//		console.log('module "'  + moduleName + '" is not registered.');
 		return false;
 	};
 
@@ -351,7 +351,7 @@
 			$.isFunction(m.disable) && m.disable.call(m, Notifier);
 			return m;
 		}
-		console.log('module "'  + moduleName + '" is not registered.');
+//		console.log('module "'  + moduleName + '" is not registered.');
 		return false;
 	};
 

@@ -47,13 +47,13 @@
 		register: function(){
 			this.transformAttr = ($.browser.webkit ? '-webkit-' : ($.browser.mozilla ? '-moz-' : ($.browser.msie ? '-ms-' : ''))) + 'transform';
 			this.shadowAttr = ($.browser.webkit ? '-webkit-' : '') + 'box-shadow';
-			console.log(this.name + ' module was registered');
+			//console.log(this.name + ' module was registered');
 		},
 		enable: function(){
-			console.log(this.name + ' module was activated');
+			//console.log(this.name + ' module was activated');
 		},
 		disable: function(){
-			console.log(this.name + ' module was stopped');
+			//console.log(this.name + ' module was stopped');
 		}
 	});
 
