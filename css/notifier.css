@@ -234,18 +234,6 @@
 	color: #DB3A00;
 }
 
-/*.notifier.warning button {
-	color: #FFFB80;
-	border: solid 1px #333333;
-	padding: 3px 10px;
-	background-color: #000;
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	-o-border-radius: 4px;
-	-ms-border-radius: 4px;
-	margin: 10px;
-}*/
 .notifier-loader {
 	display: inline-block;
     zoom: 1;

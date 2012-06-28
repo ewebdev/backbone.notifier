@@ -10,11 +10,12 @@
 				'baseCls': 'notifier',
 				'types': ['warning', 'error', 'info', 'success'], // available notification styles
 				'dialog': false,		// whether display the notification with a title bar and a dialog style (sets 'hideOnClick' to false, unless defined)
+                'theme': 'notifier-ui-clean',
 				'message': '',		// message content
 				'title': undefined,		// notification title, if defined causes the notification to be 'dialog' (unless dialog is 'false')
 				'hideOnClick': true,	// whether to hide the notifications on mouse click
-				'type': null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
-				'class': null, 		// additional css class
+				'type': null,       // default notification style (null / 'warning' / 'error' / 'info' / 'success')
+				'cls': null,      // additional css class
 				'ms': 10000,			// milliseconds before hiding
 				'loader': false,		// whether to display loader animation in notifactions
 				'destroy': false,		// notification or selector of nofications to hide on show
@@ -27,7 +28,7 @@
 				'screenOpacity': 0.5,	// opacity of dark screen background that goes behind for modals (between 0 to 1)
 				'zIndex': 10000,		// minimal z-index for notifications
 				'width': undefined,		// notification's width
-				'template': function(settings){     		//function(sessings){ ... return html; }
+				'template': function(settings){         //function(sessings){ ... return html; }
 					var strBuilder =  [
 						'<div class="' + settings.wrapperCls + '">',
 						'<div class="' +  settings.innerCls + '">',
@@ -73,8 +74,8 @@
 						el.animate({top: '0%', marginTop: -inner.height(), opacity: 0}, duration, callback || emptyFn);
 					}
 				}
-			},
-		    current: {},
+            },
+            current: {},
 			initialize: function(options){
 				var scope = this,
 					el = options && options.el ? options.el : 'body',
@@ -84,16 +85,16 @@
 
 				scope.NotificationView = Backbone.View.extend({
 					defaults: scope.attributes,
-				    on: function(eventName, handler){
-		    			var fn = handler,
+                    on: function(eventName, handler){
+                        var fn = handler,
 							view = this;
-		    			if (_.isString(handler)) {
+                        if (_.isString(handler)) {
 							fn = function(){
 								view[handler].apply(view, arguments);
-		    				};
-		    			}
-		    			return Backbone.View.prototype.on.call(this, eventName, fn);
-		    		}
+                            };
+                        }
+                        return Backbone.View.prototype.on.call(this, eventName, fn);
+                    }
 				});
 
 				var notifyFn = function(type, opts){
@@ -101,14 +102,14 @@
 						opts = {message: opts};
 					}
 					var o = _.extend({}, {'type': ''}, opts);
-					o['type'] = o['type'] ? type + ' ' + o['type'] : type;
+                    o.type = o.type ? type + ' ' + o.type : type;
 					return scope.notify(o);
 				};
 
 				var createNotifyFn = function(type){
 					scope[type] = scope[type] || function(opts){
 						notifyFn(type, opts);
-					}
+					};
 				};
 
 				_.each(scope.attributes.types, function(type){
@@ -123,8 +124,8 @@
 				});
 				return ++z;
 			},
-		    destroyAll: function(keyFilter, valueFilter){
-		    	var i= 0,
+            destroyAll: function(keyFilter, valueFilter){
+                var i= 0,
 					scope = this;
 				if (_.isFunction(keyFilter)) {
 					_.each(scope.current, function(view) {
@@ -147,15 +148,16 @@
 					});
 				}
 				return i;
-		    },
+            },
 			getWrapperCls: function(settings){
 				var c = (settings.baseCls + ' ') +
-					   (settings.type ? settings.type + ' ' : '') +
-					   (settings.dialog ? 'dialog ' : '') +
-					   ('pos-' + settings.position + ' ') +
-					   (settings.buttons ? 'block ' : '') +
-					   (settings.loader ? 'with-loader ' : '');
-				return $.trim(c).split(' ').join(' ' + settings.baseCls + '-') + ' ' + (settings['class'] || '');
+                        (settings.type ? settings.type + ' ' : '') +
+                        (settings.dialog ? 'dialog ' : '') +
+                        ('pos-' + settings.position + ' ') +
+                        (settings.buttons ? 'block ' : '') +
+                        (settings.loader ? 'with-loader ' : '');
+				return $.trim(c).split(' ').join(' ' + settings.baseCls + '-') +
+                    ' ' + (settings.cls || '') + ' ' + (settings.theme || '');
 			},
 			getSettings: function(options){
 				if (!options) {
@@ -178,19 +180,19 @@
 				}
 				return settings;
 			},
-		    notify: function(options){
+            notify: function(options){
 				var scope = this,
 					settings = this.getSettings(options);
 
 				if (_.isObject(settings.destroy)){
-			    	if (settings.destroy instanceof scope.NotificationView){
+                    if (settings.destroy instanceof scope.NotificationView){
 						settings.destroy.destroy();
-			    	} else {
-			    		scope.destroyAll.apply(scope, _.isArray(settings.destroy) ? settings.destroy : [settings.destroy]);
-			    	}
-		    	} else if (settings.destroy == true) {
+                    } else {
+                        scope.destroyAll.apply(scope, _.isArray(settings.destroy) ? settings.destroy : [settings.destroy]);
+                    }
+                } else if (settings.destroy === true) {
 					scope.destroyAll();
-		    	}
+                }
 				var zIndex = scope.calcZIndex.call(scope);
 
 				settings.wrapperCls = scope.getWrapperCls(settings);
@@ -202,10 +204,10 @@
 
 				Notifier._modulesBinder.trigger('beforeAppendMsgEl', scope, settings, msgEl, msgInner);
 				msgEl.css({top: settings.top - 40, opacity: 0, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(scope.$el);
-				var msgView = new scope.NotificationView({
-		    		el: msgEl
-		    	});
-		    	msgView.settings = settings;
+                var msgView = new scope.NotificationView({
+                    el: msgEl
+                });
+                msgView.settings = settings;
 
 				if (settings.buttons || msgInner.find('button').length) {
 					msgInner.on('click', 'button[data-handler]', function(){
@@ -218,16 +220,16 @@
 					});
 				}
 
-		    	var removeFn = msgView.destroy = function(e){
-	    			if (_.isObject(e) && e.preventDefault) {
-	    				e.preventDefault();
-	    				e.stopPropagation();
-	    			} 
-	    			msgView.trigger('beforeHide', msgView, msgEl);
+                var removeFn = msgView.destroy = function(e){
+                    if (_.isObject(e) && e.preventDefault) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    } 
+                    msgView.trigger('beforeHide', msgView, msgEl);
 					settings.modal && msgView.screenEl.fadeOut(300, function(){
 						msgView.trigger('screenHide', msgView, msgEl);
 						msgView.screenEl.remove();
-	    			});
+                    });
 
 					Notifier._modulesBinder.trigger('beforeHideMsgEl', scope, settings, msgEl, msgInner, msgView);
 					var outAnimFn = scope.transitions[settings.position].out;
@@ -242,22 +244,27 @@
 					}
 					delete msgView.timeoutId;
 					delete scope.current[msgView.cid];
-		    	};
+                };
 
-		    	var preventDefaultFn = function(e){
-	    			e && (e.preventDefault(), e.stopPropagation());
-		    	};
+                var preventDefaultFn = function(e){
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                };
 
-		    	if (settings.modal) {
-		    			var screenEl = msgView.screenEl =  $('<div/>',{'class': settings.baseCls + '-screen', css: {position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, zIndex: zIndex-1  }}).prependTo($('body'));
-						screenEl.click(function(e){
-							e.preventDefault();
-							e.stopPropagation();
-							return false;
-		    			});
-		    		screenEl.fadeTo(300, settings.screenOpacity);
+                if (settings.modal) {
+                    msgView.screenEl =  $('<div/>', {
+                        'class': settings.baseCls + '-screen', 
+                        css: { position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, zIndex: zIndex-1  }
+                    }).prependTo($('body'))
+					.click(function(e){
+						e.preventDefault();
+						e.stopPropagation();
+						return false;
+                    }).fadeTo(300, settings.screenOpacity);
 
-		    	}
+                }
 
 				if (settings.ms > 0  || settings.ms === 0){
 					msgView.timeoutId = setTimeout(function(){
@@ -266,7 +273,7 @@
 					}, settings.ms);
 				}
 
-	    		msgInner.click(settings.hideOnClick ? removeFn : preventDefaultFn);
+                msgInner.click(settings.hideOnClick ? removeFn : preventDefaultFn);
 
 				var animateFn = scope.transitions[settings.position]['in'];
 				scope.current[msgView.cid] = msgView;
@@ -277,8 +284,8 @@
 				animateFn.call(scope, msgEl, msgInner, settings, settings.fadeInMs, function(){
 					Notifier._modulesBinder.trigger('afterAnimateInMsgEl', scope, settings, msgEl, msgInner, msgView);
 				});
-		    	return msgView;
-		    }
+                return msgView;
+            }
 	});
 
 
