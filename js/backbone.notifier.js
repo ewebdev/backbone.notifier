@@ -1,5 +1,5 @@
 /*!
- * Backbone.Notifier.js v0.2.0
+ * Backbone.Notifier.js v0.2.1
  * Copyright 2012, Eyal Weiss
  * backbone.notifier.js may be freely distributed under the MIT license.
  */
@@ -21,10 +21,10 @@
 				'destroy': false,		// notification or selector of nofications to hide on show
 				'modal': false,			// whether to dark and block the UI behind the nofication
 				'opacity': 1,			// opacity of nofications
-				'top': 0,				// distance between the notifications and the top edge
+				'offsetY': 0,				// distance between the notifications and the top/bottom edge
 				'fadeInMs': 500,		// duration (milliseconds) of notification's fade-in effect
 				'fadeOutMs': 500,		// duration (milliseconds) of notification's fade-out effect
-				'position': 'top',		// default notifications position ('top' / 'center')
+				'position': 'top',		// default notifications position ('top' / 'center' / 'bottom')
 				'screenOpacity': 0.5,	// opacity of dark screen background that goes behind for modals (between 0 to 1)
 				'zIndex': 10000,		// minimal z-index for notifications
 				'width': undefined,		// notification's width
@@ -60,7 +60,8 @@
 			transitions: {
 				top: {
 					'in': function(el, inner, options, duration, callback){
-						el.animate({top: options.top, opacity: options.opacity}, duration, callback || emptyFn);
+						el.css({top: options.offsetY - 40, display: 'block'})
+							.animate({top: options.offsetY, opacity: options.opacity}, duration, callback || emptyFn);
 					},
 					'out': function(el, inner, options, duration, callback){
 						el.animate({top: -inner.height(), opacity: 0}, duration, callback || emptyFn);
@@ -68,10 +69,20 @@
 				},
 				center: {
 					'in': function(el, inner, options, duration, callback){
-						el.animate({ top: '50%', marginTop: -inner.innerHeight()/2, opacity: options.opacity}, duration, callback || emptyFn);
+						el.css({top: options.offsetY - 40, display: 'block'})
+							.animate({ top: '50%', marginTop: -inner.innerHeight()/2, opacity: options.opacity}, duration, callback || emptyFn);
 					},
 					'out': function(el, inner, options, duration, callback){
 						el.animate({top: '0%', opacity: 0}, duration, callback || emptyFn);
+					}
+				},
+				bottom: {
+					'in': function(el, inner, options, duration, callback){
+						el.css({bottom: options.offsetY - 40, top: 'auto', display: 'block'})
+							.animate({bottom: inner.innerHeight() + options.offsetY, opacity: options.opacity}, duration, callback || emptyFn);
+					},
+					'out': function(el, inner, options, duration, callback){
+						el.animate({bottom: -inner.height(), opacity: 0}, duration, callback || emptyFn);
 					}
 				}
             },
@@ -205,7 +216,7 @@
 					settings.width && msgInner.css({width: settings.width});
 
 				Notifier._modulesBinder.trigger('beforeAppendMsgEl', scope, settings, msgEl, msgInner);
-				msgEl.css({top: settings.top - 40, opacity: 0, position: scope._cssPos, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(scope.$el);
+				msgEl.css({display: 'none', opacity: 0, position: scope._cssPos, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(scope.$el);
                 var msgView = new scope.NotificationView({
                     el: msgEl
                 });

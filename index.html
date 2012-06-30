@@ -5,21 +5,21 @@
 	<title>Backbone.Notifier | Powerful UI Notifications Framework</title>
 
 	<!-- Used by example page -->
-	<link rel="stylesheet" type="text/css" href="example-css/bootstrap.css?_13">
-	<link rel="stylesheet" type="text/css" href="example-css/example.css?_13">
-	<link rel="stylesheet" type="text/css" href="example-css/prettify.css?_13">
+	<link rel="stylesheet" type="text/css" href="example-css/bootstrap.css?_0.2.1">
+	<link rel="stylesheet" type="text/css" href="example-css/example.css?_0.2.1">
+	<link rel="stylesheet" type="text/css" href="example-css/prettify.css?_0.2.1">
 	<!-- Used /by example page -->
 
 	<!-- Backbone.Notifier LESS CSS  -->
-	<!--<link rel="stylesheet/less" type="text/css" href="less/notifier-base.less??_13">-->
-	<!--<link rel="stylesheet/less" type="text/css" href="less/notifier-theme-clean.less??_13">-->
-	<!--<link rel="stylesheet/less" type="text/css" href="less/notifier-theme-plastic.less??_13">-->
+	<!--<link rel="stylesheet/less" type="text/css" href="less/notifier-base.less??_0.2.1">-->
+	<!--<link rel="stylesheet/less" type="text/css" href="less/notifier-theme-clean.less??_0.2.1">-->
+	<!--<link rel="stylesheet/less" type="text/css" href="less/notifier-theme-plastic.less??_0.2.1">-->
 	<!--<script type="text/javascript" src="example-js/less-1.3.0.min.js"></script>-->
 	<!-- /Backbone.Notifier LESS CSS  -->
 
-	<link rel="stylesheet" type="text/css" href="css/notifier-base.css?_13">
-	<link rel="stylesheet" type="text/css" href="css/notifier-theme-clean.css?_13">
-	<link rel="stylesheet" type="text/css" href="css/notifier-theme-plastic.css?_13">
+	<link rel="stylesheet" type="text/css" href="css/notifier-base.css?_0.2.1">
+	<link rel="stylesheet" type="text/css" href="css/notifier-theme-clean.css?_0.2.1">
+	<link rel="stylesheet" type="text/css" href="css/notifier-theme-plastic.css?_0.2.1">
 
 </head>
 <body>
@@ -73,7 +73,7 @@
 <section id="intro">
 	<div class="intro-ph">
 		<h1>Backbone.Notifier
-			<small>version 0.2.0</small>
+			<small>version 0.2.1</small>
 		</h1>
 		<button id="btnTour" class="after-tour btn-primary btn btn-large">Quick Tour</button>
 		<button id="btnTheme" class="after-tour btn btn-large">Switch Theme</button>
@@ -131,7 +131,7 @@
 							href="js/Backbone.Notifier.js">js/Backbone.Notifier.js</a></strong>"&gt;&lt;/script&gt;
 					</code> <span>Place this tag <strong>after</strong> <em>backbone.js</em> <strong>(Required)</strong></span></li>
 				</ul>
-				<p class="res-section"><strong>Styles (Themes)</strong> <span class="alert"><em>notifier-base.css</em> is <strong>mandatory</strong>, and you can choose to include both themes or just one of them.</span> (<a href="less/notifier-base.less">source LESS file</a>)</p>
+				<p class="res-section"><strong>Styles (Themes)</strong> <span class="alert"><em>notifier-base.css</em> is <strong>mandatory</strong>, and you can choose to include both themes or just one of them.</span> (<a href="https://github.com/ewebdev/backbone.notifier/blob/master/less/notifier-base.less">source LESS file</a>)</p>
 				<ul>
 					<li><code class="file">&lt;link rel="stylesheet" type="text/css" href="<strong><a
 							href="css/notifier-base.css">css/notifier-base.css</a></strong>"&gt;</code> <span>Add this to the head section. Feel free to modify. <strong>(Required)</strong></span>
@@ -141,7 +141,7 @@
 						<strong>'Clean' Theme</strong> (<a class="theme-demo" data-theme="clean" href="#demo-clean">see demo</a>)
 						<ul>
 							<li><code class="file">&lt;link rel="stylesheet" type="text/css" href="<strong><a
-									href="css/notifier-theme-clean.css">css/notifier-theme-clean.css</a></strong>"&gt;</code> <span>Add this to the head section. Feel free to modify.</span> (<a href="less/notifier-theme-clean.less">source LESS file</a>)</li>
+									href="css/notifier-theme-clean.css">css/notifier-theme-clean.css</a></strong>"&gt;</code> <span>Add this to the head section. Feel free to modify.</span> (<a href="https://github.com/ewebdev/backbone.notifier/blob/master/less/notifier-theme-clean.less">source LESS file</a>)</li>
 							<li><code class="file"><strong><a
 									href="imgs/notifier-loader-clean.gif">imgs/notifier-loader-clean.gif</a></strong></code> <span>You can use your own loader animation (referenced by css file)</span>
 							</li>
@@ -153,7 +153,7 @@
 							<strong>'Plastic' Theme</strong> (<a class="theme-demo" data-theme="plastic" href="#demo-plastic">see demo</a>)
 							<ul>
 								<li><code class="file">&lt;link rel="stylesheet" type="text/css" href="<strong><a
-										href="css/notifier-theme-plastic.css">css/notifier-theme-plastic.css</a></strong>"&gt;</code> <span>Add this to the head section. Feel free to modify.</span> (<a href="less/notifier-theme-plastic.less">source LESS file</a>)</li>
+										href="css/notifier-theme-plastic.css">css/notifier-theme-plastic.css</a></strong>"&gt;</code> <span>Add this to the head section. Feel free to modify.</span> (<a href="https://github.com/ewebdev/backbone.notifier/blob/master/less/notifier-theme-plastic.less">source LESS file</a>)</li>
 								<li><code class="file"><strong><a
 										href="imgs/notifier-loader-plastic.gif">imgs/notifier-loader-plastic.gif</a></strong></code> <span>You can use your own loader animation (referenced by css file)</span>
 								</li>
@@ -206,10 +206,10 @@
 		loader: false,		// whether to display loader animation in notifications (default: false)
 		destroy: false,		// notification or selector of notifications to hide on show (default: false)
 		opacity: 1,		// notification's opacity (default: 1)
-		top: -500,		// distance between the notifications and the top edge (default: 0)
+		offsetY: -500,		// distance between the notifications and the top/bottom edge (default: 0)
 		fadeInMs: 500,		// duration (milliseconds) of notification's fade-in effect (default: 500)
 		fadeOutMs: 500,		// duration (milliseconds) of notification's fade-out effect (default: 500)
-		position: 'top',	// default notifications position ('top' / 'center')
+		position: 'top',	// default notifications position ('top' / 'center' / 'bottom')
 		zIndex: 10000,		// minimal z-index for notifications
 		screenOpacity: 0.5,	// opacity of dark screen background that goes behind for modals (between 0 to 1)
 		width: undefined,	// notification's width ('auto' if not set)
@@ -810,16 +810,16 @@ window.Backbone || document.write('<script type="text/javascript" src="dependenc
 <!-- /Dependencies -->
 
 <!-- Backbone.Notifier -->
-<script type="text/javascript" src="js/Backbone.Notifier.js?_13"></script>
-<script type="text/javascript" src="js/modules/3d.js?_13"></script>
+<script type="text/javascript" src="js/Backbone.Notifier.js?_0.2.1"></script>
+<script type="text/javascript" src="js/modules/3d.js?_0.2.1"></script>
 <!-- Optional (3d module) -->
-<script type="text/javascript" src="js/modules/logger.js?_13"></script>
+<script type="text/javascript" src="js/modules/logger.js?_0.2.1"></script>
 <!-- Optional (3d module) -->
 <!-- /Backbone.Notifier -->
 
 <!-- Used by example page -->
 <script type="text/javascript" src="example-js/prettify.js"></script>
-<script type="text/javascript" src="example-js/example.js?_13"></script>
+<script type="text/javascript" src="example-js/example.js?_0.2.1"></script>
 <!-- /Used by example page -->
 
 <!--Google Analytics-->

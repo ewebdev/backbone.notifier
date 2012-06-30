@@ -130,7 +130,7 @@ $(function(){
 	var showThemeChooser = function(options){
 		var chooser = themeNotifier.notify({
 			message: 'Set theme',
-			top: options.top,
+			position: options.position || 'top',
 			cls: options.cls,
 			destroy: options.destroy,
 			modal: options.modal,
@@ -157,6 +157,7 @@ $(function(){
 		_.each(this.current, function(a){
 			a.settings.theme = theme;
 			a.$el.attr('class', notifier.getWrapperCls(a.settings));
+			notifier.transitions[a.settings.position].in.call(a, a.$el, a.$el.find('>div'), a.settings, a.settings.fadeInMs);
 			a.screenEl && a.screenEl.attr('class', a.settings.baseCls + '-screen ' + a.settings.baseCls + '-theme-' + theme);
 		});
 	}
@@ -180,7 +181,7 @@ $(function(){
 		})
 			.on('click:ok', function(){
 				this.destroy();
-				showThemeChooser({top: $(window).innerHeight()-200, cls: 'notifier-pos-center'});
+				showThemeChooser({position: 'bottom'});
 
 				notifier.notify({
 					message: "Backbone.Notifier support different styles and positions,<br />which are fully customizable. <strong>Wanna see more?</strong>",

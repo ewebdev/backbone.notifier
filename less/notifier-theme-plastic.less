@@ -1,5 +1,5 @@
 /*!
- * Backbone.Notifier v0.2.0 - 'Plastic' Theme
+ * Backbone.Notifier v0.2.1 - 'Plastic' Theme
  * Copyright 2012, Eyal Weiss
  */
 
@@ -58,6 +58,14 @@
 		}
 	}
 
+	&.notifier-pos-top .notifier-inner {
+		.border-radius(0, 4px, 4px, 0);
+	}
+
+	&.notifier-pos-bottom .notifier-inner {
+		.border-radius(4px, 0, 0, 4px);
+	}
+
 	&.notifier-pos-center .notifier-inner {
 		.rounded(4px);
 	}
@@ -65,7 +73,6 @@
 	&.notifier-with-buttons button {
 		margin: 10px 20px 0;
 	}
-
 
 	&.notifier-dialog {
 		.notifier-inner {
@@ -77,7 +84,7 @@
 		(~".@{notifier}-message") {
 			padding: 25px 50px;
 			margin: 0 1px 1px;
-			background: #FAFAFA;
+			background: #fff;
 			display: block;
 			*display: block;
 			text-shadow: none;
@@ -86,7 +93,7 @@
 		}
 
 		(~".@{notifier}-btns") {
-			background: #F0F0F0;
+			background: rgba(255, 255, 255, 0.9);
 			padding: 5px 0 13px;
 			margin: -1px 1px 1px;
 			border-top: solid 1px #D1CECE;
@@ -99,10 +106,10 @@
 			border-bottom-right-radius: 4px;
 			border-bottom-left-radius: 4px;
 
-		button {
-			margin: 10px 30px 0;
-			padding: 3px 25px;
-		}
+			button {
+				margin: 10px 30px 0;
+				padding: 3px 25px;
+			}
 		}
 
 		(~".@{notifier}-title") {
@@ -113,7 +120,6 @@
 
 	(~".@{notifier}-inner") {
 		cursor: default;
-		.border-radius(0, 4px, 4px, 0);
 		padding: 11px 30px 10px;
 		color: #fff;
 		text-shadow: 0 1px 0 #000;
