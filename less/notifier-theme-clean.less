@@ -1,0 +1,133 @@
+/*!
+ * Backbone.Notifier v0.2.0 - 'Clean' Theme
+ * Copyright 2012, Eyal Weiss
+ */
+
+@import "elements.less";
+@import "notifier-variables.less";
+
+@themeName: clean;
+
+(~".@{notifier}-screen.@{notifier}-theme-@{themeName}") {
+	background-color: #fff;
+}
+
+
+(~".@{notifier}.@{notifier}-theme-@{themeName}") {
+	font-size: 13px;
+	text-align: center;
+
+	(~".@{notifier}-loader") {
+		width: 16px;
+		height: 16px;
+		margin-left: 10px;
+		background: url('../imgs/notifier-loader-clean.gif') center center no-repeat;
+	}
+
+	(~".@{notifier}-message") {
+		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	}
+
+	(~".@{notifier}-btns") {
+		margin: 30px 0 0;
+	}
+
+	button {
+		border: solid 1px #D1D1D1;
+		background-color: white;
+		padding: 5px 30px;
+		margin: 0 40px;
+		text-shadow: 0 1px 0 #E9E9E9;
+		.transition(100ms);
+		.box-shadow(~"inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 1px 1px rgba(111, 111, 111, 0.18), inset 0 0 8px rgba(150, 150, 150, 0.21)");
+
+		&:hover, &.hover {
+			border: solid 1px silver;
+			.box-shadow(~"inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 2px 2px rgba(48, 48, 48, 0.21), inset 0 0 8px rgba(117, 117, 117, 0.21)");
+		}
+		&:active, &.active {
+			border: solid 1px silver;
+			.box-shadow(~"inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 1px rgba(48, 48, 48, 0.4), inset 0 0 20px rgba(117, 117, 117, 0.3)");
+		}
+	}
+
+	button.link {
+		text-shadow: 0 1px 0 #E9E9E9;
+		color: #444;
+		border-bottom: dotted 1px #444;
+		padding: 9px 0 1px;
+		&:hover, &.hover {
+			color: #000;
+			border-bottom: solid 1px #000;
+			text-shadow: 0 1px 0 #DBDBDB;
+		}
+	}
+
+	> div {
+		  background-color: #fff;
+		  .themed-notification(100,100,100);
+		  padding: 30px 30px 30px;
+		  max-width: 460px;
+	}
+}
+
+//warning
+(~".@{notifier}.@{notifier}-theme-@{themeName}.@{notifier}-warning > div" ) {
+	.themed-notification(255,162,29);
+}
+
+//warning
+(~".@{notifier}.@{notifier}-theme-@{themeName}.@{notifier}-error > div" ) {
+	.themed-notification(218,79,73);
+}
+
+//info
+(~".@{notifier}.@{notifier}-theme-@{themeName}.@{notifier}-info > div" ) {
+	.themed-notification(73,175,205);
+}
+
+//success
+(~".@{notifier}.@{notifier}-theme-@{themeName}.@{notifier}-success > div" ) {
+	.themed-notification(76,255,76);
+}
+
+(~".@{notifier}.@{notifier}-theme-@{themeName}.@{notifier}-dialog") {
+	> div {
+		  padding-top: 12px;
+	  }
+
+	(~".@{notifier}-message") {
+		text-align: left;
+	}
+
+	(~".@{notifier}-btns") {
+		background: rgba(255, 255, 255, 0.47);
+		padding: 13px 10px 14px 10px;
+		.box-shadow(~"0 -1px 0 white, inset 0 2px 3px rgba(185, 185, 185, 0.27)");
+		border-top: solid 1px rgba(0, 0, 0, 0.14);
+		margin: 25px -30px -30px;
+	}
+
+	(~".@{notifier}-title") {
+		font-weight: bold;
+		text-shadow: 0 1px 0 white;
+		.box-shadow(~"0 1px 0px #fff");
+		border-bottom: solid 1px rgba(0, 0, 0, 0.06);
+		margin: 0 -30px 20px;
+		padding-bottom: 10px;
+	}
+}
+
+//function definition for generating notification's css
+.themed-notification(@r, @g, @b) {
+	border: solid 1px #fff;
+	border-top: solid 1px rgb(@r, @g, @b);
+	.box-shadow(~"0 -1px 2px rgba("@r~","@g~","@b~",.4), 0 2px 20px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2)");
+	background-image: -moz-linear-gradient(top, rgba(@r,@g,@b,0.29) 0%, rgba(@r,@g,@b,0.08) 27%, rgba(@r,@g,@b,0.01) 100%); /* FF3.6+ */
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(@r,@g,@b,0.29)), color-stop(27%,rgba(@r,@g,@b,0.08)), color-stop(100%,rgba(@r,@g,@b,0.01))); /* Chrome,Safari4+ */
+	background-image: -webkit-linear-gradient(top, rgba(@r,@g,@b,0.29) 0%,rgba(@r,@g,@b,0.08) 27%,rgba(@r,@g,@b,0.01) 100%); /* Chrome10+,Safari5.1+ */
+	background-image: -o-linear-gradient(top, rgba(@r,@g,@b,0.29) 0%,rgba(@r,@g,@b,0.08) 27%,rgba(@r,@g,@b,0.01) 100%); /* Opera 11.10+ */
+	background-image: -ms-linear-gradient(top, rgba(@r,@g,@b,0.29) 0%,rgba(@r,@g,@b,0.08) 27%,rgba(@r,@g,@b,0.01) 100%); /* IE10+ */
+	background-image: linear-gradient(to bottom, rgba(@r,@g,@b,0.29) 0%,rgba(@r,@g,@b,0.08) 27%,rgba(@r,@g,@b,0.01) 100%); /* W3C */
+	filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorStr="lighten(rgb(@r,@g,@b), 33%)~", EndColorStr="lighten(rgb(@r,@g,@b), 100%)~")";
+}

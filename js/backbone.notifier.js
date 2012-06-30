@@ -1,5 +1,5 @@
 /*!
- * Backbone.Notifier.js v0.1.0
+ * Backbone.Notifier.js v0.2.0
  * Copyright 2012, Eyal Weiss
  * backbone.notifier.js may be freely distributed under the MIT license.
  */
@@ -10,16 +10,16 @@
 				'baseCls': 'notifier',
 				'types': ['warning', 'error', 'info', 'success'], // available notification styles
 				'dialog': false,		// whether display the notification with a title bar and a dialog style (sets 'hideOnClick' to false, unless defined)
-                'theme': 'notifier-ui-clean',
-				'message': '',		// message content
+                'theme': 'plastic',		// default theme for notifications (currently available: 'plastic' / 'clean').
+				'message': '',			// message content
 				'title': undefined,		// notification title, if defined causes the notification to be 'dialog' (unless dialog is 'false')
 				'hideOnClick': true,	// whether to hide the notifications on mouse click
-				'type': null,       // default notification style (null / 'warning' / 'error' / 'info' / 'success')
-				'cls': null,      // additional css class
+				'type': null,       	// default notification style (null / 'warning' / 'error' / 'info' / 'success')
+				'cls': null,      		// additional css class
 				'ms': 10000,			// milliseconds before hiding
 				'loader': false,		// whether to display loader animation in notifactions
 				'destroy': false,		// notification or selector of nofications to hide on show
-				'modal': false,		// whether to dark and block the UI behind the nofication
+				'modal': false,			// whether to dark and block the UI behind the nofication
 				'opacity': 1,			// opacity of nofications
 				'top': 0,				// distance between the notifications and the top edge
 				'fadeInMs': 500,		// duration (milliseconds) of notification's fade-in effect
@@ -68,21 +68,20 @@
 				},
 				center: {
 					'in': function(el, inner, options, duration, callback){
-						el.animate({ top: '50%', marginTop: -inner.height()/2, opacity: options.opacity}, duration, callback || emptyFn);
+						el.animate({ top: '50%', marginTop: -inner.innerHeight()/2, opacity: options.opacity}, duration, callback || emptyFn);
 					},
 					'out': function(el, inner, options, duration, callback){
-						el.animate({top: '0%', marginTop: -inner.height(), opacity: 0}, duration, callback || emptyFn);
+						el.animate({top: '0%', opacity: 0}, duration, callback || emptyFn);
 					}
 				}
             },
-            current: {},
 			initialize: function(options){
 				var scope = this,
 					el = options && options.el ? options.el : 'body',
 					$el = this.$el = _.isObject(el) ? el : $(el);
-
+				scope._cssPos = ($el.get(0)===document.body) ? 'fixed' : 'absolute';
 				$el.css('position', 'relative');
-
+				this.current = {};
 				scope.NotificationView = Backbone.View.extend({
 					defaults: scope.attributes,
                     on: function(eventName, handler){
@@ -108,7 +107,7 @@
 
 				var createNotifyFn = function(type){
 					scope[type] = scope[type] || function(opts){
-						notifyFn(type, opts);
+						return notifyFn(type, opts);
 					};
 				};
 
@@ -117,7 +116,10 @@
 				});
 			},
 			calcZIndex: function(){
-				var z = this.attributes.zIndex,
+				if (this._cssPos === 'absolute') {
+					return this.attributes.zIndex;
+				}
+				var z = this.attributes.zIndex+1,
 					scope = this;
 				_.each(scope.current, function(view) {
 					z = view.zIndex > z ? view.zIndex : z;
@@ -152,12 +154,13 @@
 			getWrapperCls: function(settings){
 				var c = (settings.baseCls + ' ') +
                         (settings.type ? settings.type + ' ' : '') +
+                        ('theme-' + settings.theme + ' ') +
                         (settings.dialog ? 'dialog ' : '') +
                         ('pos-' + settings.position + ' ') +
-                        (settings.buttons ? 'block ' : '') +
+                        (settings.buttons ? 'with-buttons ' : '') +
                         (settings.loader ? 'with-loader ' : '');
 				return $.trim(c).split(' ').join(' ' + settings.baseCls + '-') +
-                    ' ' + (settings.cls || '') + ' ' + (settings.theme || '');
+                    ' ' + (settings.cls || '');
 			},
 			getSettings: function(options){
 				if (!options) {
@@ -183,7 +186,6 @@
             notify: function(options){
 				var scope = this,
 					settings = this.getSettings(options);
-
 				if (_.isObject(settings.destroy)){
                     if (settings.destroy instanceof scope.NotificationView){
 						settings.destroy.destroy();
@@ -193,7 +195,7 @@
                 } else if (settings.destroy === true) {
 					scope.destroyAll();
                 }
-				var zIndex = scope.calcZIndex.call(scope);
+				var zIndex = options.zIndex || scope.calcZIndex.call(scope);
 
 				settings.wrapperCls = scope.getWrapperCls(settings);
 				settings.innerCls = settings.baseCls + '-inner';
@@ -203,7 +205,7 @@
 					settings.width && msgInner.css({width: settings.width});
 
 				Notifier._modulesBinder.trigger('beforeAppendMsgEl', scope, settings, msgEl, msgInner);
-				msgEl.css({top: settings.top - 40, opacity: 0, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(scope.$el);
+				msgEl.css({top: settings.top - 40, opacity: 0, position: scope._cssPos, zIndex: settings.modal ? ++zIndex : zIndex}).prependTo(scope.$el);
                 var msgView = new scope.NotificationView({
                     el: msgEl
                 });
@@ -255,9 +257,9 @@
 
                 if (settings.modal) {
                     msgView.screenEl =  $('<div/>', {
-                        'class': settings.baseCls + '-screen', 
-                        css: { position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, zIndex: zIndex-1  }
-                    }).prependTo($('body'))
+                        'class': settings.baseCls + '-screen ' + settings.baseCls + '-theme-' + settings.theme,
+                        css: { position: scope._cssPos, top: 0, left: 0, width: '100%', height: '100%', opacity: 0, zIndex: zIndex-1  }
+                    }).prependTo(scope.$el)
 					.click(function(e){
 						e.preventDefault();
 						e.stopPropagation();

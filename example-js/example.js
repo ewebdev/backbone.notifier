@@ -1,7 +1,8 @@
 $(function(){
 
 	var notifier = window.notifier = new Backbone.Notifier({
-		ms: 5000
+		ms: 5000,
+		caller: 'examples'
 	});
 
 	var supports3d = !($.browser.msie && $.browser.version < 9);
@@ -108,15 +109,61 @@ $(function(){
 		t.length && $('html,body').animate({scrollTop:t.offset().top-20}, 1000);
 	});
 
+	var themeNotifier = new Backbone.Notifier({
+		hideOnClick: false,
+		modal: false,
+		zIndex: 9999999,
+		ms: null
+	});
 
 	var onTourEnd = function(){
-		$('#btnTour').fadeIn(2000);
+		$('.after-tour').fadeIn(2000);
+		notifier.destroyAll(true);
+		themeNotifier.destroyAll(true);
 	};
 
 	var quitTour = function(){
 		this.destroy();
 		onTourEnd();
 	};
+
+	var showThemeChooser = function(options){
+		var chooser = themeNotifier.notify({
+			message: 'Set theme',
+			top: options.top,
+			cls: options.cls,
+			destroy: options.destroy,
+			modal: options.modal,
+			fadeOutMs: 0,
+			fadeInMs: 0,
+			buttons: [
+				{'data-role': 'plastic', text: 'Plastic', 'class': notifier.attributes.theme === 'plastic' ? 'default active' : ''},
+				{'data-role': 'clean', text: 'Clean', 'class': notifier.attributes.theme === 'clean' ? 'default active' : ''}
+			]
+		});
+		chooser.$el.find('>div').on('click', 'button', function(){
+			var btn = $(this),
+				theme = btn.data('role');
+			chooser.trigger('done');
+			notifier.trigger('themechosen', theme);
+			btn.addClass('default active').siblings().removeClass('default active');
+		});
+		return chooser;
+	};
+
+	var setTheme = function(theme){
+		console.log(theme);
+		this.set('theme', theme);
+		_.each(this.current, function(a){
+			a.settings.theme = theme;
+			a.$el.attr('class', notifier.getWrapperCls(a.settings));
+			a.screenEl && a.screenEl.attr('class', a.settings.baseCls + '-screen ' + a.settings.baseCls + '-theme-' + theme);
+		});
+	}
+	notifier.on('themechosen', function(theme){
+		setTheme.call(notifier, theme);
+		setTheme.call(themeNotifier, theme);
+	});
 
 	var tour = function(){
 
@@ -133,6 +180,7 @@ $(function(){
 		})
 			.on('click:ok', function(){
 				this.destroy();
+				showThemeChooser({top: $(window).innerHeight()-200, cls: 'notifier-pos-center'});
 
 				notifier.notify({
 					message: "Backbone.Notifier support different styles and positions,<br />which are fully customizable. <strong>Wanna see more?</strong>",
@@ -142,84 +190,84 @@ $(function(){
 					ms: false,
 					buttons: [
 						{'data-role': 'ok', text: 'Sure!', 'class': 'default'},
-						{'data-role': 'cancel', text: 'No, I think I\'ve got it'}
+						{'data-role': 'cancel', 'class': 'link', text: 'No, I think I\'ve got it'}
 					]
 				})
 					.on('click:ok', function(){
 						this.destroy();
 
-						      notifier.notify({
-								  type: 'info',
-								  title: "Information",
-								  message: "This is a 'dialog' <em>info</em> notification. Dialog-styled notifications are also available in the same all types, and creating new types doens't require extra css for dialogs.",
-								  buttons: [
-									  {'data-role': 'ok', text: 'Continue the tour', 'class': 'default'},
-									  {'data-role': 'cancel', text: 'Let me go'}
-								  ],
-								  modal: true,
-								  ms: null
-							  })
-							  .on('click:ok', function(){
+						notifier.notify({
+							type: 'info',
+							title: "Information",
+							message: "This is a 'dialog' <em>info</em> notification. Dialog-styled notifications are also available in the same all types, and creating new types doens't require extra css for dialogs.",
+							buttons: [
+								{'data-role': 'ok', text: 'Continue the tour', 'class': 'default'},
+								{'data-role': 'cancel', 'class': 'link', text: 'Skip tour'}
+							],
+							modal: true,
+							ms: null
+						})
+							.on('click:ok', function(){
 
-									  notifier.notify({
-										  message: 'We got loaders...',
-										  loader: true,
-										  modal: true,
-										  hideOnClick: true,
-										  ms: 3500
-									  }).on('destroy', function(){
-											  var msg3d = supports3d ? '<strong>You can now see our <em>3D module</em> in action.</strong>' : '';
-											  Backbone.Notifier.enableModule('3d');
-											  notifier.notify({
-												  title: 'Almost Done...',
-												  destroy: true,
-												  '3d': true,
-												  message: 'Backbone.Notifier can be can be easily extended thanks to smart modules architecture.<br />' + msg3d,
-												  buttons: [
-													  {text: 'Dismiss', 'class': 'default'}
-												  ],
-												  type: 'success',
-												  position: 'center',
-												  modal: true,
-												  hideOnClick: true,
-												  ms: false
-											  })
-												  .on('destroy', function(){
-													  Backbone.Notifier.disableModule('3d');
+								notifier.notify({
+									message: 'We got loaders...',
+									loader: true,
+									modal: true,
+									hideOnClick: true,
+									ms: 3500
+								}).on('destroy', function(){
+										var msg3d = supports3d ? '<strong>You can now see our <em>3D module</em> in action.</strong>' : '';
+										Backbone.Notifier.enableModule('3d');
+										notifier.notify({
+											title: 'Almost Done...',
+											destroy: true,
+											'3d': true,
+											message: 'Backbone.Notifier can be can be easily extended thanks to smart modules architecture.<br />' + msg3d,
+											buttons: [
+												{text: 'Dismiss', 'class': 'default'}
+											],
+											type: 'success',
+											position: 'center',
+											modal: true,
+											hideOnClick: true,
+											ms: false
+										})
+											.on('destroy', function(){
+												Backbone.Notifier.disableModule('3d');
 
-														  notifier.notify({
-															  message: "And there's so much more... <strong>Thanks for taking the tour.</strong><br /><em>Don't forget to tweet if you appreciate the work...!</em>",
-															  buttons: [
-																  {'data-role': 'dismiss', text: 'Dismiss', 'class': 'default'}
-															  ],
-															  type: 'success',
-															  destroy: true,
-															  modal: true,
-															  hideOnClick: false,
-															  ms: 15000
-														  })
-														  .on('click:dismiss', 'destroy')
-														  .on('destroy', onTourEnd);
+												notifier.notify({
+													message: "And there's so much more... <strong>Thanks for taking the tour.</strong><br /><em>Don't forget to tweet if you appreciate the work...!</em>",
+													buttons: [
+														{'data-role': 'dismiss', text: 'Dismiss', 'class': 'default'}
+													],
+													type: 'success',
+													destroy: true,
+													modal: true,
+													hideOnClick: false,
+													ms: 15000
+												})
+													.on('click:dismiss', 'destroy')
+													.on('destroy', onTourEnd);
 
-														  setTimeout(function(){
-															  notifier.notify({
-																  modal: true,
-																  screenOpacity:.7,
-																  message: 'Features useful event mechanism with great API',
-																  type: 'error',
-																  hideOnClick: true,
-																  position: 'center',
-																  ms: 3500
-															  });
-														  }, 300);
+												setTimeout(function(){
+													notifier.notify({
+														modal: true,
+														screenOpacity:.7,
+														message: 'Features useful event mechanism with great API',
+														type: 'error',
+														hideOnClick: true,
+														position: 'center',
+														ms: 3500
+													});
+												}, 300);
 
-												  });
+											});
 
 
-										  });
+									});
 
-							  })
-							  .on('click:cancel', quitTour);
+							})
+							.on('click:cancel', quitTour);
 
 					})
 					.on('click:cancel', quitTour);
@@ -231,6 +279,89 @@ $(function(){
 
 	tour();
 	$('#btnTour').click(tour);
+	$('#btnTheme').click(function(){
+		showThemeChooser({modal: true}).on('done', function(){
+			this.destroy();
+			notifier.success({message: 'Theme was set', destroy: true});
+		});
+	});
+
+	$('#installation').on('click', '.theme-demo', function(){
+		var theme = $(this).data('theme');
+		notifier.info({
+			message: 'This notification is using the theme "' + theme + '"',
+			modal: false,
+			theme: theme,
+			destroy: true
+		});
+		return false;
+	});
 	window.prettyPrint();
+
+	var commitModel = Backbone.Model.extend({
+		author: undefined,
+		commit: undefined,
+		committer: undefined,
+		url: undefined,
+		sha: undefined
+	});
+	var Commits = Backbone.Collection.extend({
+		model: commitModel
+	});
+	var CommitsView = Backbone.View.extend({
+		initialize: function(){
+			this.loader = new Backbone.Notifier({
+				el: this.$el,
+				position: 'center',
+				loader: true,
+				message: 'loading...',
+				ms: null,
+				modal: true
+			});
+			this.loader.notify({});
+			window.parseCommitHistory = $.proxy(this.parseResponse, this);
+			jQuery.ajax({
+				url: 'https://api.github.com/repos/ewebdev/backbone.notifier/commits?callback=parseCommitHistory',
+				dataType: "jsonp",
+				jsonp: true
+			});
+		},
+		parseResponse: function(obj){
+			this.collection = new Commits(obj.data);
+			this.render();
+		},
+		limit: 5,
+		template: function(data){
+			var html = '';
+			_.each(data.first(this.limit), function(item) {
+			html += '<div class="row release-changes">';
+				var date = new Date(item.attributes.commit.committer.date);
+			html += '<div class="span3">' +  date.toLocaleDateString() +' ' + date.toLocaleTimeString() + '</div>' +
+				'<div class="span6">' +
+					"<ul>";
+			var s = item.attributes.commit.message.split('\n');
+			_.each(s, function(l) {
+				var change = l.replace(/^-\s?(.*)$/ig, '$1').trim();
+				if (change && change.length) {
+					html +=	'<li>' + change + '</li>';
+				}
+			});
+			html +=	'</ul>' +
+			'</div>' +
+			'</div>';
+			});
+			return html;
+		},
+		render: function(){
+			var html = this.template.call(this, this.collection);
+			var ph = this.$el.find('.log-content').css({opacity: 0}).html(html);
+			var targetH = ph.height() - 50;
+			this.$el.animate({height: '+=' + targetH}, 800);
+			ph.animate({opacity: 1}, 800);
+			this.loader.destroyAll();
+			return this;
+		}
+	});
+	new CommitsView({el: $('#changelog')});
 
 });

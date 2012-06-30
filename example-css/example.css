@@ -10,13 +10,13 @@
 }
 
 .instructions li {
-	margin: 10px 0 0 20px;
+    margin: 10px 0 0 20px;
 }
 
 .instructions li .file {
     margin-right: 10px;
-	display: inline-block;
-	display: -moz-inline-stack;
+    display: inline-block;
+    display: -moz-inline-stack;
     zoom: 1;
     *display: inline;
     font-style: italic;
@@ -34,7 +34,7 @@ code a {
 
 
 .code-wrapper {
-	margin: 10px 20px 20px 40px;
+    margin: 10px 20px 20px 40px;
 }
 
 .code {
@@ -43,19 +43,19 @@ code a {
     border: 1px solid rgba(0, 0, 0, 0.15);
 }
 .code-wrapper > .title {
-	height: 31px;
-	font-size: 20px;
-	border: solid 1px rgba(0, 0, 0, 0.15);
-	border-bottom: 0 none;
-	padding: 3px 3px 0 20px;
-	background-color: #DBDBDB;
-	box-shadow: inset 0 -1px 2px #C7C7C7;
+    height: 31px;
+    font-size: 20px;
+    border: solid 1px rgba(0, 0, 0, 0.15);
+    border-bottom: 0 none;
+    padding: 3px 3px 0 20px;
+    background-color: #DBDBDB;
+    box-shadow: inset 0 -1px 2px #C7C7C7;
 }
 
 .code-wrapper > .title > h3 {
-	float: left;
-	width: 80%;
-	text-shadow: 0 1px 0 #F1F1F1;
+    float: left;
+    width: 80%;
+    text-shadow: 0 1px 0 #F1F1F1;
 }
 
 .code-wrapper > .title  small {
@@ -64,8 +64,8 @@ code a {
 }
 
 .code-wrapper > .title > button {
-	float: right;
-	width: 10%;
+    float: right;
+    width: 10%;
     height: 27px;
 }
 
@@ -76,30 +76,30 @@ code a {
 }
 
 .code-wrapper .code {
-	clear: both;
-	float: none;
-	color: #888;
+    clear: both;
+    float: none;
+    color: #888;
 
-	-webkit-border-bottom-right-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	-moz-border-radius-bottomright: 5px;
-	-moz-border-radius-bottomleft: 5px;
-	border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 .code-wrapper pre > strong {
-	font-weight: normal;
-	color: #222;
+    font-weight: normal;
+    color: #222;
 }
 .code-wrapper pre > small {
-	color: green;
+    color: green;
 }
 
 #installation .file {
-	color: #666;
+    color: #666;
 }
-#installation .file > strong { 
-	color: #000;
+#installation .file > strong {
+    color: #000;
 }
 
 #logoBar {
@@ -230,10 +230,14 @@ code a {
     color: #ccc;
 }
 
-#btnTour {
+#btnTour, #btnTheme {
     float: right;
     font-size: 20px;
     display: none;
+}
+
+#btnTheme {
+    margin-right: 15px;
 }
 
 .lbl-module-state, .btn-module {
@@ -291,6 +295,43 @@ code a:hover, .well a:hover {
     width: 149px;
     height: 149px;
     display: block;
+}
+
+#changelog{
+    margin: 40px 0 50px;
+    height: 100px;
+}
+#changelog h3 {
+    /*border-bottom: 1px solid #EEE;*/
+    padding-left: 20px;
+    margin: 5px 30px 10px;
+}
+#changelog .release-changes {
+    margin: 10px 50px 0 50px;
+    padding-top: 20px;
+    border-top: 1px solid #EEE;
+    box-shadow: 0 -1px 0 #fff;
+}
+
+.res-section {
+    margin: 40px 0 20px;
+}
+.res-section .alert{
+    margin: 0 10px;
+    padding: 3px;
+}
+
+.theme-item {
+    border: solid 1px #EEE;
+    background-color: #fafafa;
+    padding: 10px 20px;
+    margin: 10px 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.theme-item ul {
+    list-style-type: square;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {

@@ -1,96 +1,169 @@
 <!DOCTYPE html>
 <html>
-<head> 
-<meta charset=utf-8 /> 
-<title>Backbone.Notifier | Powerful UI Notifications Framework</title>
+<head>
+	<meta charset=utf-8/>
+	<title>Backbone.Notifier | Powerful UI Notifications Framework</title>
 
-<!-- Used by example page -->
-<link rel="stylesheet" type="text/css" href="example-css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="example-css/example.css?_13">
-<link rel="stylesheet" type="text/css" href="example-css/prettify.css?_13">
-<!-- Used /by example page -->
+	<!-- Used by example page -->
+	<link rel="stylesheet" type="text/css" href="example-css/bootstrap.css?_13">
+	<link rel="stylesheet" type="text/css" href="example-css/example.css?_13">
+	<link rel="stylesheet" type="text/css" href="example-css/prettify.css?_13">
+	<!-- Used /by example page -->
 
-<!-- Backbone.Notifier CSS  -->
-<link rel="stylesheet" type="text/css" href="css/notifier.css?_13">
-<!-- /Backbone.Notifier CSS  -->
+	<!-- Backbone.Notifier LESS CSS  -->
+	<!--<link rel="stylesheet/less" type="text/css" href="less/notifier-base.less??_13">-->
+	<!--<link rel="stylesheet/less" type="text/css" href="less/notifier-theme-clean.less??_13">-->
+	<!--<link rel="stylesheet/less" type="text/css" href="less/notifier-theme-plastic.less??_13">-->
+	<!--<script type="text/javascript" src="example-js/less-1.3.0.min.js"></script>-->
+	<!-- /Backbone.Notifier LESS CSS  -->
+
+	<link rel="stylesheet" type="text/css" href="css/notifier-base.css?_13">
+	<link rel="stylesheet" type="text/css" href="css/notifier-theme-clean.css?_13">
+	<link rel="stylesheet" type="text/css" href="css/notifier-theme-plastic.css?_13">
 
 </head>
 <body>
 
- <div class="navbar" id="topBar">
-      <div class="navbar-inner">
-        <div class="container wrapper-940">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+<div class="navbar" id="topBar">
+	<div class="navbar-inner">
+		<div class="container wrapper-940">
+			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
 
-		<div class="social-btns">
-		<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=ewebdev&repo=backbone.notifier&type=watch&count=true"
-				allowtransparency="true" frameborder="0" scrolling="0" width="90px" height="20px"></iframe>
-		<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=ewebdev&repo=backbone.notifier&type=fork&count=true"
-				allowtransparency="true" frameborder="0" scrolling="0" width="84px" height="20px"></iframe>
-		<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=ewebdev&repo=backbone.notifier&type=follow"
-				allowtransparency="true" frameborder="0" scrolling="0" width="140px" height="20px"></iframe>
-			<a href="https://twitter.com/share" class="twitter-share-button" data-via="Eyal_Weiss">Tweet</a>
-			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			<div class="social-btns">
+				<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=ewebdev&repo=backbone.notifier&type=watch&count=true"
+						allowtransparency="true" frameborder="0" scrolling="0" width="90px" height="20px"></iframe>
+				<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=ewebdev&repo=backbone.notifier&type=fork&count=true"
+						allowtransparency="true" frameborder="0" scrolling="0" width="84px" height="20px"></iframe>
+				<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=ewebdev&repo=backbone.notifier&type=follow"
+						allowtransparency="true" frameborder="0" scrolling="0" width="140px" height="20px"></iframe>
+				<a href="https://twitter.com/share" class="twitter-share-button" data-via="Eyal_Weiss">Tweet</a>
+				<script>!function (d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (!d.getElementById(id)) {
+						js = d.createElement(s);
+						js.id = id;
+						js.src = "//platform.twitter.com/widgets.js";
+						fjs.parentNode.insertBefore(js, fjs);
+					}
+				}(document, "script", "twitter-wjs");</script>
 
-			<a href="https://twitter.com/Eyal_Weiss" class="twitter-follow-button" data-show-count="false">Follow @Eyal_Weiss</a>
-			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+				<a href="https://twitter.com/Eyal_Weiss" class="twitter-follow-button" data-show-count="false">Follow
+					@Eyal_Weiss</a>
+				<script>!function (d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (!d.getElementById(id)) {
+						js = d.createElement(s);
+						js.id = id;
+						js.src = "//platform.twitter.com/widgets.js";
+						fjs.parentNode.insertBefore(js, fjs);
+					}
+				}(document, "script", "twitter-wjs");</script>
+			</div>
+
 		</div>
-
-		</div>
-      </div>
+	</div>
 </div>
 
- <div id="githubBadge"><a href="https://github.com/ewebdev/backbone.notifier/"></a></div>
+<div id="githubBadge"><a href="https://github.com/ewebdev/backbone.notifier/"></a></div>
 
- <section id="intro">
-	 <div class="intro-ph">
-		 <h1>Backbone.Notifier <small>version 0.1</small></h1>
-		 <button id="btnTour" class="btn-primary btn btn-large">Quick Tour</button>
-	 </div>
- </section>
+<section id="intro">
+	<div class="intro-ph">
+		<h1>Backbone.Notifier
+			<small>version 0.2.0</small>
+		</h1>
+		<button id="btnTour" class="after-tour btn-primary btn btn-large">Quick Tour</button>
+		<button id="btnTheme" class="after-tour btn btn-large">Switch Theme</button>
+	</div>
+</section>
 
 <div class="container" id="main">
+
+
+<section id="changelog" class="well well-small">
+	<h3>What's New?
+		<small>Recent Commits (<a href="https://github.com/ewebdev/backbone.notifier/commits/master" rel="nofollow">see all</a>)</small>
+	</h3>
+	<div class="log-content"></div>
+</section>
+
 
 <div class="instructions">
 
 	<section id="dependencies">
 		<div class="page-header">
-		<h1>1. Dependencies<small></small></h1>
+			<h1>1. Dependencies
+				<small></small>
+			</h1>
 		</div>
 		<div class="row">
-		    <div class="span12">
-		    	<ol>
-		    		<li><code><a href="http://jquery.com" rel="nofollow">jQuery</a></code></li>
-		    		<li><code><a href="http://underscorejs.org/" rel="nofollow">underscore.js</a></code></li>
-		    		<li><code><a href="http://backbonejs.org" rel="nofollow">backbone.js</a></code></li>
-		    	</ol>
-		    </div>
+			<div class="span12">
+				<ol>
+					<li><code><a href="http://jquery.com" rel="nofollow">jQuery</a></code></li>
+					<li><code><a href="http://underscorejs.org/" rel="nofollow">underscore.js</a></code></li>
+					<li><code><a href="http://backbonejs.org" rel="nofollow">backbone.js</a></code></li>
+				</ol>
+			</div>
 		</div>
 	</section>
 
 
 	<section id="installation">
 		<div class="page-header">
-		<h1>2. Installation<small></small></h1>
+			<h1>2. Installation
+				<small></small>
+			</h1>
 		</div>
 		<div class="row">
-		    <div class="span12 btns-wrapper">
+			<div class="span12 btns-wrapper">
 				<a class="btn btn-primary btn-large" href="https://github.com/ewebdev/backbone.notifier/zipball/master">Download</a>
 				<a class="btn btn-large" href="https://github.com/ewebdev/backbone.notifier/">project on github</a>
 			</div>
 		</div>
 		<div class="row">
 			<div class="span12">
-				<strong>Notifier's resources:</strong>
-		    	<ul>
-		    		<li><code class="file">&lt;link rel="stylesheet" type="text/css" href="<strong><a href="css/notifier.css">css/notifier.css</a></strong>"&gt;</code> <span>Add this to the head section. Feel free to modify.</span></li>
-		    		<li><code class="file">&lt;script type="text/javascript" src="<strong><a href="js/Backbone.Notifier.js">js/Backbone.Notifier.js</a></strong>"&gt;&lt;/script&gt;</code> <span>Place this tag <strong>after</strong> <em>backbone.js</em></span></li>
-		    		<li><code class="file"><strong><a href="imgs/notifier-loader.gif">imgs/notifier-loader.gif</a></strong></code> <span>You can use your own loader animation (referenced in css file)</span></li>
-		    	</ul>
+				<strong>Javascript Core</strong>
+				<ul>
+					<li><code class="file">&lt;script type="text/javascript" src="<strong><a
+							href="js/Backbone.Notifier.js">js/Backbone.Notifier.js</a></strong>"&gt;&lt;/script&gt;
+					</code> <span>Place this tag <strong>after</strong> <em>backbone.js</em> <strong>(Required)</strong></span></li>
+				</ul>
+				<p class="res-section"><strong>Styles (Themes)</strong> <span class="alert"><em>notifier-base.css</em> is <strong>mandatory</strong>, and you can choose to include both themes or just one of them.</span> (<a href="less/notifier-base.less">source LESS file</a>)</p>
+				<ul>
+					<li><code class="file">&lt;link rel="stylesheet" type="text/css" href="<strong><a
+							href="css/notifier-base.css">css/notifier-base.css</a></strong>"&gt;</code> <span>Add this to the head section. Feel free to modify. <strong>(Required)</strong></span>
+					</li>
+					<li>
+						<div class="theme-item">
+						<strong>'Clean' Theme</strong> (<a class="theme-demo" data-theme="clean" href="#demo-clean">see demo</a>)
+						<ul>
+							<li><code class="file">&lt;link rel="stylesheet" type="text/css" href="<strong><a
+									href="css/notifier-theme-clean.css">css/notifier-theme-clean.css</a></strong>"&gt;</code> <span>Add this to the head section. Feel free to modify.</span> (<a href="less/notifier-theme-clean.less">source LESS file</a>)</li>
+							<li><code class="file"><strong><a
+									href="imgs/notifier-loader-clean.gif">imgs/notifier-loader-clean.gif</a></strong></code> <span>You can use your own loader animation (referenced by css file)</span>
+							</li>
+						</ul>
+						</div>
+					</li>
+					<li>
+						<div class="theme-item">
+							<strong>'Plastic' Theme</strong> (<a class="theme-demo" data-theme="plastic" href="#demo-plastic">see demo</a>)
+							<ul>
+								<li><code class="file">&lt;link rel="stylesheet" type="text/css" href="<strong><a
+										href="css/notifier-theme-plastic.css">css/notifier-theme-plastic.css</a></strong>"&gt;</code> <span>Add this to the head section. Feel free to modify.</span> (<a href="less/notifier-theme-plastic.less">source LESS file</a>)</li>
+								<li><code class="file"><strong><a
+										href="imgs/notifier-loader-plastic.gif">imgs/notifier-loader-plastic.gif</a></strong></code> <span>You can use your own loader animation (referenced by css file)</span>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li>Or <strong>make your own themes!</strong> making new themes is straightforward and relatively easy. Start by taking a look at the <a rel="nofollow" href="https://github.com/ewebdev/backbone.notifier/tree/master/less">LESS files</a>.
+						I would really appreciate it if you send themes you've made and I would consider adding them here if you like.
+					</li>
+				</ul>
 			</div>
 		</div>
 	</section>
@@ -98,36 +171,41 @@
 
 	<section id="initialization">
 		<div class="page-header">
-		<h1>3. Initialization<small></small></h1>
+			<h1>3. Initialization
+				<small></small>
+			</h1>
 		</div>
 
 		<div class="row">
-		    <div class="span12">
+			<div class="span12">
 
 				<div class="code-wrapper">
 					<div class="title">
-						<h3>1. Create notifier with default config <small>The config is <strong>optional</strong>!</small></h3>
+						<h3>1. Create notifier with default config
+							<small>The config is <strong>optional</strong>!</small>
+						</h3>
 					</div>
-				<div class="code"><pre class="prettyprint">
+					<div class="code"><pre class="prettyprint">
 	var notifier = new Backbone.Notifier({		// defaults
 		el: 'body', 		// container for notification (default: 'body')
 		baseCls: 'notifier',	// css classes prefix, should match css file and can be changed to avoid conflicts.
+		theme: 'plastic',	// default theme for notifications (currently available: 'plastic' / 'clean').
 		types: ['warning', 'error', 'info', 'success'], // available notification styles
 		type: null, 		// default notification style (null / 'warning' / 'error' / 'info' / 'success')
 		dialog: false,		// whether display the notification with a title bar and a dialog style.
 						// - sets 'hideOnClick' to false, unless defined otherwise
 						// - sets 'position' to 'center', unless defined otherwise
 						// - sets 'ms' to null, unless defined otherwise
-		modal: false,		// whether to dark and block the UI behind the nofication (default: false)
+		modal: false,		// whether to dark and block the UI behind the notification (default: false)
 		message: '',		// default message content
 		title: undefined,	// default notification title, if defined, causes the notification
 						// to be 'dialog' (unless dialog is 'false')
 		ms: 5000,		// milliseconds before hiding, (null || false => no timeout) (default: 10000)
-		cls: null, 		// additional css class
+		'class': null, 		// additional css class
 		hideOnClick: true,	// whether to hide the notifications on mouse click (default: true)
-		loader: false,		// whether to display loader animation in notifactions (default: false)
-		destroy: false,		// notification or selector of nofications to hide on show (default: false)
-		opacity: 1,		// opacity of nofications (default: 1)
+		loader: false,		// whether to display loader animation in notifications (default: false)
+		destroy: false,		// notification or selector of notifications to hide on show (default: false)
+		opacity: 1,		// notification's opacity (default: 1)
 		top: -500,		// distance between the notifications and the top edge (default: 0)
 		fadeInMs: 500,		// duration (milliseconds) of notification's fade-in effect (default: 500)
 		fadeOutMs: 500,		// duration (milliseconds) of notification's fade-out effect (default: 500)
@@ -136,15 +214,17 @@
 		screenOpacity: 0.5,	// opacity of dark screen background that goes behind for modals (between 0 to 1)
 		width: undefined,	// notification's width ('auto' if not set)
 		template: function(settings){ var html = ...; return html; }	// custom html structure
-	});</pre></div>
+	});</pre>
+					</div>
 				</div>
 
 			</div>
 		</div>
 	</section>
 
-
 </div>
+
+
 
 <section id="examples">
 	<div class="page-header">
@@ -165,7 +245,7 @@
 						<button class="btn btn-warning runnable">notifier.warning("Hi!");</button>
 						<button class="btn btn-danger runnable">notifier.error("Hi!");</button>
 						<button class="btn btn-success runnable">notifier.success("Hi!");</button>
-						<a href="#examples" class="more">more »</a>
+						<a href="#examples" class="more">more &raquo;</a>
 					</div>
 				</div>
 			</div>
@@ -235,39 +315,55 @@
 						<button class="run btn btn-primary"></button>
 					</div>
 					<div class="code">
-<pre class="runnable"><strong>	notifier.notify({
-		type: 'info',
-		title: "Information",
-		message: "This is a 'dialog' notification. Do you want to see another one?",
+<pre class="runnable"><strong>notifier.notify({
+		title: "Default Dialog Notification",
+		message: "This is a default styled dialog notification.&lt;br /&gt;Wanna see other styles?",
 		buttons: [
-			{'data-role': 'myOk', text: 'Yes', 'class': 'default'},	// 'data-role' - an identifier for binding
-							// event using notification.on('click:myOk', function(){...});
-			{'data-handler': 'destroy', text: 'No'} // 'data-handler' - calls a function of notification object,
-			// i.g.: 'data-handler': 'destroy' => calls notification.destroy() upon clicking the button
+		{'data-role': 'myOk', text: 'Sure', 'class': 'default', css: {width: 120}},
+		{'data-role': 'myOk', text: 'Yes'},
+	// 'data-role' - an identifier for binding event using notification.on('click:myOk', function(){...});
+		{'data-handler': 'destroy', text: 'No', 'class': 'link'}
+	// 'data-handler' - calls a function of notification object,
+	// i.g.: 'data-handler': 'destroy' => calls notification.destroy() upon clicking the button
 		],
 		modal: true,
 		ms: null,
+		modal: true,
 		destroy: false
 	})
 	.on('click:myOk', function(){
+		this.destroy();
 		notifier.notify({
-			destroy: true,	// will hide all existing notification
-			type: 'warning',
-			title: "Warning!",
-			message: "Lets say you've been warned!",
-			buttons: [{'data-handler': 'destroy', text: 'Errrr'}]
-		}).on('destroy', function(){
-			notifier.notify({
-				type: 'error',
-				title: "Error Dialog",
-				message: "That's our error dialog notification",
-				buttons: [{'data-handler': 'destroy', text: 'Ok'}]
-			}).on('destroy', function(){
-				notifier.notify({
-					type: 'success',
-					title: "Success!",
-					message: "bla bla bla bla bla bla bla bla...",
-					buttons: [{'data-handler': 'destroy', text: 'Cool'}]
+			'type': 'info',
+			title: "Information",
+			message: "This is an 'info' styled dialog notification.",
+			buttons: [
+				{'data-role': 'ok', text: 'Show More', 'class': 'default'},
+				{'data-handler': 'destroy', text: 'Cancel', 'class': 'link'}
+			],
+			modal: false,
+			ms: null,
+			destroy: false
+		})
+		.on('click:ok', function(){
+			notifier.warning({
+				destroy: true,	// will hide all existing notification
+				title: "Warning!",
+				message: "This is a warning!",
+				buttons: [{'data-handler': 'destroy', text: 'Errrr'}]
+			})
+			.on('destroy', function(){
+				notifier.error({
+					title: "Error Dialog",
+					message: "That's our error dialog notification",
+					buttons: [{'data-handler': 'destroy', 'class': 'default', text: 'Ok'}]
+				})
+				.on('destroy', function(){
+					notifier.success({
+						title: "Success!",
+						message: "You have successfully completed this example. Well done!",
+						buttons: [{'data-handler': 'destroy', 'class': 'default', text: 'Finish'}]
+					});
 				});
 			});
 		});
@@ -276,10 +372,6 @@
 
 			</div>
 		</div><!-- row -->
-
-
-
-
 
 
 
@@ -293,7 +385,7 @@
 			<div class="code">
 <pre class="runnable"><strong>	var confirmMsg = notifier.notify({
 		message: "Unsaved changes will be lost. Continue anyway?",
-		type: "warning",
+		'type': "warning",
 		buttons: [
 			{'data-role': 'ok', text: 'Continue'},
 			{'data-role': 'cancel', text: 'Cancel', 'class': 'default'}
@@ -304,10 +396,7 @@
 	})
 	.on('click:ok', function(){
 		this.destroy();
-		notifier.notify({
-			message: 'You have clicked "Continue".',
-			type: 'success'
-		});
+		notifier.success('You have clicked "Continue".');
 	})
 	.on('click:cancel', 'destroy');</strong></pre></div>
 		</div>
@@ -327,7 +416,7 @@
 				<div class="code"><pre class="runnable">
 <strong>	var confirmMsg = notifier.notify({
 		message: "Unsaved changes will be lost. Continue anyway?",
-		type: "info",
+		'type': "info",
 		buttons: [
 			{'data-role': 'ok', text: 'Continue'},
 			{'data-role': 'cancel', text: 'Cancel', 'class': 'default'}
@@ -339,10 +428,7 @@
 	})
 	.on('click:ok', function(){
 		this.destroy();
-		notifier.notify({
-			message: 'You have clicked "Continue".',
-			type: 'success'
-		});
+		notifier.success('You have clicked "Continue".');
 	})
 	.on('click:cancel', 'destroy');</strong></pre></div>
 			</div>
@@ -358,10 +444,9 @@
 				<button class="run btn btn-primary"></button>
 			</div>
 			<div class="code"><pre class="runnable">
-	<strong>notifier.notify({ 
+	<strong>notifier.info({ 
 		message: "Loading...",
 		destroy: true,	// hides all existing notification
-		type: "info",
 		opacity: .5,
 		ms: 3000,
 		loader: true
@@ -402,12 +487,11 @@
 				<button class="run btn btn-primary"></button>
 			</div>
 			<div class="code"><pre class="runnable">
-	<strong>notifier.notify({ 
+	<strong>notifier.error({ 
 		message: "&lt;em&gt;Error&lt;/em&gt;: An error has occurred",
 		ms: false,
 		fadeInMs: 2500,
-		fadeOutMs: 2500,
-		type: 'error'
+		fadeOutMs: 2500
 	});</strong></pre></div>
 		</div>
 	</div>
@@ -423,7 +507,7 @@
 			</div>
 			<div class="code"><pre class="runnable">
 	<strong>notifier.notify({ 
-		type: 'success',
+		'type': 'success',
 		fadeInMs: 1000,
 		fadeOutMs: 1000,
 		modal: true,
@@ -452,7 +536,7 @@
 					</div>
 					<div class="code"><pre class="runnable">
 <strong>	var loader = notifier.notify({
-		type: 'info',
+		'type': 'info',
 		modal: true,
 		loader: true,
 		myAttr: 'ajaxLoader',
@@ -461,8 +545,7 @@
 		message: "Loading..."
 	});
 
-	notifier.notify({
-		type: 'warning',
+	notifier.warning({
 		ms: false,
 		message: "This is another message, unrelated to the ajax request."
 	});
@@ -490,8 +573,7 @@
 					<button class="run btn btn-primary"></button>
 				</div>
 				<div class="code"><pre class="runnable">
-<strong>	notifier.notify({
-		type: 'info',
+<strong>	notifier.info({
 		modal: true,
 		loader: true,
 		message: "Loading..."
@@ -521,7 +603,7 @@
 					</div>
 					<div class="code"><pre class="runnable">
 <strong>	notifier.notify({
-		type: 'info',
+		'type': 'info',
 		modal: true,
 		loader: true,
 		myAttr: 'ajaxLoader',
@@ -531,7 +613,7 @@
 	});
 
 	notifier.notify({
-		type: 'warning',
+		'type': 'warning',
 		ms: 8000,
 		message: "This is another message, unrelated to the ajax request."
 	});
@@ -560,7 +642,7 @@
 					</div>
 					<div class="code"><pre class="runnable">
 <strong>	notifier.notify({
-		type: 'info',
+		'type': 'info',
 		modal: true,
 		loader: true,
 		message: "Loading..."
@@ -572,7 +654,7 @@
 		dataType: 'jsonp',
 		complete: function(){
 			notifier.notify({
-				type: 'success',
+				'type': 'success',
 				ms: 10000,
 				destroy: true,   // destroy any existing notifications.
 						 // can also pass attribute selector (e.g. ['loader', true] )
@@ -590,11 +672,6 @@
 </div><!-- row -->
 
 </section>
-
-
-
-
-
 
 
 
@@ -712,43 +789,53 @@
 	</div>
 </section>
 
-<div id="footer"></div>
 
+<div id="footer"></div>
 
 </div>
 
 
+<!-- Dependencies -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
 
+<script>
+window.jQuery || document.write('<script type="text/javascript" src="dependencies/jquery-1.7.2.min.js"><\/script>');
+window._ || document.write('<script type="text/javascript" src="dependencies/underscore-1.3.3.min.js"><\/script>');
+window.JSON || document.write('<script type="text/javascript" src="dependencies/json2.js"><\/script>');
+window.Backbone || document.write('<script type="text/javascript" src="dependencies/backbone-0.9.2.js"><\/script>');
+</script>
+<!-- /Dependencies -->
 
-
- <!-- Dependencies -->
-<script type="text/javascript" src="dependencies/jquery-1.7.2.min.js"></script> 
-<script type="text/javascript" src="dependencies/underscore-1.3.3.min.js"></script> 
-<script type="text/javascript" src="dependencies/backbone-0.9.2.js"></script>
- <!-- /Dependencies -->
-
- <!-- Backbone.Notifier -->
+<!-- Backbone.Notifier -->
 <script type="text/javascript" src="js/Backbone.Notifier.js?_13"></script>
-<script type="text/javascript" src="js/modules/3d.js?_13"></script><!-- Optional (3d module) -->
-<script type="text/javascript" src="js/modules/logger.js?_13"></script><!-- Optional (3d module) -->
- <!-- /Backbone.Notifier -->
+<script type="text/javascript" src="js/modules/3d.js?_13"></script>
+<!-- Optional (3d module) -->
+<script type="text/javascript" src="js/modules/logger.js?_13"></script>
+<!-- Optional (3d module) -->
+<!-- /Backbone.Notifier -->
 
- <!-- Used by example page -->
- <script type="text/javascript" src="example-js/prettify.js"></script>
- <script type="text/javascript" src="example-js/example.js?_13"></script>
- <!-- /Used by example page -->
+<!-- Used by example page -->
+<script type="text/javascript" src="example-js/prettify.js"></script>
+<script type="text/javascript" src="example-js/example.js?_13"></script>
+<!-- /Used by example page -->
 
 <!--Google Analytics-->
- <script type="text/javascript">
-	 var _gaq = _gaq || [];
-	 _gaq.push(['_setAccount', 'UA-11361452-2']);
-	 _gaq.push(['_trackPageview']);
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-11361452-2']);
+	_gaq.push(['_trackPageview']);
 
-	 (function() {
-		 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	 })();
- </script>
-</body> 
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+</body>
 </html>

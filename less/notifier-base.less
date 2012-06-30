@@ -1,0 +1,59 @@
+/*!
+ * Backbone.Notifier v0.2.0 - Base Styles
+ * Copyright 2012, Eyal Weiss
+ */
+
+@import "elements.less";
+@import "notifier-variables.less";
+
+(~".@{notifier}-screen") {
+	background-color: #000;
+	z-index: 90000022;
+}
+
+(~".@{notifier}") {
+	z-index: 90000025;
+	position: fixed;
+	top: -32px;
+	left: 0;
+	right: 0;
+	width: auto;
+	height: 0;
+	overflow: visible;
+
+	> div {
+		  cursor: default;
+		  display: inline-block;
+		  zoom: 1;
+		  *display: inline;
+
+		  em {
+			  font-weight: bold;
+			  font-style: italic;
+		  }
+	  }
+
+	button.default {
+		font-weight: bold;
+	}
+
+	(~".@{notifier}-inner .@{notifier}-btns button.link") {
+		border-width: 0 0 1px 0;
+		background-color: transparent;
+		.box-shadow(none);
+		.rounded(0);
+		padding-right: 0!important;
+		padding-left: 0!important;
+		padding-bottom: 0;
+	}
+}
+
+(~".@{notifier}-with-loader .@{notifier}-message") {
+	display: inline;
+}
+
+(~".@{notifier}-loader") {
+	display: inline-block;
+	zoom: 1;
+	*display: inline;
+}
