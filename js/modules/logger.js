@@ -21,9 +21,9 @@
 			// }
 			// 'initialize' is called when instantiating a new Backbone.Notifier
 			initialize: function(){
-				this.supr.apply(this.scope, arguments);
 				this.scope._loggerNotifierId = ++this.module._notifiers;
-				this.module._log('initialized notifier #' + this.scope._loggerNotifierId);
+				this.module._log('initializing notifier #' + this.scope._loggerNotifierId);
+				return this.supr.apply(this.scope, arguments);
 			}
 		},
 		// Optional. Unique events accessible for modules, dynamic binding/unbinding is not supported (at the moment).

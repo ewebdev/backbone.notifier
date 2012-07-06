@@ -1,8 +1,7 @@
 /*!
- * Backbone.Notifier v0.2.1 - 'Clean' Theme
+ * Backbone.Notifier v0.2.2 - 'Clean' Theme
  * Copyright 2012, Eyal Weiss
  */
-
 .notifier-screen.notifier-theme-clean {
   background-color: #fff;
 }
@@ -16,13 +15,17 @@
   margin-left: 10px;
   background: url('../imgs/notifier-loader-clean.gif') center center no-repeat;
 }
+.notifier.notifier-theme-clean .notifier-close {
+  top: 5px;
+  right: 5px;
+}
 .notifier.notifier-theme-clean .notifier-message {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 .notifier.notifier-theme-clean .notifier-btns {
   margin: 30px 0 0;
 }
-.notifier.notifier-theme-clean button {
+.notifier.notifier-theme-clean .notifier-btns button {
   border: solid 1px #D1D1D1;
   background-color: white;
   padding: 5px 30px;
@@ -35,28 +38,28 @@
   -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 1px 1px rgba(111, 111, 111, 0.18), inset 0 0 8px rgba(150, 150, 150, 0.21);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 1px 1px rgba(111, 111, 111, 0.18), inset 0 0 8px rgba(150, 150, 150, 0.21);
 }
-.notifier.notifier-theme-clean button:hover,
-.notifier.notifier-theme-clean button.hover {
+.notifier.notifier-theme-clean .notifier-btns button:hover,
+.notifier.notifier-theme-clean .notifier-btns button.hover {
   border: solid 1px silver;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 2px 2px rgba(48, 48, 48, 0.21), inset 0 0 8px rgba(117, 117, 117, 0.21);
   -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 2px 2px rgba(48, 48, 48, 0.21), inset 0 0 8px rgba(117, 117, 117, 0.21);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 2px 2px rgba(48, 48, 48, 0.21), inset 0 0 8px rgba(117, 117, 117, 0.21);
 }
-.notifier.notifier-theme-clean button:active,
-.notifier.notifier-theme-clean button.active {
+.notifier.notifier-theme-clean .notifier-btns button:active,
+.notifier.notifier-theme-clean .notifier-btns button.active {
   border: solid 1px silver;
   -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 1px rgba(48, 48, 48, 0.4), inset 0 0 20px rgba(117, 117, 117, 0.3);
   -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 1px rgba(48, 48, 48, 0.4), inset 0 0 20px rgba(117, 117, 117, 0.3);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 1px rgba(48, 48, 48, 0.4), inset 0 0 20px rgba(117, 117, 117, 0.3);
 }
-.notifier.notifier-theme-clean button.link {
+.notifier.notifier-theme-clean .notifier-btns button.link {
   text-shadow: 0 1px 0 #E9E9E9;
   color: #444;
   border-bottom: dotted 1px #444;
   padding: 9px 0 1px;
 }
-.notifier.notifier-theme-clean button.link:hover,
-.notifier.notifier-theme-clean button.link.hover {
+.notifier.notifier-theme-clean .notifier-btns button.link:hover,
+.notifier.notifier-theme-clean .notifier-btns button.link.hover {
   color: #000;
   border-bottom: solid 1px #000;
   text-shadow: 0 1px 0 #DBDBDB;
@@ -200,6 +203,10 @@
 .notifier.notifier-theme-clean.notifier-dialog .notifier-message {
   text-align: left;
 }
+.notifier.notifier-theme-clean.notifier-dialog .notifier-close {
+  top: 13px;
+  right: 13px;
+}
 .notifier.notifier-theme-clean.notifier-dialog .notifier-btns {
   background: rgba(255, 255, 255, 0.47);
   padding: 13px 10px 14px 10px;
@@ -217,5 +224,8 @@
   box-shadow: 0 1px 0px #fff;
   border-bottom: solid 1px rgba(0, 0, 0, 0.06);
   margin: 0 -30px 20px;
-  padding-bottom: 10px;
+  padding: 0 30px 10px;
+}
+.notifier.notifier-theme-clean.notifier-with-close-btn .notifier-title {
+  padding-right: 60px;
 }
