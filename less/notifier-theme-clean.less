@@ -1,5 +1,5 @@
 /*!
- * Backbone.Notifier v0.2.1 - 'Clean' Theme
+ * Backbone.Notifier v0.2.2 - 'Clean' Theme
  * Copyright 2012, Eyal Weiss
  */
 
@@ -24,50 +24,57 @@
 		background: url('../imgs/notifier-loader-clean.gif') center center no-repeat;
 	}
 
+	(~".@{notifier}-close") {
+		top: 5px;
+		right: 5px;
+	}
+
 	(~".@{notifier}-message") {
 		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 	}
 
 	(~".@{notifier}-btns") {
 		margin: 30px 0 0;
+
+		button {
+			border: solid 1px #D1D1D1;
+			background-color: white;
+			padding: 5px 30px;
+			margin: 0 40px;
+			text-shadow: 0 1px 0 #E9E9E9;
+			.transition(100ms);
+			.box-shadow(~"inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 1px 1px rgba(111, 111, 111, 0.18), inset 0 0 8px rgba(150, 150, 150, 0.21)");
+
+			&:hover, &.hover {
+				border: solid 1px silver;
+				.box-shadow(~"inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 2px 2px rgba(48, 48, 48, 0.21), inset 0 0 8px rgba(117, 117, 117, 0.21)");
+			}
+			&:active, &.active {
+				border: solid 1px silver;
+				.box-shadow(~"inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 1px rgba(48, 48, 48, 0.4), inset 0 0 20px rgba(117, 117, 117, 0.3)");
+			}
+		}
+
+		button.link {
+			text-shadow: 0 1px 0 #E9E9E9;
+			color: #444;
+			border-bottom: dotted 1px #444;
+			padding: 9px 0 1px;
+			&:hover, &.hover {
+				color: #000;
+				border-bottom: solid 1px #000;
+				text-shadow: 0 1px 0 #DBDBDB;
+			}
+		}
+
 	}
 
-	button {
-		border: solid 1px #D1D1D1;
-		background-color: white;
-		padding: 5px 30px;
-		margin: 0 40px;
-		text-shadow: 0 1px 0 #E9E9E9;
-		.transition(100ms);
-		.box-shadow(~"inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 1px 1px rgba(111, 111, 111, 0.18), inset 0 0 8px rgba(150, 150, 150, 0.21)");
-
-		&:hover, &.hover {
-			border: solid 1px silver;
-			.box-shadow(~"inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 2px 2px rgba(48, 48, 48, 0.21), inset 0 0 8px rgba(117, 117, 117, 0.21)");
-		}
-		&:active, &.active {
-			border: solid 1px silver;
-			.box-shadow(~"inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 1px rgba(48, 48, 48, 0.4), inset 0 0 20px rgba(117, 117, 117, 0.3)");
-		}
-	}
-
-	button.link {
-		text-shadow: 0 1px 0 #E9E9E9;
-		color: #444;
-		border-bottom: dotted 1px #444;
-		padding: 9px 0 1px;
-		&:hover, &.hover {
-			color: #000;
-			border-bottom: solid 1px #000;
-			text-shadow: 0 1px 0 #DBDBDB;
-		}
-	}
 
 	> div {
-		  background-color: #fff;
-		  .themed-notification(100,100,100);
-		  padding: 30px 30px 30px;
-		  max-width: 460px;
+			  background-color: #fff;
+			  .themed-notification(100,100,100);
+			  padding: 30px 30px 30px;
+			  max-width: 460px;
 	}
 }
 
@@ -94,10 +101,15 @@
 (~".@{notifier}.@{notifier}-theme-@{themeName}.@{notifier}-dialog") {
 	> div {
 		  padding-top: 12px;
-	  }
+	 }
 
 	(~".@{notifier}-message") {
 		text-align: left;
+	}
+
+	(~".@{notifier}-close") {
+		top: 13px;
+		right: 13px;
 	}
 
 	(~".@{notifier}-btns") {
@@ -114,8 +126,12 @@
 		.box-shadow(~"0 1px 0px #fff");
 		border-bottom: solid 1px rgba(0, 0, 0, 0.06);
 		margin: 0 -30px 20px;
-		padding-bottom: 10px;
+		padding: 0 30px 10px;
 	}
+}
+
+(~".@{notifier}.@{notifier}-theme-@{themeName}.@{notifier}-with-close-btn .notifier-title") {
+	padding-right: 60px;
 }
 
 //function definition for generating notification's css

@@ -313,6 +313,13 @@ code a:hover, .well a:hover {
     box-shadow: 0 -1px 0 #fff;
 }
 
+#changelog .release-changes li.ver {
+    list-style-type: none;
+    margin-left: -16px;
+    line-height: 25px;
+    font-weight: bold;
+}
+
 .res-section {
     margin: 40px 0 20px;
 }

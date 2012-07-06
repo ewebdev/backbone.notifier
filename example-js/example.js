@@ -2,7 +2,8 @@ $(function(){
 
 	var notifier = window.notifier = new Backbone.Notifier({
 		ms: 5000,
-		caller: 'examples'
+		caller: 'examples',
+		theme: 'clean'
 	});
 
 	var supports3d = !($.browser.msie && $.browser.version < 9);
@@ -113,12 +114,13 @@ $(function(){
 		hideOnClick: false,
 		modal: false,
 		zIndex: 9999999,
-		ms: null
+		ms: null,
+		theme: 'clean'
 	});
 
 	var onTourEnd = function(){
 		$('.after-tour').fadeIn(2000);
-		notifier.destroyAll(true);
+		notifier.destroyAll('section', 'tour');
 		themeNotifier.destroyAll(true);
 	};
 
@@ -152,15 +154,14 @@ $(function(){
 	};
 
 	var setTheme = function(theme){
-		console.log(theme);
 		this.set('theme', theme);
 		_.each(this.current, function(a){
 			a.settings.theme = theme;
 			a.$el.attr('class', notifier.getWrapperCls(a.settings));
-			notifier.transitions[a.settings.position].in.call(a, a.$el, a.$el.find('>div'), a.settings, a.settings.fadeInMs);
+			notifier.transitions[a.settings.position]['in'].call(a, a.$el, a.$el.find('>div'), a.settings, a.settings.fadeInMs);
 			a.screenEl && a.screenEl.attr('class', a.settings.baseCls + '-screen ' + a.settings.baseCls + '-theme-' + theme);
 		});
-	}
+	};
 	notifier.on('themechosen', function(theme){
 		setTheme.call(notifier, theme);
 		setTheme.call(themeNotifier, theme);
@@ -177,6 +178,7 @@ $(function(){
 			],
 			hideOnClick: false,
 			modal: false,
+			section: 'tour',
 			ms: 10000
 		})
 			.on('click:ok', function(){
@@ -189,6 +191,7 @@ $(function(){
 					position: 'center',
 					modal: true,
 					ms: false,
+					section: 'tour',
 					buttons: [
 						{'data-role': 'ok', text: 'Sure!', 'class': 'default'},
 						{'data-role': 'cancel', 'class': 'link', text: 'No, I think I\'ve got it'}
@@ -201,6 +204,7 @@ $(function(){
 							type: 'info',
 							title: "Information",
 							message: "This is a 'dialog' <em>info</em> notification. Dialog-styled notifications are also available in the same all types, and creating new types doens't require extra css for dialogs.",
+							section: 'tour',
 							buttons: [
 								{'data-role': 'ok', text: 'Continue the tour', 'class': 'default'},
 								{'data-role': 'cancel', 'class': 'link', text: 'Skip tour'}
@@ -214,6 +218,7 @@ $(function(){
 									message: 'We got loaders...',
 									loader: true,
 									modal: true,
+									section: 'tour',
 									hideOnClick: true,
 									ms: 3500
 								}).on('destroy', function(){
@@ -229,6 +234,7 @@ $(function(){
 											],
 											type: 'success',
 											position: 'center',
+											section: 'tour',
 											modal: true,
 											hideOnClick: true,
 											ms: false
@@ -243,6 +249,7 @@ $(function(){
 													],
 													type: 'success',
 													destroy: true,
+													section: 'tour',
 													modal: true,
 													hideOnClick: false,
 													ms: 15000
@@ -256,6 +263,7 @@ $(function(){
 														screenOpacity:.7,
 														message: 'Features useful event mechanism with great API',
 														type: 'error',
+														section: 'tour',
 														hideOnClick: true,
 														position: 'center',
 														ms: 3500
@@ -317,9 +325,18 @@ $(function(){
 				loader: true,
 				message: 'loading...',
 				ms: null,
-				modal: true
+				modal: true,
+				theme: 'plastic',
+				fadeInMs: 600,
+				fadeOutMs: 1200,
+				'out': function(el, inner, options, duration, callback){
+					el.fadeOut(duration, callback);
+				},
+				'in': function(el, inner, options, duration, callback){
+					el.fadeIn(duration, callback);
+				}
 			});
-			this.loader.notify({});
+			this.loader.notify();
 			window.parseCommitHistory = $.proxy(this.parseResponse, this);
 			jQuery.ajax({
 				url: 'https://api.github.com/repos/ewebdev/backbone.notifier/commits?callback=parseCommitHistory',
@@ -340,14 +357,17 @@ $(function(){
 			html += '<div class="span3">' +  date.toLocaleDateString() +' ' + date.toLocaleTimeString() + '</div>' +
 				'<div class="span6">' +
 					"<ul>";
-			var s = item.attributes.commit.message.split('\n');
+			var s = item.attributes.commit.message.split('\n'),
+				verList = '';
 			_.each(s, function(l) {
 				var change = l.replace(/^-\s?(.*)$/ig, '$1').trim();
-				if (change && change.length) {
-					html +=	'<li>' + change + '</li>';
+				if (change.toLowerCase().substr(0, 7) === 'version') {
+					verList = '<li class="ver">' + change  + '</li>' + verList;
+				} else if (change && change.length) {
+					verList +=	'<li>' + change + '</li>';
 				}
 			});
-			html +=	'</ul>' +
+			html +=	verList + '</ul>' +
 			'</div>' +
 			'</div>';
 			});
@@ -357,7 +377,7 @@ $(function(){
 			var html = this.template.call(this, this.collection);
 			var ph = this.$el.find('.log-content').css({opacity: 0}).html(html);
 			var targetH = ph.height() - 50;
-			this.$el.animate({height: '+=' + targetH}, 800);
+			this.$el.animate({height: '+=' + targetH}, 800, updatePos);
 			ph.animate({opacity: 1}, 800);
 			this.loader.destroyAll();
 			return this;

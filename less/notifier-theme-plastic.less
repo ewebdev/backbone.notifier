@@ -1,5 +1,5 @@
 /*!
- * Backbone.Notifier v0.2.1 - 'Plastic' Theme
+ * Backbone.Notifier v0.2.2 - 'Plastic' Theme
  * Copyright 2012, Eyal Weiss
  */
 
@@ -21,6 +21,25 @@
 		height: 16px;
 		margin-left: 10px;
 		background: url('../imgs/notifier-loader-plastic.gif') center center no-repeat;
+	}
+
+	(~"button.@{notifier}-close") {
+		top: 8px;
+		right: 4px;
+		padding: 1px 7px;
+		height: auto;
+		text-align: center;
+		width: auto;
+		font-size: 11px;
+		opacity: 0.5;
+//		background: rgba(255, 255, 255, 0.3);
+
+		&:hover {
+			opacity: 1;
+		}
+		&:active {
+			background: transparent;
+		}
 	}
 
 	button {
