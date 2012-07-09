@@ -1,7 +1,7 @@
 /*!
- * Backbone.Notifier.js v0.2.1
+ * Backbone.Notifier.js v0.2.3
  * Copyright 2012, Eyal Weiss
- * backbone.notifier.js may be freely distributed under the MIT license.
+ * Backbone.Notifier.js may be freely distributed under the MIT license.
  */
 (function($, Backbone, _) {
 	var emptyFn = function(){},
@@ -66,7 +66,7 @@
 					'<div class="' + settings.wrapperCls + '">',
 					'<div class="' +  settings.innerCls + '">',
 					(settings.title ? '<div class="' + settings.baseCls + '-title">' + settings.title + '</div>' : ''),
-					(settings.closeBtn ? '<button class="' + settings.baseCls + '-close" data-handler="destroy">x</button>' : '')
+					(settings.closeBtn ? '<button class="' + settings.baseCls + '-close" data-handler="destroy"><span>x</span></button>' : '')
 				];
 				if (settings.dialog) {
 					strBuilder.push(
@@ -350,12 +350,14 @@
 		if (m.extend) {
 			$.each(m.extend, function(k, v){
 				var orig = Notifier.prototype[k];
-				if (_.isFunction(orig)) {
+				if (_.isFunction(v) || orig === undefined) {
 					Notifier.prototype[k] = function(){
 						return v.apply({scope: this, supr: orig, module: m}, arguments);
 					};
+				} else if (!_.isObject(v)) {
+					Notifier.prototype[k] = v;
 				} else {
-					Notifier.prototype[k] = $.extend(true, {}, orig, v );
+					Notifier.prototype[k] = $.extend(true, {}, orig, v);
 				}
 			});
 		}
