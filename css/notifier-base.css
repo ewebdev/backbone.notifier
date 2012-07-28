@@ -1,5 +1,21 @@
 /*!
- * Backbone.Notifier v0.2.3 - Base Styles
+ * Backbone.Notifier v0.2.4 - Base Styles
+ * Copyright 2012, Eyal Weiss
+ */
+/*---------------------------------------------------
+    LESS Elements 0.6
+  ---------------------------------------------------
+    A set of useful LESS mixins by Dmitry Fadeyev
+    Special thanks for mixin suggestions to:
+      Kris Van Herzeele,
+      Benoit Adam,
+      Portenart Emile-Victor,
+      Ryan Faerman
+
+    More info at: http://lesselements.com
+-----------------------------------------------------*/
+/*!
+ * Backbone.Notifier v0.2.4 - Variables Config
  * Copyright 2012, Eyal Weiss
  */
 .notifier-screen {
@@ -73,6 +89,8 @@
 
   text-align: center;
   font-size: 11px;
+  line-height: 11px;
+  font-family: Arial, Helvetica, "sans-serif";
   color: rgba(102, 102, 102, 0.39);
   background: transparent;
 }

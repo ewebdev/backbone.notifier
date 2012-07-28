@@ -1,5 +1,21 @@
 /*!
- * Backbone.Notifier v0.2.3 - 'Clean' Theme
+ * Backbone.Notifier v0.2.4 - 'Clean' Theme
+ * Copyright 2012, Eyal Weiss
+ */
+/*---------------------------------------------------
+    LESS Elements 0.6
+  ---------------------------------------------------
+    A set of useful LESS mixins by Dmitry Fadeyev
+    Special thanks for mixin suggestions to:
+      Kris Van Herzeele,
+      Benoit Adam,
+      Portenart Emile-Victor,
+      Ryan Faerman
+
+    More info at: http://lesselements.com
+-----------------------------------------------------*/
+/*!
+ * Backbone.Notifier v0.2.4 - Variables Config
  * Copyright 2012, Eyal Weiss
  */
 .notifier-screen.notifier-theme-clean {
@@ -24,6 +40,7 @@
 }
 .notifier.notifier-theme-clean .notifier-btns {
   margin: 30px 0 0;
+  text-align: center;
 }
 .notifier.notifier-theme-clean .notifier-btns button {
   border: solid 1px #D1D1D1;

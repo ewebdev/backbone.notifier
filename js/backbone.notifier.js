@@ -1,5 +1,5 @@
 /*!
- * Backbone.Notifier.js v0.2.3
+ * Backbone.Notifier.js v0.2.4
  * Copyright 2012, Eyal Weiss
  * Backbone.Notifier.js may be freely distributed under the MIT license.
  */
@@ -26,7 +26,7 @@
 				'fadeInMs': 500,		// duration (milliseconds) of notification's fade-in effect
 				'fadeOutMs': 500,		// duration (milliseconds) of notification's fade-out effect
 				'position': 'top',		// default notifications position ('top' / 'center' / 'bottom')
-				'screenOpacity': 0.5,	// opacity of dark screen background that goes behind for modals (between 0 to 1)
+				'screenOpacity': .65,	// opacity of dark screen background that goes behind for modals (between 0 to 1)
 				'zIndex': 10000,		// minimal z-index for notifications
 				'width': undefined,		// notification's width
 				'modules':  undefined	// modules to register immediately
@@ -98,7 +98,7 @@
 				}
 				this.$el = $el;
 				this._cssPos = ($el.get(0)===document.body) ? 'fixed' : 'absolute';
-				$el.css('position', 'relative');
+				($el.get(0)!==document.body) && $el.css('position', 'relative');
 				if (this._cssPos === 'absolute') {
 					$el.css('overflow', 'hidden');
 				}
