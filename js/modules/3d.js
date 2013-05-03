@@ -49,7 +49,7 @@
                 return attr + prefix;
             });
             var tmp = document.createElement("div"),
-                res = attr;
+                res = prefix;
             for (var i = 0; i < prefixes.length; ++i) {
                 if (typeof tmp.style[prefixes[i]] !== 'undefined') {
                     res = prefixes[i];
@@ -59,7 +59,6 @@
             return res;
         },
         register: function () {
-            debugger;
             this.transformAttr = this.GetVendorPrefix('transform');
             this.shadowAttr = this.GetVendorPrefix('box-shadow');
             //console.log(this.name + ' module was registered');
