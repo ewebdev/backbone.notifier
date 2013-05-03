@@ -220,6 +220,8 @@
 			},
 			notify: function(options){
 				options = options || {};
+				this.el = options && options.el;
+				this.initEl.call(this, options && options.el);
 				var scope = this,
 					settings = this.getSettings(options);
 				if (_.isObject(settings.destroy)){
