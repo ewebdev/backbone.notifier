@@ -44,7 +44,7 @@
             css[this.shadowAttr] = shadow;
             e.data.msgInner.css(css);
         },
-        GetVendorPrefix: function (prefix) {
+        getVendorPrefix: function (prefix) {
             var prefixes = $.map(['', '-webkit-', '-moz-', '-ms-', '-o-'], function (attr) {
                 return attr + prefix;
             });
@@ -59,8 +59,8 @@
             return res;
         },
         register: function () {
-            this.transformAttr = this.GetVendorPrefix('transform');
-            this.shadowAttr = this.GetVendorPrefix('box-shadow');
+            this.transformAttr = this.getVendorPrefix('transform');
+            this.shadowAttr = this.getVendorPrefix('box-shadow');
             //console.log(this.name + ' module was registered');
         },
         enable: function () {
