@@ -22,6 +22,7 @@
 			// 'initialize' is called when instantiating a new Backbone.Notifier
 			initialize: function(){
 				this.scope._loggerNotifierId = ++this.module._notifiers;
+                this.module.doStringify = !!~window.navigator.userAgent.indexOf('msie');
 				this.module._log('initializing notifier #' + this.scope._loggerNotifierId);
 				return this.supr.apply(this.scope, arguments);
 			}
@@ -55,7 +56,7 @@
 			if (window.console && window.console.log){
 				a = 'logger: ' + a;
 				if (arguments.length >= 2) {
-					b = _.isString(b) ? b : ($.browser.msie ? ' ' + JSON.stringify(b) : b);
+					b = _.isString(b) ? b : (this.doStringify ? ' ' + JSON.stringify(b) : b);
 					console.log(a, b);
 				} else {
 					console.log(a);

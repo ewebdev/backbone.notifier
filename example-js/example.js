@@ -6,7 +6,7 @@ $(function(){
 		theme: 'clean'
 	});
 
-	var supports3d = !($.browser.msie && $.browser.version < 9);
+	var supports3d = Modernizr.csstransforms3d;
 	!supports3d && $('#notSupported3d').show();
 
 	var updateUIState = function(moduleBlock, enabled){
